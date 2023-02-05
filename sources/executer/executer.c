@@ -6,13 +6,18 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/18 23:21:28 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/01/16 20:57:26 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/05 21:54:14 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdbool.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "includes/structs.h"
+#include "pathfind.c"
+#include "errors.c"
+#include "builtins.c"
 
 void executer(t_commands *commands, char **envp)
 {
@@ -121,7 +126,7 @@ void	execute_child(t_commands *commands, t_metainfo *info, int pipefd[2])
 	
 	else
 	{
-		info->path = find_path();
+		info->path = find_path(info);
 		execve(path, commands->list_of_commands, info->envp);
 	}
 

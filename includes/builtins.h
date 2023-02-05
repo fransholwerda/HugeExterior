@@ -13,9 +13,6 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-#include <stdbool.h>
-#include <unistd.h>
-
 void	check_builtins(t_commands commands);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/28 16:17:07 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/01/13 20:54:30 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/01/16 20:57:28 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,16 @@ typedef struct s_metainfo
 {
     char    **envp;
     pid_t   lastpid;
+    int     infilefd;
+    int     outfilefd;
+	char	*path;
 }           t_metainfo;
 
 #endif
 
 
 path = true                         false
-list of commands [0] = path         list of commands [0] = ls
-list of commands [1] = ls           list of commands [1] = -a
-list of commands [2] = -a           list of commands [2] 
-list of commands [3] 
+list of commands [0] = {path}/ls    list of commands [0] = ls
+list of commands [1] = -a           list of commands [1] = -a
+list of commands [2] =              list of commands [2] 
+ 
