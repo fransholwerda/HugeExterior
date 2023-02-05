@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/03 16:38:35 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/05 21:52:46 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/05 21:56:25 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	**get_paths(t_metainfo *info)
 	return (paths);
 }
 
-char	*find_path(t_metainfo *info, t_commands commands)
+char	*find_path(t_metainfo *info, t_commands *commands)
 {
 	int		i;
 	char	*temp;
@@ -39,8 +39,8 @@ char	*find_path(t_metainfo *info, t_commands commands)
 	char	*final_command;
 
 	i = 0;
-	paths = get_paths(t_metainfo *info);
-	joined_command = ft_strjoin(info->list_of_commands[0], info->list_of_commands[1]);
+	paths = get_paths(info);
+	joined_command = ft_strjoin(commands->list_of_commands[0], commands->list_of_commands[1]);
 	while (paths[i] && joined_command != '\0')
 	{
 		temp = ft_strjoin("/", joined_command);
