@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/18 23:21:28 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/05 21:54:14 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/09 06:22:54 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,15 @@ void executer(t_commands *commands, char **envp)
 			execute_fork(commands, info);
 	}
 	//While there are still commands left in the struct, continue moving through it creating child processes
+	//if the in/outfile fd are greater than the std in/outs, that means they were specified files, and close them
 	else
 		while (commands->next)
 		{
 			info->lastpid = execute_fork(commands, info);
+			if (info->infilefd > 2)
+				close(info->infilefd);
+			if (info->outfilefd > 2)
+				close(info->outfilefd);
 			commands = commands->next;
 		}
 	//wait until the last child has finished doing it's stuff
@@ -59,6 +64,16 @@ int	execute_fork(t_commands *commands, t_metainfo *info)
 	//create pipe and check to make sure it is done correctly
 	if (pipe(pipefd) == -1)
 		return (error_pipe());
+
+	//setting the in and outfile file descriptors to the correct infile/outfile. if none specified default to STDIN/OUT
+	if (commands->infile.file != NULL)
+		info->infilefd = open(commands->infile.file, commands->infile.mode);
+	else
+		info->infilefd = STDIN_FILENO;
+	if (commands->outfile.file != NULL)
+		info->outfilefd = open(commands->outfile.file, commands->outfile.mode);
+	else
+		info->outfilefd = STDOUT_FILENO;
 	
 	//fork the process to spawn a child process, and set the lastpid pid to the new child. in a loop the final process will be the final child's pid
 	pid = fork();
@@ -72,17 +87,12 @@ int	execute_fork(t_commands *commands, t_metainfo *info)
 	//if child process, execute child process code.
 	else if (pid == 0)
 	{
-		//setting the in and outfile file descriptors to the correct infile/outfile. if none specified default to STDIN/OUT
-		if (commands->infile.file != NULL)
-			info->infilefd = open(commands->infile.file, commands->infile.mode);
-		else
-			info->infilefd = STDIN_FILENO;
-		if (commands->outfile.file != NULL)
-			info->outfilefd = open(commands->outfile.file, commands->outfile.mode);
-		else
-			info->outfilefd = STDOUT_FILENO;
-		execute_child(commands, info, pipefd);
+		execute_child(commands, info, *pipefd);
 	}
+
+	//close write end, because all writing to pipe should be done by the child
+	close(pipefd[1]);
+
 	//set the read end of the pipe to replace the infilefd of the first file
 	if (commands->next != NULL && commands->next->infile.file == NULL)
 		commands->next->infile.file = pipefd[0];
@@ -113,7 +123,7 @@ void	execute_child(t_commands *commands, t_metainfo *info, int pipefd[2])
 		dupe_error();
 	
 	//now that the STDIN/OUT has been redirected, close the hanging write end of the pipe (as all writing now happens on the redirected STDOUT)
-	//also close the read end, because all reading should now happen from the STDIN which is actually the pipefd
+	//also close the read end, because all reading should now happen from the STDIN (which is actually a redirected pipefd)
 	close(pipefd[1]);
 	close(pipefd[0]);
 
@@ -126,7 +136,7 @@ void	execute_child(t_commands *commands, t_metainfo *info, int pipefd[2])
 	
 	else
 	{
-		info->path = find_path(info);
+		info->path = find_path(info, commands);
 		execve(path, commands->list_of_commands, info->envp);
 	}
 

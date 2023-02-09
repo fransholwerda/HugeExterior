@@ -6,11 +6,12 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/03 16:38:35 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/05 21:56:25 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/09 07:02:13 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/structs.h"
+#include "ft_split.c"
 
 static char	**get_paths(t_metainfo *info)
 {
@@ -40,7 +41,15 @@ char	*find_path(t_metainfo *info, t_commands *commands)
 
 	i = 0;
 	paths = get_paths(info);
-	joined_command = ft_strjoin(commands->list_of_commands[0], commands->list_of_commands[1]);
+	joined_command = commands->list_of_commands[i];
+	while (commands->list_of_commands[i + 1])
+	{
+		temp = ft_strjoin(joined_command, commands->list_of_commands[i + 1]);
+		joined_command = temp;
+		free(temp);
+		i++;
+	}
+	i = 0;
 	while (paths[i] && joined_command != '\0')
 	{
 		temp = ft_strjoin("/", joined_command);
