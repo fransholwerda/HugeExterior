@@ -25,6 +25,9 @@ void executer(t_commands *commands, char **envp)
 	bool		builtin;
 	t_metainfo	*info;
 
+	signal(SIGINT, handle_sig_interrupt);
+	signal(SIGQUIT, handle_sig_quit);
+
 	//Add envp to the metadata struct for future reference
 	info->envp = envp;
 
@@ -33,7 +36,7 @@ void executer(t_commands *commands, char **envp)
 	//If only one command and it is not a builtin, then fork and continue as normal, but end the executer upon completion of that one command.
 	if (commands->next == NULL)
 	{
-		builtin = check_builtin(commands->list_of_commands[0]);
+		builtin = check_builtin(commands);
 		if (builtin == true)
 			execute_builtin(commands, info);
 		else
