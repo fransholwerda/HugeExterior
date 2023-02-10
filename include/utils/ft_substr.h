@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtins.h                                         :+:    :+:            */
+/*   ft_substr.h                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
+/*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/01/10 21:16:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/09 06:47:55 by ahorling      ########   odam.nl         */
+/*   Created: 2023/01/08 16:15:54 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/02/07 12:24:57 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#ifndef FT_SUBSTR_H
+# define FT_SUBSTR_H
 
-#include "structs.h"
-#include <stdbool.h>
-
-bool	check_builtins(t_commands *commands);
-int		execute_builtins(t_commands *commands, t_metainfo *info);
+char	*ft_substr(char const *s, int start, int len);
 
 #endif
