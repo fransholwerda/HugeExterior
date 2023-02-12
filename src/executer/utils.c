@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/09 06:41:37 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/09 06:42:08 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/12 22:30:59 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (fullstr);
 }
 
-int	ft_strncmp(const char *str1, const char *str2, size_t size)
+int		ft_strncmp(const char *str1, const char *str2, size_t size)
 {
 	size_t	i;
 
@@ -81,3 +81,5 @@ void	ft_putstr_fd(char *string, int fd)
 	if (fd >= 0 && string != NULL)
 		write(fd, string, len);
 }
+
+

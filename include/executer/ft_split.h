@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtins.h                                         :+:    :+:            */
+/*   ft_split.h                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/01/10 21:16:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/12 22:15:08 by ahorling      ########   odam.nl         */
+/*   Created: 2023/02/12 22:23:34 by ahorling      #+#    #+#                 */
+/*   Updated: 2023/02/12 22:24:08 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#ifndef FT_SPLIT_H
+# define FT_SPLIT_H
 
-# include "structs.h"
-
-bool	check_builtins(t_commands *commands);
-int		execute_builtins(t_commands *commands, t_metainfo *info);
+char	**ft_split(char const *s, char c);
 
 #endif

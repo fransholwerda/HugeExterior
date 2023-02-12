@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/18 23:21:28 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/09 06:22:54 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/12 22:20:10 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "includes/structs.h"
+#include "structs.h"
 #include "pathfind.c"
 #include "errors.c"
 #include "builtins.c"

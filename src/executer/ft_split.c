@@ -6,12 +6,29 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/01 11:53:46 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/09 07:02:14 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/12 22:26:29 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
+
+static void	*ft_memchr(const void *str, int ch, size_t size)
+{
+	char	*input;
+	size_t	i;
+
+	i = 0;
+	input = (char *)str;
+	while (i < size)
+	{
+		if (input[i] == ch)
+			return (&input[i]);
+		i++;
+	}
+	return (NULL);
+}
+
 
 static char	**freesplits(char **table, int tableindex)
 {

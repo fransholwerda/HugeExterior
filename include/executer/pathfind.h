@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtins.h                                         :+:    :+:            */
+/*   pathfind.h                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/01/10 21:16:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/12 22:15:08 by ahorling      ########   odam.nl         */
+/*   Created: 2023/02/12 22:20:29 by ahorling      #+#    #+#                 */
+/*   Updated: 2023/02/12 22:29:00 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#ifndef PATHFIND_H
+# define PATHFIND_H
 
 # include "structs.h"
 
-bool	check_builtins(t_commands *commands);
-int		execute_builtins(t_commands *commands, t_metainfo *info);
+char		*find_path(t_metainfo *info, t_commands *commands);
 
 #endif

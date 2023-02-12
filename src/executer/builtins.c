@@ -6,13 +6,13 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 21:15:18 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/09 07:02:09 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/12 22:28:39 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/builtins.h"
-#include "includes/structs.h"
-#include "utils.c"
+#include "executer/builtins.h"
+#include "structs.h"
+#include "utils.h"
 #include <stdbool.h>
 #include <unistd.h>
 

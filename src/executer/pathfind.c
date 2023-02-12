@@ -6,12 +6,14 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/03 16:38:35 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/09 07:02:13 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/12 22:31:13 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/structs.h"
-#include "ft_split.c"
+#include <unistd.h>
+#include "structs.h"
+#include "executer/ft_split.h"
+#include "executer/utils.h"
 
 static char	**get_paths(t_metainfo *info)
 {
