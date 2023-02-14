@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/07 17:12:02 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/10 14:12:59 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/14 13:14:33 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_file	*new_file(char *filename, int mode)
 	file = (t_file *)malloc(sizeof(t_file));
 	if (!file)
 		malloc_stop("malloc_new_file");
-	file->file = ft_strdup(filename);
+	file->name = ft_strdup(filename);
 	file->mode = mode;
 	file->next = NULL;
 	return (file);
