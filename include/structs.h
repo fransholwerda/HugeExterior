@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/28 16:17:07 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/10 17:58:57 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/14 13:14:19 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 
 typedef struct s_file
 {
-	char			*file; //rename to name
+	char			*name;
 	int				mode;
 	struct s_file	*next;
 }					t_file;
 
 typedef struct s_commands
 {
-	char				**list_of_commands; //rename to args
+	char				**args;
 	t_file				*infile;
 	t_file				*outfile;
 	char				*hd;

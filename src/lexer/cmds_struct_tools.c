@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/07 16:30:40 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/10 17:05:02 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/14 13:15:21 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ t_commands	*new_cmds(void)
 	cmds = (t_commands *)malloc(sizeof(t_commands));
 	if (!cmds)
 		malloc_stop("malloc_init_cmds");
+	cmds->args = NULL;
+	cmds->infile = NULL;
+	cmds->outfile = NULL;
+	cmds->next = NULL;
 	return (cmds);
 }
 
@@ -76,11 +80,9 @@ void	copy_array(char	**to, char **from)
 	i = 0;
 	while (from[i])
 	{
-		printf("copy_array i: %d\n", i);
 		to[i] = from[i];
 		i++;
 	}
-	printf("return copy_array\n");
 }
 
 void	add_args(t_commands *cmds, char *arg)
