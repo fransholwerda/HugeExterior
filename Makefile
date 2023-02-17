@@ -6,9 +6,16 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/02/17 14:18:17 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/02/17 15:47:37 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
+
+#			$(ROOT)src/executer/builtins.c \
+			$(ROOT)src/executer/errors.c \
+			$(ROOT)src/executer/executer.c \
+			$(ROOT)src/executer/ft_split.c \
+			$(ROOT)src/executer/pathfind.c \
+			$(ROOT)src/executer/utils.c 
 
 ROOT	= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 NAME	= minishell
@@ -17,12 +24,6 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/env/copy_env.c \
 			$(ROOT)src/env/env_add.c \
 			$(ROOT)src/env/env_pop.c \
-			$(ROOT)src/executer/builtins.c \
-			$(ROOT)src/executer/errors.c \
-			$(ROOT)src/executer/executer.c \
-			$(ROOT)src/executer/ft_split.c \
-			$(ROOT)src/executer/pathfind.c \
-			$(ROOT)src/executer/utils.c \
 			$(ROOT)src/lexer/cmds_struct_tools.c \
 			$(ROOT)src/lexer/expand.c \
 			$(ROOT)src/lexer/file_struct_tools.c \
@@ -50,8 +51,8 @@ INCLUDE	= -I $(ROOT)include \
 			-I $(ROOT)include/executer \
 			-I $(ROOT)include/lexer \
 			-I $(ROOT)include/utils \
-			-I /Users/fholwerd/.brew/opt/readline/include
-LINKS	= -L /Users/fholwerd/.brew/opt/readline/lib -lreadline
+			-I $(HOME)/.brew/Cellar/readline/8.2.1/include
+LINKS	= -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline
 CFLAGS	= -Wall -Wextra -Werror
 
 all: $(NAME)

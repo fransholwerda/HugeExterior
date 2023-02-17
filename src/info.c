@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 13:12:27 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/17 14:09:24 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/17 14:47:16 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@
 #include "stop.h"
 #include "structs.h"
 
-
-
-
-
-#include <stdio.h>
 static char	*get_prompt(char *program_name)
 {
 	char			*prompt;
@@ -35,7 +30,6 @@ static char	*get_prompt(char *program_name)
 			prompt = ft_strjoin(&program_name[i + 1], ">");
 		i--;
 	}
-	printf("Prompt1: %s\n", prompt);
 	return (prompt);
 }
 
@@ -47,7 +41,6 @@ t_info	*init_info(char *argv[], char *env[])
 	if (!info)
 		stop("init_info: ");
 	info->prompt = get_prompt(argv[0]);
-	printf("Prompt2: %s\n", info->prompt);
 	info->env = copy_env(env);
 	info->cmds = NULL;
 	return (info);
