@@ -6,11 +6,13 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 15:27:23 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/06 18:05:35 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/17 13:19:59 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "ft_strlen.h"
+#include "ft_substr.h"
+#include "stop.h"
 #include "split_utils.h"
 #include <stdlib.h>
 

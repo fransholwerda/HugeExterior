@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 13:19:39 by fholwerd      #+#    #+#                 */
-/*   Updated: 2022/11/26 17:33:47 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/14 15:34:10 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "structs.h"
 
-t_info	*init_info(char *argv[]);
+t_info	*init_info(char *argv[], char *env[]);
 void	free_info(t_info *info);
 
 #endif

@@ -6,13 +6,14 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/01 19:49:03 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/07 12:22:15 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/17 13:21:12 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "free_split.h"
-#include "utils.h"
+#include "ft_strlen.h"
+#include "stop.h"
 
 static int	word_count(const char *s, char c)
 {

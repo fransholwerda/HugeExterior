@@ -6,22 +6,19 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/07 16:30:40 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/14 13:15:21 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/17 13:14:23 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <stdlib.h>
 #include "file_struct_tools.h"
-#include "utils.h"
+#include "array_len.h"
+#include "free_split.h"
+#include "ft_strdup.h"
+#include "stop.h"
 #include "structs.h"
 
-
-
-
-
-
-#include <stdio.h>
 t_commands	*new_cmds(void)
 {
 	t_commands	*cmds;
@@ -61,16 +58,6 @@ void	add_outfile(t_commands *cmds, char *outfile)
 	else
 		cmds->outfile = file_add_back(cmds->outfile, outfile,
 				O_CREAT | O_RDWR | O_TRUNC);
-}
-
-int	array_len(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-		i++;
-	return (i);
 }
 
 void	copy_array(char	**to, char **from)

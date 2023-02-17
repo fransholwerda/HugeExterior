@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/14 13:15:51 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/17 14:11:27 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include "readline/readline.h"
 #include "readline/history.h"
-#include "utils.h"
+#include "printer.h"
 #include "structs.h"
 #include "info.h"
 
@@ -98,9 +98,11 @@ int	main(int argc, char **argv, char *env[])
 	t_info	*info;
 	char	**split;
 
+	printf("Test\n");
 	if (argc != 1)
 		return (EXIT_FAILURE);
-	info = init_info(argv);
+	info = init_info(argv, env);
+	printf("Prompt3: %s\n", info->prompt);
 	str = readline(info->prompt);
 	while (str != NULL)
 	{
@@ -121,6 +123,7 @@ int	main(int argc, char **argv, char *env[])
 		str = readline(info->prompt);
 	}
 	free(info->prompt);
+	free(info);
 	free(str);
 	return (EXIT_SUCCESS);
 }

@@ -6,12 +6,13 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 15:25:02 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/06 18:05:59 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/17 13:20:54 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "separate_cmds.h"
+#include "stop.h"
 #include <stdlib.h>
 
 static void	trim_cmd(char **split, int i, int q1, int q2)

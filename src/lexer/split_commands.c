@@ -6,12 +6,13 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 12:56:01 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/06 18:03:57 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/17 13:20:26 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "split_utils.h"
-#include "utils.h"
+#include "ft_strlen.h"
+#include "stop.h"
 #include <stdlib.h>
 
 static int	count_commands(char *str)

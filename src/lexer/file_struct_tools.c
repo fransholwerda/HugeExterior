@@ -6,12 +6,13 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/07 17:12:02 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/14 13:14:33 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/17 13:18:55 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "utils.h"
+#include "ft_strdup.h"
+#include "stop.h"
 #include "structs.h"
 
 t_file	*new_file(char *filename, int mode)

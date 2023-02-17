@@ -6,12 +6,13 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/01 16:26:34 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/07 12:22:45 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/17 13:21:26 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "utils.h"
+#include "ft_strlen.h"
+#include "stop.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

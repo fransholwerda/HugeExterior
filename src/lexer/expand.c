@@ -6,12 +6,18 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 14:38:57 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/06 17:46:32 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/17 13:17:54 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
 #include <stdlib.h>
+#include "ft_strjoin.h"
+#include "ft_strdup.h"
+#include "ft_strlen.h"
+#include "ft_strncmp.h"
+#include "ft_substr.h"
+#include "ft_is_al_under.h"
+#include "stop.h"
 
 static char	*get_env_var(char *env[], char *var)
 {

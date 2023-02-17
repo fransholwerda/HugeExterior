@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/28 16:17:07 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/14 13:14:19 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/17 14:06:09 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_metainfo
 typedef struct s_info
 {
 	char		*prompt;
+	char		**env;
 	t_commands	*cmds;
 }	t_info;
 

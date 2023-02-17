@@ -6,12 +6,13 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/01 16:10:23 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/07 12:24:37 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/17 13:21:46 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
 #include <stdlib.h>
+#include "ft_strlen.h"
+#include "stop.h"
 
 char	*ft_substr(char const *s, int start, int len)
 {

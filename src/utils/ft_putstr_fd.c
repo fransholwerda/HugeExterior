@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utils.h                                            :+:    :+:            */
+/*   ft_putstr_fd.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/11/13 13:29:17 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/17 13:51:04 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/02/17 13:47:16 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/02/17 13:47:29 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include <unistd.h>
+#include "ft_strlen.h"
 
-# include "array_len.h"
-# include "free_split.h"
-# include "ft_is_al_under.h"
-# include "ft_putendl_fd.h"
-# include "ft_putstr_fd.h"
-# include "ft_split.h"
-# include "ft_strdup.h"
-# include "ft_strjoin.h"
-# include "ft_strlen.h"
-# include "ft_strncmp.h"
-# include "ft_strndup.h"
-# include "ft_substr.h"
-# include "printer.h"
-# include "stop.h"
+void	ft_putstr_fd(char *string, int fd)
+{
+	int	len;
 
-#endif
+	len = ft_strlen(string);
+	if (fd >= 0 && string != NULL)
+		write(fd, string, len);
+}

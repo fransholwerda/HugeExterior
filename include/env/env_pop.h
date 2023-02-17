@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utils.h                                            :+:    :+:            */
+/*   env_pop.h                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/11/13 13:29:17 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/17 13:51:04 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/02/15 17:44:19 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/02/15 17:45:22 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef ENV_POP_H
+# define ENV_POP_H
 
-# include "array_len.h"
-# include "free_split.h"
-# include "ft_is_al_under.h"
-# include "ft_putendl_fd.h"
-# include "ft_putstr_fd.h"
-# include "ft_split.h"
-# include "ft_strdup.h"
-# include "ft_strjoin.h"
-# include "ft_strlen.h"
-# include "ft_strncmp.h"
-# include "ft_strndup.h"
-# include "ft_substr.h"
-# include "printer.h"
-# include "stop.h"
+char	**env_pop(char *env[], char *var);
 
 #endif

@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_split.h                                         :+:    :+:            */
+/*   ft_putendl_fd.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
+/*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/12 22:23:34 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/12 22:24:08 by ahorling      ########   odam.nl         */
+/*   Created: 2023/02/17 13:49:12 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/02/17 13:49:24 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_SPLIT_H
-# define FT_SPLIT_H
+#include <unistd.h>
+#include "ft_strlen.h"
 
-char	**ft_split(char const *s, char c);
+void	ft_putendl_fd(char *string, int fd)
+{
+	int	len;
 
-#endif
+	len = ft_strlen(string);
+	if (fd >= 0 && string != NULL)
+	{
+		write(fd, string, len);
+		write(fd, "\n", 1);
+	}
+}
