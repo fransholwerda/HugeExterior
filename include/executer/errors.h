@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/12 22:13:10 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/12 22:16:19 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/17 19:46:50 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,7 @@ void	fork_error();
 void	pipe_error();
 void	dupe_error();
 void	execute_error();
+void	global_error();
+void	env_error();
 
 #endif

@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtins.h                                         :+:    :+:            */
+/*   ft_strcmp.h                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/01/10 21:16:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/17 19:20:50 by ahorling      ########   odam.nl         */
+/*   Created: 2023/02/17 19:13:25 by ahorling      #+#    #+#                 */
+/*   Updated: 2023/02/17 19:15:11 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#ifndef FT_STRCMP_H
+# define FT_STRCMP_H
 
-# include <stdbool.h>
-# include <unistd.h>
-# include "structs.h"
-
-bool	check_builtin(t_commands *commands);
-int		execute_builtin(t_commands *commands, t_metainfo *info);
+int	ft_strcmp(char const *string1, char const *string2);
 
 #endif

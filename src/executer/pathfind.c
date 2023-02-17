@@ -6,14 +6,16 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/03 16:38:35 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/12 22:31:13 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/17 19:47:49 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdlib.h>
 #include "structs.h"
-#include "executer/ft_split.h"
-#include "executer/utils.h"
+#include "ft_split.h"
+#include "utils.h"
+#include "errors.h"
 
 static char	**get_paths(t_metainfo *info)
 {
@@ -27,9 +29,9 @@ static char	**get_paths(t_metainfo *info)
 			break;
 		i++;
 	}
-	paths = ft_split(info->envp[i][5], ':');
+	paths = ft_split(info->envp[i], ':');
 	if (!paths)
-		environment_error();
+		env_error();
 	return (paths);
 }
 
@@ -43,10 +45,10 @@ char	*find_path(t_metainfo *info, t_commands *commands)
 
 	i = 0;
 	paths = get_paths(info);
-	joined_command = commands->list_of_commands[i];
-	while (commands->list_of_commands[i + 1])
+	joined_command = commands->args[i];
+	while (commands->args[i + 1])
 	{
-		temp = ft_strjoin(joined_command, commands->list_of_commands[i + 1]);
+		temp = ft_strjoin(joined_command, commands->args[i + 1]);
 		joined_command = temp;
 		free(temp);
 		i++;

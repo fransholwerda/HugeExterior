@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/02/17 15:47:37 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/02/17 19:49:21 by ahorling      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,10 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/lexer/split_commands.c \
 			$(ROOT)src/lexer/split_utils.c \
 			$(ROOT)src/lexer/trim_cmds.c \
+			$(ROOT)src/executer/builtins.c \
+			$(ROOT)src/executer/errors.c \
+			$(ROOT)src/executer/executer.c \
+			$(ROOT)src/executer/pathfind.c \
 			$(ROOT)src/utils/array_len.c \
 			$(ROOT)src/utils/free_split.c \
 			$(ROOT)src/utils/ft_is_al_under.c \
@@ -40,6 +44,7 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/utils/ft_strdup.c \
 			$(ROOT)src/utils/ft_strjoin.c \
 			$(ROOT)src/utils/ft_strlen.c \
+			$(ROOT)src/utils/ft_strcmp.c \
 			$(ROOT)src/utils/ft_strncmp.c \
 			$(ROOT)src/utils/ft_strndup.c \
 			$(ROOT)src/utils/ft_substr.c \
