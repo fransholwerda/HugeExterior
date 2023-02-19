@@ -6,16 +6,14 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/02/17 19:49:21 by ahorling      ########   odam.nl          #
+#    Updated: 2023/02/19 18:42:28 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 #			$(ROOT)src/executer/builtins.c \
 			$(ROOT)src/executer/errors.c \
 			$(ROOT)src/executer/executer.c \
-			$(ROOT)src/executer/ft_split.c \
-			$(ROOT)src/executer/pathfind.c \
-			$(ROOT)src/executer/utils.c 
+			$(ROOT)src/executer/pathfind.c
 
 ROOT	= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 NAME	= minishell

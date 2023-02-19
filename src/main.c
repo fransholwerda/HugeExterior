@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/17 15:49:05 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/19 19:00:22 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	get_command(t_commands *cmds, char **split, int i)
 
 t_commands	*commandize(t_info *info, char **split)
 {
-	int			i;
+	int	i;
 
 	i = 0;
 	if (split[0] && split[0][0] == '|')

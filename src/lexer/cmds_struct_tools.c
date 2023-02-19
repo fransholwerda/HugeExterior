@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/07 16:30:40 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/17 15:48:26 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/19 19:00:08 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 #include "stop.h"
 #include "structs.h"
 
+
+
+#include <stdio.h>
 t_commands	*new_cmds(void)
 {
 	t_commands	*cmds;
@@ -86,12 +89,13 @@ void	add_args(t_commands *cmds, char *arg)
 	}
 	else
 	{
-		new_args = malloc((array_len(cmds->args) + 1) * sizeof(char *));
+		new_args = malloc((array_len(cmds->args) + 2) * sizeof(char *));
 		if (!cmds->args)
 			malloc_stop("malloc_add_args_2");
 		new_args[array_len(cmds->args) + 1] = NULL;
+		new_args[array_len(cmds->args)] = ft_strdup(arg);
 		copy_array(new_args, cmds->args);
-		free_split(cmds->args);
+		free(cmds->args);
 		cmds->args = new_args;
 	}
 }
