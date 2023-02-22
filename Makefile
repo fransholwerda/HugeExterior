@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/02/19 18:42:28 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/02/22 14:24:15 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/env/copy_env.c \
 			$(ROOT)src/env/env_add.c \
 			$(ROOT)src/env/env_pop.c \
+			$(ROOT)src/env/env_sort.c \
 			$(ROOT)src/lexer/cmds_struct_tools.c \
 			$(ROOT)src/lexer/expand.c \
 			$(ROOT)src/lexer/file_struct_tools.c \
