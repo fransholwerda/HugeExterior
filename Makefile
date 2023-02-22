@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/02/22 14:24:15 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/02/22 15:07:10 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/env/copy_env.c \
 			$(ROOT)src/env/env_add.c \
 			$(ROOT)src/env/env_pop.c \
-			$(ROOT)src/env/env_sort.c \
 			$(ROOT)src/lexer/cmds_struct_tools.c \
 			$(ROOT)src/lexer/expand.c \
 			$(ROOT)src/lexer/file_struct_tools.c \
@@ -35,6 +34,7 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/executer/executer.c \
 			$(ROOT)src/executer/pathfind.c \
 			$(ROOT)src/utils/array_len.c \
+			$(ROOT)src/utils/array_sort.c \
 			$(ROOT)src/utils/free_split.c \
 			$(ROOT)src/utils/ft_is_al_under.c \
 			$(ROOT)src/utils/ft_putendl_fd.c \
