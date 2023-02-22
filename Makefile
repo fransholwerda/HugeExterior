@@ -6,22 +6,19 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/02/22 15:07:10 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/02/22 18:03:24 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
-
-#			$(ROOT)src/executer/builtins.c \
-			$(ROOT)src/executer/errors.c \
-			$(ROOT)src/executer/executer.c \
-			$(ROOT)src/executer/pathfind.c
 
 ROOT	= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 NAME	= minishell
 SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/info.c \
-			$(ROOT)src/env/copy_env.c \
-			$(ROOT)src/env/env_add.c \
-			$(ROOT)src/env/env_pop.c \
+			$(ROOT)src/builtins/env_add.c \
+			$(ROOT)src/builtins/env_copy.c \
+			$(ROOT)src/builtins/env_pop.c \
+			$(ROOT)src/builtins/env.c \
+			$(ROOT)src/builtins/unset.c \
 			$(ROOT)src/lexer/cmds_struct_tools.c \
 			$(ROOT)src/lexer/expand.c \
 			$(ROOT)src/lexer/file_struct_tools.c \
@@ -47,11 +44,12 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/utils/ft_strncmp.c \
 			$(ROOT)src/utils/ft_strndup.c \
 			$(ROOT)src/utils/ft_substr.c \
+			$(ROOT)src/utils/is_valid_varname.c \
 			$(ROOT)src/utils/printer.c \
 			$(ROOT)src/utils/stop.c
 OBJ		= $(SRC:.c=.o)
 INCLUDE	= -I $(ROOT)include \
-			-I $(ROOT)include/env \
+			-I $(ROOT)include/builtins \
 			-I $(ROOT)include/executer \
 			-I $(ROOT)include/lexer \
 			-I $(ROOT)include/utils \

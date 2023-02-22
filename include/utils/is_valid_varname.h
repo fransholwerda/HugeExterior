@@ -1,37 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_is_al_under.c                                   :+:    :+:            */
+/*   is_valid_varname.h                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/06 17:49:12 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/22 17:36:56 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/02/22 17:32:30 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/02/22 17:36:08 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "enums.h"
+#ifndef IS_VALID_VARNAME_H
+# define IS_VALID_VARNAME_H
 
-int	ft_is_al_under(char c)
-{
-	if (c >= 'A' && c <= 'Z')
-		return (True);
-	if (c >= 'a' && c <= 'z')
-		return (True);
-	if (c == '_')
-		return (True);
-	return (False);
-}
+int	is_valid_varname(char *str);
 
-int	ft_is_al_under_num(char c)
-{
-	if (c >= 'A' && c <= 'Z')
-		return (True);
-	if (c >= 'a' && c <= 'z')
-		return (True);
-	if (c == '_')
-		return (True);
-	if (c == '0' && c <= '9')
-		return (True);
-	return (False);
-}
+#endif

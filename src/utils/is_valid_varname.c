@@ -1,37 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_is_al_under.c                                   :+:    :+:            */
+/*   is_valid_varname.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/06 17:49:12 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/22 17:36:56 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/02/22 17:32:03 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/02/22 17:37:44 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "enums.h"
+#include "ft_is_al_under.h"
 
-int	ft_is_al_under(char c)
+int	is_valid_varname(char *str)
 {
-	if (c >= 'A' && c <= 'Z')
-		return (True);
-	if (c >= 'a' && c <= 'z')
-		return (True);
-	if (c == '_')
-		return (True);
-	return (False);
-}
+	int	i;
 
-int	ft_is_al_under_num(char c)
-{
-	if (c >= 'A' && c <= 'Z')
-		return (True);
-	if (c >= 'a' && c <= 'z')
-		return (True);
-	if (c == '_')
-		return (True);
-	if (c == '0' && c <= '9')
-		return (True);
-	return (False);
+	if (!str)
+		return (-1);
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (i == 0 && ft_is_al_under(str[0]) == False)
+			return (False);
+		else if (i > 0 && ft_is_al_under_num(str[i]) == False)
+			return (False);
+		i++;
+	}
+	return (True);
 }

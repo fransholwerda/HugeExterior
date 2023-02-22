@@ -1,37 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_is_al_under.c                                   :+:    :+:            */
+/*   env.c                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/06 17:49:12 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/22 17:36:56 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/02/22 15:13:46 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/02/22 18:00:11 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "enums.h"
+#include "ft_putendl_fd.h"
 
-int	ft_is_al_under(char c)
-{
-	if (c >= 'A' && c <= 'Z')
-		return (True);
-	if (c >= 'a' && c <= 'z')
-		return (True);
-	if (c == '_')
-		return (True);
-	return (False);
-}
+extern int	g_error;
 
-int	ft_is_al_under_num(char c)
+void	env(char *envp[], int fd)
 {
-	if (c >= 'A' && c <= 'Z')
-		return (True);
-	if (c >= 'a' && c <= 'z')
-		return (True);
-	if (c == '_')
-		return (True);
-	if (c == '0' && c <= '9')
-		return (True);
-	return (False);
+	int	i;
+
+	g_error = 0;
+	i = 0;
+	while (envp[i])
+	{
+		ft_putendl_fd(envp[i], fd);
+		i++;
+	}
 }
