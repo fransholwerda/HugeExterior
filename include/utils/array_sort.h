@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   copy_env.h                                         :+:    :+:            */
+/*   array_sort.h                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/15 17:44:41 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/15 17:49:05 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/02/22 14:20:37 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/02/22 15:06:42 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COPY_ENV_H
-# define COPY_ENV_H
+#ifndef ARRAY_SORT_H
+# define ARRAY_SORT_H
 
-# include "structs.h"
-
-char	**copy_env(char *env[]);
+void	array_sort(char *array[]);
 
 #endif

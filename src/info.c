@@ -6,12 +6,12 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 13:12:27 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/17 14:47:16 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/22 18:02:23 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "copy_env.h"
+#include "env_copy.h"
 #include "ft_strlen.h"
 #include "ft_strjoin.h"
 #include "stop.h"
@@ -41,7 +41,7 @@ t_info	*init_info(char *argv[], char *env[])
 	if (!info)
 		stop("init_info: ");
 	info->prompt = get_prompt(argv[0]);
-	info->env = copy_env(env);
+	info->env = env_copy(env);
 	info->cmds = NULL;
 	return (info);
 }

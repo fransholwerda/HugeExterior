@@ -6,11 +6,12 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 14:38:57 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/17 13:17:54 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/22 17:38:36 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "enums.h"
 #include "ft_strjoin.h"
 #include "ft_strdup.h"
 #include "ft_strlen.h"
@@ -90,10 +91,10 @@ static int	expand_dollar(char *env[], char *split[], int i, int pos)
 	char	*temp;
 
 	end = pos;
-	if (ft_is_al_under(split[i][end + 1]) == 1)
+	if (ft_is_al_under(split[i][end + 1]) == True)
 	{
 		end++;
-		while (ft_is_al_under_num(split[i][end + 1]) == 1)
+		while (ft_is_al_under_num(split[i][end + 1]) == True)
 			end++;
 	}
 	var = get_env_var(env, ft_substr(split[i], pos + 1, end - pos));

@@ -1,37 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_is_al_under.c                                   :+:    :+:            */
+/*   unset.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/06 17:49:12 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/22 17:36:56 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/02/22 16:09:40 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/02/22 17:59:59 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "enums.h"
+#include "env_pop.h"
+#include "ft_putendl_fd.h"
+#include "ft_putstr_fd.h"
+#include "is_valid_varname.h"
+#include "structs.h"
 
-int	ft_is_al_under(char c)
-{
-	if (c >= 'A' && c <= 'Z')
-		return (True);
-	if (c >= 'a' && c <= 'z')
-		return (True);
-	if (c == '_')
-		return (True);
-	return (False);
-}
+extern int	g_error;
 
-int	ft_is_al_under_num(char c)
+void	unset(t_metainfo *info, char *var, int fd)
 {
-	if (c >= 'A' && c <= 'Z')
-		return (True);
-	if (c >= 'a' && c <= 'z')
-		return (True);
-	if (c == '_')
-		return (True);
-	if (c == '0' && c <= '9')
-		return (True);
-	return (False);
+	g_error = 0;
+	if (is_valid_varname(var) == False)
+	{
+		ft_putstr_fd("minishell: unset: '", fd);
+		ft_putstr_fd(var, fd);
+		ft_putendl_fd("': not a valid identifier", fd);
+		g_error = 1;
+	}
+	else
+		info->envp = env_pop(info->envp, var);
 }

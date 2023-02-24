@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   copy_env.c                                         :+:    :+:            */
+/*   env_copy.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/15 17:03:45 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/17 13:10:34 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/22 16:08:14 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "stop.h"
 
 //Will count how many entries there are in env, excluding the OLDPWD entry
-int	env_len_no_oldpwd(char *env[])
+static int	env_len_no_oldpwd(char *env[])
 {
 	int	count;
 	int	i;
@@ -34,7 +34,7 @@ int	env_len_no_oldpwd(char *env[])
 }
 
 //Will make a copy of env without OLDPWD
-char	**copy_env(char *env[])
+char	**env_copy(char *env[])
 {
 	char	**new_env;
 	int		i;

@@ -1,37 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_is_al_under.c                                   :+:    :+:            */
+/*   env_sort.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/06 17:49:12 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/22 17:36:56 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/02/22 12:50:05 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/02/22 15:05:51 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "enums.h"
+#include "array_len.h"
+#include "ft_strcmp.h"
 
-int	ft_is_al_under(char c)
+void	array_sort(char *array[])
 {
-	if (c >= 'A' && c <= 'Z')
-		return (True);
-	if (c >= 'a' && c <= 'z')
-		return (True);
-	if (c == '_')
-		return (True);
-	return (False);
-}
+	char	*temp;
+	int		i;
+	int		j;
+	int		len;
 
-int	ft_is_al_under_num(char c)
-{
-	if (c >= 'A' && c <= 'Z')
-		return (True);
-	if (c >= 'a' && c <= 'z')
-		return (True);
-	if (c == '_')
-		return (True);
-	if (c == '0' && c <= '9')
-		return (True);
-	return (False);
+	len = array_len(array);
+	i = 0;
+	while (i < len - 1)
+	{
+		j = 0;
+		while (j < len - i - 1)
+		{
+			if (ft_strcmp(array[j], array[j + 1]) > 0)
+			{
+				temp = array[j];
+				array[j] = array[j + 1];
+				array[j + 1] = temp;
+			}
+			j++;
+		}
+		i++;
+	}
 }
