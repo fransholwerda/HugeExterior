@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/18 23:21:28 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/17 19:39:58 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/24 18:52:56 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ int	execute_fork(t_commands *commands, t_metainfo *info)
 
 void executer(t_commands *commands, char **envp)
 {
-	//bool		path;
 	bool		builtin;
 	t_metainfo	*info;
 
@@ -120,17 +119,27 @@ void executer(t_commands *commands, char **envp)
 	//Add envp to the metadata struct for future reference
 	info = malloc(1 * sizeof(t_metainfo));
 	info->envp = envp;
+	printf("env added to metadata\n");
 
 
 	//Check to see if there is only 1 command. If only one, and the command is a builtin, the builtin does not fork into a new process.
 	//If only one command and it is not a builtin, then fork and continue as normal, but end the executer upon completion of that one command.
-	if (commands->next == NULL)
+	if (!commands->next)
 	{
+		printf("no new command\n");
 		builtin = check_builtin(commands);
+		printf("checked if the command is a builtin\n");
+		printf("%d\n", builtin);
 		if (builtin == true)
+		{
+			printf("executing builtin\n");
 			execute_builtin(commands, info);
+		}
 		else
+		{
+			printf("executing fork\n");
 			execute_fork(commands, info);
+		}
 	}
 	//While there are still commands left in the struct, continue moving through it creating child processes
 	//if the in/outfile fd are greater than the std in/outs, that means they were specified files, and close them
