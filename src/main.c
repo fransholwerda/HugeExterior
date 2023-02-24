@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/19 19:09:16 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/24 21:25:01 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ int	main(int argc, char **argv, char *env[])
 			{
 				printf("I've been here\n");
 				printf("cmd: %s, %s, %s\n", info->cmds->args[0], info->cmds->args[1], info->cmds->args[2]);
+				if (!info->cmds->infile)
+					printf("no file found");
 				executer(info->cmds, env);
 			}
 				//printf("Sending stuff to Alex!\n"); //Send stuff to Alex

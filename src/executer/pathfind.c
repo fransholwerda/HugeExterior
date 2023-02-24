@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/03 16:38:35 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/24 18:21:47 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/24 19:41:05 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static char	**get_paths(t_metainfo *info)
 {
 	int		i;
 	char	**paths;
+	char	*temp;
 
 	i = 0;
 	while (info->envp[i])
@@ -29,9 +30,14 @@ static char	**get_paths(t_metainfo *info)
 			break;
 		i++;
 	}
-	paths = ft_split(info->envp[i], ':');
+	temp = ft_substr(info->envp[i], 5, ft_strlen(info->envp[i]));
+	paths = ft_split(temp, ':');
 	if (!paths)
+	{
+		free(temp);
 		env_error();
+	}
+	free(temp);
 	return (paths);
 }
 

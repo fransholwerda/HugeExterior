@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/18 23:21:28 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/24 18:52:56 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/24 21:25:56 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,37 @@ int	execute_fork(t_commands *commands, t_metainfo *info)
 	pid_t	pid;
 	int		pipefd[2];
 
+	printf("creating pipe\n");
 	//create pipe and check to make sure it is done correctly
 	if (pipe(pipefd) == -1)
 		pipe_error();
 
 	//setting the in and outfile file descriptors to the correct infile/outfile. if none specified default to STDIN/OUT
-	if (commands->infile->name != NULL)
+	printf("pipe made\n");
+	if (!commands->infile)
+		printf("no file found\n");
+	if (commands->infile != NULL)
+	{
+		printf("opening file\n");
 		info->infilefd = open(commands->infile->name, commands->infile->mode);
+	}
 	else
+	{
+		printf("setting infilefd to std in\n");
 		info->infilefd = STDIN_FILENO;
-	if (commands->outfile->name != NULL)
+	}
+	if (commands->outfile != NULL)
+	{
+		printf("opening outfile\n");
 		info->outfilefd = open(commands->outfile->name, commands->outfile->mode);
+	}
 	else
+	{
+		printf("setting infile to std out\n");
 		info->outfilefd = STDOUT_FILENO;
+	}
 	
+	printf("about to fork process\n");
 	//fork the process to spawn a child process, and set the lastpid pid to the new child. in a loop the final process will be the final child's pid
 	pid = fork();
 	if (pid == -1)
