@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/03 16:38:35 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/17 19:47:49 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/24 19:41:05 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static char	**get_paths(t_metainfo *info)
 {
 	int		i;
 	char	**paths;
+	char	*temp;
 
 	i = 0;
 	while (info->envp[i])
@@ -29,9 +30,14 @@ static char	**get_paths(t_metainfo *info)
 			break;
 		i++;
 	}
-	paths = ft_split(info->envp[i], ':');
+	temp = ft_substr(info->envp[i], 5, ft_strlen(info->envp[i]));
+	paths = ft_split(temp, ':');
 	if (!paths)
+	{
+		free(temp);
 		env_error();
+	}
+	free(temp);
 	return (paths);
 }
 
@@ -40,30 +46,17 @@ char	*find_path(t_metainfo *info, t_commands *commands)
 	int		i;
 	char	*temp;
 	char	**paths;
-	char	*joined_command;
 	char	*final_command;
 
-	i = 0;
 	paths = get_paths(info);
-	joined_command = commands->args[i];
-	while (commands->args[i + 1])
-	{
-		temp = ft_strjoin(joined_command, commands->args[i + 1]);
-		joined_command = temp;
-		free(temp);
-		i++;
-	}
 	i = 0;
-	while (paths[i] && joined_command != '\0')
+	while (paths[i] && commands->args[0] != '\0')
 	{
-		temp = ft_strjoin("/", joined_command);
+		temp = ft_strjoin("/", commands->args[0]);
 		final_command = ft_strjoin(paths[i], temp);
 		free(temp);
 		if (access(final_command, F_OK) == 0)
-		{
-			free(joined_command);
 			return(final_command);
-		}
 		free(final_command);
 		i++;
 	}

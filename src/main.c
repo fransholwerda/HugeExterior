@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/19 19:00:22 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/24 21:25:01 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "printer.h"
 #include "structs.h"
 #include "info.h"
-
+#include "executer.h"
 #include "split_commands.h"
 #include "expand.h"
 #include "trim_cmds.h"
@@ -114,7 +114,14 @@ int	main(int argc, char **argv, char *env[])
 			split = separate_cmds(split);
 			trim_split_cmds(split);
 			if (commandize(info, split))
-				printf("Sending stuff to Alex!\n"); //Send stuff to Alex
+			{
+				printf("I've been here\n");
+				printf("cmd: %s, %s, %s\n", info->cmds->args[0], info->cmds->args[1], info->cmds->args[2]);
+				if (!info->cmds->infile)
+					printf("no file found");
+				executer(info->cmds, env);
+			}
+				//printf("Sending stuff to Alex!\n"); //Send stuff to Alex
 		}
 		//Rework this ^
 		free(str);
