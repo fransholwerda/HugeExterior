@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 13:12:27 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/22 18:02:23 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/25 17:47:53 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*get_prompt(char *program_name)
 	while (i > 0)
 	{
 		if (program_name[i] == '/')
-			prompt = ft_strjoin(&program_name[i + 1], ">");
+			prompt = ft_strjoin(&program_name[i + 1], "> ");
 		i--;
 	}
 	return (prompt);

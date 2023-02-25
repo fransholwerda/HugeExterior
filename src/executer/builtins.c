@@ -6,13 +6,15 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 21:15:18 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/24 18:59:06 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/25 17:44:18 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "echo.h"
+#include "env.h"
 #include "unset.h"
 #include "builtins.h"
 #include "structs.h"
@@ -20,26 +22,29 @@
 
 
 //some are currently placeholder checks to confirm what command is being called
-static int		execute_echo(t_commands *commands)
+static int		execute_echo(t_commands *commands, t_metainfo *info)
 {
-	bool	newline;
-	int		i;
-
-	i = 0;
-	newline = true;
-	printf("echo variables set\n");
-	if (ft_strncmp(commands->args[1], "-n", 2) != 0)
-		newline = false;
-	printf("checked for flag, flag is: %d\n", newline);
-	if (newline == false)
-	{
-		printf("preparing to print string\n");
-		ft_putstr_fd(commands->args[1], 1);
-	}
-	else
-		ft_putendl_fd(commands->args[2], 1);
-	printf("\nstring has been printed\n");
+	(void)info;
+	echo(commands, 1);//CHANGE TO info->outfilefd WHEN IT HAS BEEN HANDLED
 	return (0);
+// 	bool	newline;
+// 	int		i;
+
+// 	i = 0;
+// 	newline = true;
+// 	printf("echo variables set\n");
+// 	if (ft_strncmp(commands->args[1], "-n", 2) != 0)
+// 		newline = false;
+// 	printf("checked for flag, flag is: %d\n", newline);
+// 	if (newline == false)
+// 	{
+// 		printf("preparing to print string\n");
+// 		ft_putstr_fd(commands->args[1], 1);
+// 	}
+// 	else
+// 		ft_putendl_fd(commands->args[2], 1);
+// 	printf("\nstring has been printed\n");
+// 	return (0);
 }
 
 static int		execute_cd(t_commands *commands, t_metainfo *info)
@@ -80,8 +85,7 @@ static int		execute_unset(t_commands *commands, t_metainfo *info)
 static int		execute_env(t_commands *commands, t_metainfo *info)
 {
 	(void)commands;
-	(void)info;
-	printf("commands was: env\n");
+	env(info->envp, info->outfilefd);
 	return (0);
 }
 
@@ -119,7 +123,7 @@ int		execute_builtin(t_commands *commands, t_metainfo *info)
 	if (ft_strcmp(commands->args[0], "echo") == 0)
 	{
 		printf("builtin is echo\n");
-		return (execute_echo(commands));
+		return (execute_echo(commands, info));
 	}
 	else if (ft_strcmp(commands->args[0], "cd") == 0)
 		return (execute_cd(commands, info));

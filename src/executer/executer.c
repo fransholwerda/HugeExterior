@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/18 23:21:28 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/24 21:25:56 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/25 16:59:51 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,5 +172,6 @@ void executer(t_commands *commands, char **envp)
 		}
 	//wait until the last child has finished doing it's stuff
 	waitpid(info->lastpid, NULL, 0);
-	return (global_error());
+	//return (global_error());
+	return ;
 }

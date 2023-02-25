@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env.c                                              :+:    :+:            */
+/*   commandize.h                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/22 15:13:46 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/25 15:02:54 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/02/25 13:26:08 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/02/25 13:26:31 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_putendl_fd.h"
+#ifndef COMMANDIZE_H
+# define COMMANDIZE_H
 
-extern int	g_error;
+# include "structs.h"
 
-void	env(char *envp[], int fd)
-{
-	int	i;
+t_commands	*commandize(t_info *info, char **split);
 
-	g_error = 0;
-	i = 0;
-	while (envp[i])
-	{
-		ft_putendl_fd(envp[i], fd);
-		i++;
-	}
-}
+#endif

@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/24 21:25:01 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/02/25 17:57:45 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include "readline/readline.h"
 #include "readline/history.h"
-#include "printer.h"
 #include "structs.h"
 #include "info.h"
 #include "executer.h"
@@ -22,7 +21,7 @@
 #include "expand.h"
 #include "trim_cmds.h"
 #include "separate_cmds.h"
-#include "cmds_struct_tools.h"
+#include "commandize.h"
 
 int	g_error = 0;
 
@@ -35,60 +34,6 @@ static int	is_empty(char *str)
 		str++;
 	}
 	return (1);
-}
-
-static int	is_data(char *str)
-{
-	if (!str)
-		return (0);
-	if (str[0] == '|' || str[0] == '<' || str[0] == '>')
-		return (0);
-	return (1);
-}
-
-int	get_command(t_commands *cmds, char **split, int i)
-{
-	while (split[i] != NULL && split[i][0] != '|')
-	{
-		//heredoc <<
-		if (split[i][0] == '<' && is_data(split[i + 1]))
-			add_infile(cmds, split[i + 1]);
-		//append >>
-		else if (split[i][0] == '>' && is_data(split[i + 1]))
-			add_outfile(cmds, split[i + 1]);
-		else
-			add_args(cmds, split[i]);
-		i++;
-	}
-	return (i);
-}
-
-t_commands	*commandize(t_info *info, char **split)
-{
-	int	i;
-
-	i = 0;
-	if (split[0] && split[0][0] == '|')
-	{
-		syntax(info->prompt, split[0]);
-		return (NULL);
-	}
-	info->cmds = new_cmds();
-	while (split[i])
-	{
-		if (split[i][0] == '|')
-		{
-			last_cmd(info->cmds)->next = new_cmds();
-			i++;
-			if (split[i] == NULL || split[i][0] == '|')
-			{
-				syntax(info->prompt, split[i]);
-				return (NULL);
-			}
-		}
-		i = get_command(last_cmd(info->cmds), split, i);
-	}
-	return (info->cmds);
 }
 
 int	main(int argc, char **argv, char *env[])
@@ -115,10 +60,19 @@ int	main(int argc, char **argv, char *env[])
 			trim_split_cmds(split);
 			if (commandize(info, split))
 			{
-				printf("I've been here\n");
-				printf("cmd: %s, %s, %s\n", info->cmds->args[0], info->cmds->args[1], info->cmds->args[2]);
-				if (!info->cmds->infile)
-					printf("no file found");
+				// printf("I've been here\n");
+				// int i = 0;
+				// printf("command: ");
+				// while (info->cmds->args[i])
+				// {
+				// 	printf("%s, ", info->cmds->args[i]);
+				// 	i++;
+				// }
+				// printf("\n");
+				// if (!info->cmds->infile)
+				// 	printf("no infile found\n");
+				// if (!info->cmds->outfile)
+				// 	printf("no outfile found\n");
 				executer(info->cmds, env);
 			}
 				//printf("Sending stuff to Alex!\n"); //Send stuff to Alex

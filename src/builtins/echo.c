@@ -1,28 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env.c                                              :+:    :+:            */
+/*   echo.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/22 15:13:46 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/25 15:02:54 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/02/25 17:19:34 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/02/25 17:47:03 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_putendl_fd.h"
+#include <stdbool.h>
+#include "ft_putstr_fd.h"
+#include "ft_strncmp.h"
+#include "structs.h"
 
 extern int	g_error;
 
-void	env(char *envp[], int fd)
+void	echo(t_commands *commands, int fd)
 {
-	int	i;
+	bool	newline;
+	int		i;
 
 	g_error = 0;
-	i = 0;
-	while (envp[i])
+	i = 1;
+	newline = true;
+	if (commands->args[i] && ft_strncmp(commands->args[i], "-n", 2) == 0)
 	{
-		ft_putendl_fd(envp[i], fd);
+		newline = false;
 		i++;
 	}
+	while (commands->args[i])
+	{
+		ft_putstr_fd(commands->args[i], fd);
+		if (commands->args[i + 1])
+			ft_putstr_fd(" ", fd);
+		i++;
+	}
+	if (newline == true)
+		ft_putstr_fd("\n", fd);
 }

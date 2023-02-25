@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/02/25 13:12:18 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/02/25 17:38:38 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ ROOT	= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 NAME	= minishell
 SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/info.c \
+			$(ROOT)src/builtins/echo.c \
 			$(ROOT)src/builtins/env_add.c \
 			$(ROOT)src/builtins/env_copy.c \
 			$(ROOT)src/builtins/env_pop.c \
@@ -21,6 +22,7 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/builtins/pwd.c \
 			$(ROOT)src/builtins/unset.c \
 			$(ROOT)src/lexer/cmds_struct_tools.c \
+			$(ROOT)src/lexer/commandize.c \
 			$(ROOT)src/lexer/expand.c \
 			$(ROOT)src/lexer/file_struct_tools.c \
 			$(ROOT)src/lexer/separate_cmds.c \
