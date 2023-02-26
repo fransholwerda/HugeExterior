@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/25 17:57:45 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/26 17:59:30 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,23 +59,7 @@ int	main(int argc, char **argv, char *env[])
 			split = separate_cmds(split);
 			trim_split_cmds(split);
 			if (commandize(info, split))
-			{
-				// printf("I've been here\n");
-				// int i = 0;
-				// printf("command: ");
-				// while (info->cmds->args[i])
-				// {
-				// 	printf("%s, ", info->cmds->args[i]);
-				// 	i++;
-				// }
-				// printf("\n");
-				// if (!info->cmds->infile)
-				// 	printf("no infile found\n");
-				// if (!info->cmds->outfile)
-				// 	printf("no outfile found\n");
-				executer(info->cmds, env);
-			}
-				//printf("Sending stuff to Alex!\n"); //Send stuff to Alex
+				printf("Sending stuff to Alex!\n"); //Send stuff to Alex
 		}
 		//Rework this ^
 		free(str);
