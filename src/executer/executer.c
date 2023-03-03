@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/18 23:21:28 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/25 16:59:51 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/03/03 22:01:46 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,108 +20,78 @@
 #include "executer/errors.h"
 #include "executer/builtins.h"
 
-void	execute_child(t_commands *commands, t_metainfo *info, int pipefd[2])
+void	execute_child(t_commands *commands, t_metainfo *info)
 {
-
-	//if infile fd links to a given file, redirect STDIN to it and close that fd
-	if (info->infilefd != STDIN_FILENO)
+	if (check_builtin(commands) == true)
 	{
+		execute_builtin(commands, info);
+	}
+	else if (access(commands->args[0], F_OK) == 0)
+	{
+		execve(commands->args[0], commands->args, info->envp);
+		path_error();
+	}
+	else
+	{
+		execve(info->path, commands->args, info->envp);
+		path_error();
+	}
+}
+
+static void	child_redirection(t_commands *commands, t_metainfo *info, int pipefd[2])
+{
+	if (commands->infile)
+	{
+		info->infilefd = open(commands->infile->name, commands->infile->mode);
 		if (dup2(info->infilefd, STDIN_FILENO) == -1)
 			dupe_error();
 		close(info->infilefd);
 	}
-	//if outfile fd links to a created file, redirect STDOUT to it and close that fd
-	if (info->outfilefd != STDOUT_FILENO)
+	else if (!info->infilefd)
+		info->infilefd = STDIN_FILENO;
+	if (commands->outfile)
 	{
+		info->outfilefd = open(commands->outfile->name, commands->outfile->mode);
 		if (dup2(info->outfilefd, STDOUT_FILENO) == -1)
 			dupe_error();
 		close(info->outfilefd);
 	}
-	//if outfile fd does not link to a new outfile and there is an upcoming command, redirect STDOUT to next process
-	else if (commands->next != NULL && dup2(pipefd[1], STDOUT_FILENO == -1))
-		dupe_error();
-	
-	//now that the STDIN/OUT has been redirected, close the hanging write end of the pipe (as all writing now happens on the redirected STDOUT)
-	//also close the read end, because all reading should now happen from the STDIN (which is actually a redirected pipefd)
+	else if (!info->outfilefd)
+		info->outfilefd = STDOUT_FILENO;
+	if (commands->next)
+	{
+		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
+			dupe_error();
+	}
 	close(pipefd[1]);
 	close(pipefd[0]);
-
-	//check if the command to be executed is a builtin, a command with the path or a command and execute each as neccessary
-	if (check_builtin(commands) == true)
-		execute_builtin(commands, info);
-	
-	else if (access(commands->args[0], F_OK) == 0)
-		execve(commands->args[0], commands->args, info->envp);
-	
-	else
-	{
-		info->path = find_path(info, commands);
-		execve(info->path, commands->args, info->envp);
-	}
-
-	//if the child is still running, then the execve part failed, and the command does not exist
-	execute_error();
 }
 
 int	execute_fork(t_commands *commands, t_metainfo *info)
 {
-	pid_t	pid;
-	int		pipefd[2];
+	pid_t		pid;
+	int			pipefd[2];
 
-	printf("creating pipe\n");
-	//create pipe and check to make sure it is done correctly
+	info->path = find_path(info, commands);
 	if (pipe(pipefd) == -1)
 		pipe_error();
-
-	//setting the in and outfile file descriptors to the correct infile/outfile. if none specified default to STDIN/OUT
-	printf("pipe made\n");
-	if (!commands->infile)
-		printf("no file found\n");
-	if (commands->infile != NULL)
-	{
-		printf("opening file\n");
-		info->infilefd = open(commands->infile->name, commands->infile->mode);
-	}
-	else
-	{
-		printf("setting infilefd to std in\n");
-		info->infilefd = STDIN_FILENO;
-	}
-	if (commands->outfile != NULL)
-	{
-		printf("opening outfile\n");
-		info->outfilefd = open(commands->outfile->name, commands->outfile->mode);
-	}
-	else
-	{
-		printf("setting infile to std out\n");
-		info->outfilefd = STDOUT_FILENO;
-	}
-	
-	printf("about to fork process\n");
-	//fork the process to spawn a child process, and set the lastpid pid to the new child. in a loop the final process will be the final child's pid
 	pid = fork();
 	if (pid == -1)
-	{
-		close(pipefd[0]);
-		close(pipefd[1]);
 		fork_error();
-	}
-
-	//if child process, execute child process code.
 	else if (pid == 0)
 	{
-		execute_child(commands, info, pipefd);
+		child_redirection(commands, info, pipefd);
+		execute_child(commands, info);
 	}
-
-	//close write end, because all writing to pipe should be done by the child
-	close(pipefd[1]);
-
-	//set the read end of the pipe to replace the infilefd of the first file
-	if (commands->next != NULL && commands->next->infile->name == NULL)
+	if (commands->next && !commands->next->infile)
+	{
+		printf("new command found, no infile found, setting infile to pipe read end\n");
 		info->infilefd = pipefd[0];
+	}
 	else
-		close(pipefd[0]);
+		printf("no new command found, printing to STD_OUT\n");
+	close(pipefd[0]);
+	close(pipefd[1]);
 	return (pid);
 }
 
@@ -129,49 +99,38 @@ void executer(t_commands *commands, char **envp)
 {
 	bool		builtin;
 	t_metainfo	*info;
+	int i = 0;
+	t_commands	*temp;
 
-	// signal(SIGINT, handle_sig_interrupt);
-	// signal(SIGQUIT, handle_sig_quit);
-
-	//Add envp to the metadata struct for future reference
-	info = malloc(1 * sizeof(t_metainfo));
+	info = malloc(sizeof(t_metainfo));
 	info->envp = envp;
-	printf("env added to metadata\n");
-
-
-	//Check to see if there is only 1 command. If only one, and the command is a builtin, the builtin does not fork into a new process.
-	//If only one command and it is not a builtin, then fork and continue as normal, but end the executer upon completion of that one command.
-	if (!commands->next)
+	temp = commands;
+	if (temp->next == NULL)
 	{
-		printf("no new command\n");
-		builtin = check_builtin(commands);
-		printf("checked if the command is a builtin\n");
-		printf("%d\n", builtin);
+		printf("only one command found\n");
+		builtin = check_builtin(temp);
 		if (builtin == true)
-		{
-			printf("executing builtin\n");
-			execute_builtin(commands, info);
-		}
+			execute_builtin(temp, info);
 		else
 		{
-			printf("executing fork\n");
-			execute_fork(commands, info);
+			info->lastpid = execute_fork(temp, info);
+			waitpid(info->lastpid, NULL, 0);
 		}
 	}
-	//While there are still commands left in the struct, continue moving through it creating child processes
-	//if the in/outfile fd are greater than the std in/outs, that means they were specified files, and close them
 	else
-		while (commands->next)
+		while (temp)
 		{
-			info->lastpid = execute_fork(commands, info);
-			if (info->infilefd > 2)
-				close(info->infilefd);
-			if (info->outfilefd > 2)
-				close(info->outfilefd);
-			commands = commands->next;
+			i++;
+			printf("loop number: %d\n", i);
+			info->lastpid = execute_fork(temp, info);
+			printf("current lastpid = %d, about to move to next command\n", info->lastpid);
+			temp = temp->next;
 		}
+		if (info->infilefd > 2)
+			close(info->infilefd);
+		if (info->outfilefd > 2)
+			close(info->outfilefd);
 	//wait until the last child has finished doing it's stuff
 	waitpid(info->lastpid, NULL, 0);
-	//return (global_error());
 	return ;
 }
