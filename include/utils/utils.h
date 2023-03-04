@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/13 13:29:17 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/17 19:16:49 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/03/04 15:52:54 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 # define UTILS_H
 
 # include "array_len.h"
+# include "array_sort.h"
 # include "free_split.h"
 # include "ft_is_al_under.h"
+# include "ft_itoa.h"
 # include "ft_putendl_fd.h"
 # include "ft_putstr_fd.h"
 # include "ft_split.h"
+# include "ft_strcmp.h"
 # include "ft_strdup.h"
 # include "ft_strjoin.h"
 # include "ft_strlen.h"
-# include "ft_strcmp.h"
 # include "ft_strncmp.h"
 # include "ft_strndup.h"
 # include "ft_substr.h"
