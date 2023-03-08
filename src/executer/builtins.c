@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 21:15:18 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/25 17:44:18 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/03/03 18:15:34 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,7 @@ bool	check_builtin(t_commands *commands)
 int		execute_builtin(t_commands *commands, t_metainfo *info)
 {
 	if (ft_strcmp(commands->args[0], "echo") == 0)
-	{
-		printf("builtin is echo\n");
 		return (execute_echo(commands, info));
-	}
 	else if (ft_strcmp(commands->args[0], "cd") == 0)
 		return (execute_cd(commands, info));
 	else if (ft_strcmp(commands->args[0], "pwd") == 0)

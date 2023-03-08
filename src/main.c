@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/26 17:59:30 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/03/08 22:19:52 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char *env[])
 			split = separate_cmds(split);
 			trim_split_cmds(split);
 			if (commandize(info, split))
-				printf("Sending stuff to Alex!\n"); //Send stuff to Alex
+				executer(info->cmds, env);
 		}
 		//Rework this ^
 		free(str);

@@ -6,11 +6,12 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/07 16:30:40 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/19 19:00:08 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/26 18:52:19 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include "file_struct_tools.h"
 #include "array_len.h"
@@ -49,18 +50,29 @@ t_commands	*last_cmd(t_commands *cmds)
 void	add_infile(t_commands *cmds, char *infile)
 {
 	if (!cmds->infile)
-		cmds->infile = new_file(infile, O_RDONLY);
+		cmds->infile = new_file(infile, O_RDONLY, -1);
 	else
-		cmds->infile = file_add_back(cmds->infile, infile, O_RDONLY);
+		cmds->infile = file_add_back(cmds->infile, infile, O_RDONLY, -1);
 }
 
-void	add_outfile(t_commands *cmds, char *outfile)
+void	add_outfile(t_commands *cmds, char *outfile, bool append)
 {
 	if (!cmds->outfile)
-		cmds->outfile = new_file(outfile, O_CREAT | O_RDWR | O_TRUNC);
+	{
+		if (append == true)
+			cmds->outfile = new_file(outfile, O_WRONLY | O_APPEND, -1);
+		else
+			cmds->outfile = new_file(outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	}
 	else
-		cmds->outfile = file_add_back(cmds->outfile, outfile,
-				O_CREAT | O_RDWR | O_TRUNC);
+	{
+		if (append == true)
+			cmds->outfile = file_add_back(cmds->outfile, outfile,
+					O_WRONLY | O_APPEND, -1);
+		else
+			cmds->outfile = file_add_back(cmds->outfile, outfile,
+					O_CREAT | O_RDWR | O_TRUNC, 0644);
+	}
 }
 
 void	copy_array(char	**to, char **from)

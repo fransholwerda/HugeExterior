@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/03 16:38:35 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/26 17:59:00 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/03/08 22:19:27 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ char	*find_path(t_metainfo *info, t_commands *commands)
 		free(final_command);
 		i++;
 	}
-	path_error();
+//	path_error();
 	return ("path finding failed");
 }
