@@ -6,10 +6,11 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/25 17:44:43 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/02/26 18:30:11 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdbool.h>
 #include "cmds_struct_tools.h"
 #include "printer.h"
 #include "structs.h"
@@ -37,9 +38,15 @@ static int	get_command(t_commands *cmds, char **split, int i)
 			i++;
 		}
 		//append >>
+		else if (split[i][0] == '>' && split[i][1] == '>'
+			&& is_data(split[i + 1]))
+		{
+			add_outfile(cmds, split[i + 1], true);
+			i++;
+		}
 		else if (split[i][0] == '>' && is_data(split[i + 1]))
 		{
-			add_outfile(cmds, split[i + 1]);
+			add_outfile(cmds, split[i + 1], false);
 			i++;
 		}
 		else
