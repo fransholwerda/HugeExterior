@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 14:38:57 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/22 17:38:36 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/03/08 13:37:32 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,12 @@ static char	*get_env_var(char *env[], char *var)
 	char	*content;
 
 	i = 0;
-	if (!var)
-		malloc_stop("malloc_get_env_var_1");
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], var, ft_strlen(var)) == 0
 			&& env[i][ft_strlen(var)] == '=')
 		{
 			content = ft_strdup(&env[i][ft_strlen(var) + 1]);
-			if (!content)
-				malloc_stop("malloc_get_env_var_2");
 			free(var);
 			return (content);
 		}
