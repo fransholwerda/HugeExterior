@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/03 16:38:35 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/24 19:41:05 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/03/08 22:19:27 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,23 @@
 #include "ft_split.h"
 #include "utils.h"
 #include "errors.h"
+
+static char *build_command(t_metainfo *info, t_commands *commands)
+{
+	int		i;
+	char	temp1;
+	char	temp2;
+	char	combined_args;
+
+	i = 0;
+	combined_args = ft_strdup(commands->args[i]);
+	while (commands->args[i + 1])
+	{
+		temp1 = ft_strjoin(" ", commands->args[i + 1]);
+		temp2 = ft_strjoin(combined_args, temp1);
+		
+	}
+}
 
 static char	**get_paths(t_metainfo *info)
 {
@@ -60,6 +77,6 @@ char	*find_path(t_metainfo *info, t_commands *commands)
 		free(final_command);
 		i++;
 	}
-	path_error();
+//	path_error();
 	return ("path finding failed");
 }

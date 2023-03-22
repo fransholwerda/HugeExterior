@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/03/04 15:53:14 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/03/22 14:52:51 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ INCLUDE	= -I $(ROOT)include \
 			-I $(ROOT)include/utils \
 			-I $(HOME)/.brew/Cellar/readline/8.2.1/include
 LINKS	= -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g -fsanitize=address
 
 all: $(NAME)
 
