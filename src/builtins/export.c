@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/23 17:39:10 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/08 17:21:36 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/03/21 16:25:39 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	find_char(char *str, char c)
 	return (-1);
 }
 
-static void	export_var(char *env[], char *var)
+static char	**export_var(char *env[], char *var)
 {
 	int	equal_pos;
 
@@ -64,7 +64,7 @@ static void	export_var(char *env[], char *var)
 	}
 }
 
-void	export(char *env[], char *args[], int fd)
+char	**export(char *env[], char *args[], int fd)
 {
 	int		i;
 	char	*var;
@@ -72,11 +72,15 @@ void	export(char *env[], char *args[], int fd)
 	g_error = 0;
 	if (array_len(args) == 1)
 		print_export(env, fd);
-	var = ft_strndup(args[1], find_char(args[1], '='));
 	i = 1;
+	var = ft_strndup(args[i], find_char(args[i], '='));
 	while (args[i] != NULL)
 	{
-		export_var(env, args[i]);
+		env = export_var(env, var);
 		i++;
+		free(var);
+		var = ft_strndup(args[i], find_char(args[i], '='));
 	}
+	free(var);
+	return (env);
 }
