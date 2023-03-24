@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/03/24 20:59:51 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/03/24 21:08:19 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,29 @@ void	executer(t_commands *commands, char **envp)
 {
 	t_metainfo	*info;
 
+	info = malloc(sizeof(t_metainfo));
+	info->envp = envp;
+	if (commands->next == NULL)
+	{
+		if (check_builtin(commands) == true)
+			execute_builtin(commands, info);
+		else
+		{
+			info->lastpid = begin_fork(commands, info);
+			waitpid(info->lastpid, NULL, 0);
+		}
+	}
+	else
+	{
+		while(commands)
+		{
+			info->lastpid = begin_fork(commands, info);
+			commands = commands->next;
+		}
+	}
+	waitpid(info->lastpid, NULL, 0);
+	return ;
+}
 	info = malloc(sizeof(t_metainfo));
 	info->envp = envp;
 	if (commands->next == NULL)
