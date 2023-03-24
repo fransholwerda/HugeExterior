@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/04 16:41:46 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/03/24 15:34:06 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ t_commands	*commandize(t_info *info, char **split)
 		syntax(info->prompt, split[0]);
 		return (NULL);
 	}
-	info->cmds = new_cmds();
+	info->cmds = new_cmds(NULL);
 	//printf("COMMANDIZE LOOP START\n");
 	while (split[i])
 	{
 		if (split[i][0] == '|')
 		{
-			last_cmd(info->cmds)->next = new_cmds();
+			last_cmd(info->cmds)->next = new_cmds(last_cmd(info->cmds));
 			pipe++;
 			i++;
 			if (split[i] == NULL || split[i][0] == '|')

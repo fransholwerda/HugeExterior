@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   cmds_struct_tools.h                                :+:    :+:            */
+/*   expand_utils.h                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/07 17:13:32 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/24 15:32:57 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/03/22 15:15:32 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/03/24 13:42:12 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CMDS_STRUCT_TOOLS_H
-# define CMDS_STRUCT_TOOLS_H
+#ifndef EXPAND_UTILS_H
+# define EXPAND_UTILS_H
 
-# include <stdbool.h>
-# include "structs.h"
-
-t_commands	*new_cmds(t_commands *prev);
-t_commands	*last_cmd(t_commands *cmds);
-void		add_infile(t_commands *cmds, char *infile);
-void		add_outfile(t_commands *cmds, char *outfile, bool append);
-void		add_args(t_commands *cmds, char *arg);
+int		expand_dollar_length(char *str, int end);
+char	*combine_three_strings(char *str, int start, int end, char *var);
+char	*get_env_var(char *env[], char *var);
 
 #endif

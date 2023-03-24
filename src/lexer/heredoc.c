@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/04 13:10:35 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/04 17:57:29 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/03/24 13:44:39 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "enums.h"
+#include "expand_utils.h"
+#include "ft_is_al_under.h"
 #include "ft_itoa.h"
 #include "ft_strcmp.h"
 #include "ft_strlen.h"
 #include "ft_strjoin.h"
+#include "ft_substr.h"
 #include "readline/readline.h"
 
 extern int	g_error;
@@ -33,10 +37,22 @@ static char	*get_hd_filename(int pipe_count)
 	return (filename);
 }
 
+static char	*expand_dollar_hd(char *env[], char *str, int pos)
+{
+	int		end;
+	char	*var;
+	char	*new_str;
+
+	end = expand_dollar_length(str, pos);
+	var = get_env_var(env, ft_substr(str, pos + 1, end - pos));
+	new_str = combine_three_strings(str, pos, end, var);
+	return (new_str);
+}
+
 static char	*expand_heredoc(char *env[], char *str)
 {
-	int	pos;
-	int	end;
+	int		pos;
+	int		skip;
 
 	pos = 0;
 	while (str[pos])
@@ -44,9 +60,13 @@ static char	*expand_heredoc(char *env[], char *str)
 		if (str[pos] == '$' && str[pos + 1] != ' ' && str[pos + 1] != '$'
 			&& str[pos + 1] != '\0')
 		{
-
+			skip = expand_dollar_length(str, pos);
+			str = expand_dollar_hd(env, str, pos);
+			pos += skip;
 		}
+		pos++;
 	}
+	return (str);
 }
 
 char	*go_heredoc(char *env[], char *eof, int pipe_count)

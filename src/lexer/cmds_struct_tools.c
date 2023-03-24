@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/07 16:30:40 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/02 11:22:33 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/03/24 15:32:32 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include "stop.h"
 #include "structs.h"
 
-t_commands	*new_cmds(void)
+t_commands	*new_cmds(t_commands *prev)
 {
 	t_commands	*cmds;
 
@@ -31,6 +31,7 @@ t_commands	*new_cmds(void)
 	cmds->infile = NULL;
 	cmds->outfile = NULL;
 	cmds->next = NULL;
+	cmds->prev = prev;
 	return (cmds);
 }
 

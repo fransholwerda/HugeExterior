@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/03/22 14:52:51 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/03/24 16:20:15 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/builtins/unset.c \
 			$(ROOT)src/lexer/cmds_struct_tools.c \
 			$(ROOT)src/lexer/commandize.c \
+			$(ROOT)src/lexer/expand_utils.c \
 			$(ROOT)src/lexer/expand.c \
 			$(ROOT)src/lexer/file_struct_tools.c \
 			$(ROOT)src/lexer/heredoc.c \
@@ -60,7 +61,7 @@ INCLUDE	= -I $(ROOT)include \
 			-I $(ROOT)include/utils \
 			-I $(HOME)/.brew/Cellar/readline/8.2.1/include
 LINKS	= -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline
-CFLAGS	= -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror #-g -fsanitize=address
 
 all: $(NAME)
 

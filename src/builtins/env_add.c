@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/15 17:17:42 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/10 18:05:32 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/03/22 14:55:02 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 #include "array_len.h"
 #include "ft_strdup.h"
 #include "ft_strjoin.h"
+#include "ft_strlen.h"
+#include "ft_strncmp.h"
 #include "stop.h"
 
 extern int	g_error;
 
-static char	*join_four(char *str1, char *str2, char *str3, char str4)
+static char	*join_four(char *str1, char *str2, char *str3, char *str4)
 {
 	char	*temp1;
 	char	*temp2;
