@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/03/24 21:09:31 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/03/27 07:22:28 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,34 @@ static void	execute_child(t_commands *commands, t_metainfo *info)
 
 static void	child_redirects(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2])
 {
-	if (commands->prev && info->infilefd != STDIN_FILENO)
+	if (info->infilefd != STDIN_FILENO)
 	{
-		dup2(pipe1[0], info->infilefd);
-		close(pipe1[0]);
-		close(pipe1[1]);
+		dup2(STDIN_FILENO, info->infilefd);
+		if (commands->next)
+		{
+			close(pipe2[1]);
+			close(pipe2[0]);
+		}
 	}
-	else if ((commands->prev && info->infilefd == STDIN_FILENO) || commands->prev == NULL)
+	else if (commands->prev)
 	{
+		close(pipe1[1]);
 		dup2(pipe1[0], STDIN_FILENO);
 		close(pipe1[0]);
-		close(pipe1[1]);
 	}
-	if (commands->next && info->outfilefd != STDOUT_FILENO)
+	if (info->outfilefd != STDOUT_FILENO)
+	{
+		dup2(STDOUT_FILENO, info->outfilefd);
+		if (commands->next)
+		{
+			close(pipe2[1]);
+			close(pipe2[0]);
+		}
+	}
+	else if (commands->next)
 	{
 		close(pipe2[0]);
 		dup2(pipe2[1], info->outfilefd);
-		close(pipe2[1]);
-	}
-	else if (commands->next && info->outfilefd == STDIN_FILENO)
-	{
-		close(pipe2[0]);
-		dupe2(pipe2[1], STDOUT_FILENO);
-		close(pipe2[1]);
-	}
-	else if (commands->next == NULL)
-	{
-		close(pipe2[0]);
 		close(pipe2[1]);
 	}
 }
@@ -88,16 +89,13 @@ static void	setup_info(t_commands *commands, t_metainfo *info)
 		info->outfilefd = STDOUT_FILENO;
 }
 
-static int		begin_fork(t_commands *commands, t_metainfo *info)
+static int		begin_fork(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2])
 {
-	int		pipe1[2];
-	int		pipe2[2];
 	pid_t	pid;
 
 	while (commands)
 	{
 		setup_info(commands, info);
-		pipe(pipe1);
 		if (commands->next)
 			pipe(pipe2);
 		pid = fork();
@@ -119,8 +117,6 @@ static int		begin_fork(t_commands *commands, t_metainfo *info)
 				pipe1[1] = pipe2[1];
 			}
 		}
-		close(pipe1[0]);
-		close(pipe1[1]);
 	}
 	return (pid);
 }
@@ -128,6 +124,8 @@ static int		begin_fork(t_commands *commands, t_metainfo *info)
 void	executer(t_commands *commands, char **envp)
 {
 	t_metainfo	*info;
+	int			pipe1[2];
+	int			pipe2[2];
 
 	info = malloc(sizeof(t_metainfo));
 	info->envp = envp;
@@ -137,7 +135,7 @@ void	executer(t_commands *commands, char **envp)
 			execute_builtin(commands, info);
 		else
 		{
-			info->lastpid = begin_fork(commands, info);
+			info->lastpid = begin_fork(commands, info, pipe1, pipe2);
 			waitpid(info->lastpid, NULL, 0);
 		}
 	}
@@ -145,9 +143,14 @@ void	executer(t_commands *commands, char **envp)
 	{
 		while(commands)
 		{
-			info->lastpid = begin_fork(commands, info);
+			info->lastpid = begin_fork(commands, info, pipe1, pipe2);
 			commands = commands->next;
 		}
+	}
+	if (commands->prev)
+	{
+		close(pipe1[0]);
+		close(pipe1[1]);
 	}
 	waitpid(info->lastpid, NULL, 0);
 	return ;
