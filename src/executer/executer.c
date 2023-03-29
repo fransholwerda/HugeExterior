@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/18 23:21:28 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/03/03 22:01:46 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/03/22 21:21:14 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ static void	child_redirection(t_commands *commands, t_metainfo *info, int pipefd
 			dupe_error();
 		close(info->infilefd);
 	}
-	else if (!info->infilefd)
-		info->infilefd = STDIN_FILENO;
 	if (commands->outfile)
 	{
 		info->outfilefd = open(commands->outfile->name, commands->outfile->mode);
@@ -56,15 +54,11 @@ static void	child_redirection(t_commands *commands, t_metainfo *info, int pipefd
 			dupe_error();
 		close(info->outfilefd);
 	}
-	else if (!info->outfilefd)
-		info->outfilefd = STDOUT_FILENO;
 	if (commands->next)
 	{
 		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 			dupe_error();
 	}
-	close(pipefd[1]);
-	close(pipefd[0]);
 }
 
 int	execute_fork(t_commands *commands, t_metainfo *info)
@@ -81,17 +75,19 @@ int	execute_fork(t_commands *commands, t_metainfo *info)
 	else if (pid == 0)
 	{
 		child_redirection(commands, info, pipefd);
+		close(pipefd[0]);
+		close(pipefd[1]);
+		printf("closed child pipes of pipe %s\n", info->path);
 		execute_child(commands, info);
 	}
+	close(pipefd[1]);
 	if (commands->next && !commands->next->infile)
 	{
-		printf("new command found, no infile found, setting infile to pipe read end\n");
 		info->infilefd = pipefd[0];
+		printf("new command found, no infile found, setting infile to pipe read end with fd %d\n", info->infilefd);
 	}
 	else
-		printf("no new command found, printing to STD_OUT\n");
-	close(pipefd[0]);
-	close(pipefd[1]);
+		close(pipefd[0]);
 	return (pid);
 }
 
@@ -126,11 +122,6 @@ void executer(t_commands *commands, char **envp)
 			printf("current lastpid = %d, about to move to next command\n", info->lastpid);
 			temp = temp->next;
 		}
-		if (info->infilefd > 2)
-			close(info->infilefd);
-		if (info->outfilefd > 2)
-			close(info->outfilefd);
-	//wait until the last child has finished doing it's stuff
 	waitpid(info->lastpid, NULL, 0);
 	return ;
 }
