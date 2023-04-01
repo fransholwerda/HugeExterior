@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 15:14:30 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/24 13:41:32 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/01 18:43:39 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "ft_strlen.h"
 #include "ft_strncmp.h"
 #include "ft_substr.h"
+#include "join_three.h"
 
 int	expand_dollar_length(char *str, int end)
 {
@@ -28,18 +29,6 @@ int	expand_dollar_length(char *str, int end)
 			end++;
 	}
 	return (end);
-}
-
-static char	*join_three(char *s1, char *s2, char *s3)
-{
-	char	*new_str;
-	char	*temp;
-
-	new_str = ft_strjoin(s1, s2);
-	temp = new_str;
-	new_str = ft_strjoin(new_str, s3);
-	free(temp);
-	return (new_str);
 }
 
 char	*combine_three_strings(char *str, int start, int end, char *var)

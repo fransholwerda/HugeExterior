@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/03/24 16:20:15 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/04/01 18:42:55 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/builtins/env_copy.c \
 			$(ROOT)src/builtins/env_pop.c \
 			$(ROOT)src/builtins/env.c \
+			$(ROOT)src/builtins/export.c \
 			$(ROOT)src/builtins/pwd.c \
 			$(ROOT)src/builtins/unset.c \
 			$(ROOT)src/lexer/cmds_struct_tools.c \
@@ -51,6 +52,7 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/utils/ft_strndup.c \
 			$(ROOT)src/utils/ft_substr.c \
 			$(ROOT)src/utils/is_valid_varname.c \
+			$(ROOT)src/utils/join_three.c \
 			$(ROOT)src/utils/printer.c \
 			$(ROOT)src/utils/stop.c
 OBJ		= $(SRC:.c=.o)
@@ -61,7 +63,7 @@ INCLUDE	= -I $(ROOT)include \
 			-I $(ROOT)include/utils \
 			-I $(HOME)/.brew/Cellar/readline/8.2.1/include
 LINKS	= -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline
-CFLAGS	= -Wall -Wextra -Werror #-g -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -g #-fsanitize=address
 
 all: $(NAME)
 

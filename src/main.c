@@ -6,12 +6,13 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/08 22:19:52 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/01 18:04:34 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
+#include "free_split.h"
 #include "readline/readline.h"
 #include "readline/history.h"
 #include "structs.h"
@@ -29,7 +30,7 @@ static int	is_empty(char *str)
 {
 	while (*str)
 	{
-		if (*str != ' ')
+		if (*str != ' ' && *str != '\n')
 			return (0);
 		str++;
 	}
@@ -50,18 +51,21 @@ int	main(int argc, char **argv, char *env[])
 	while (str != NULL)
 	{
 		if (!is_empty(str))
-			add_history(str);
-		//Rework this v
-		split = split_commands(str);
-		if (split)
 		{
-			expand_split(env, split);
-			split = separate_cmds(split);
-			trim_split_cmds(split);
-			if (commandize(info, split))
-				executer(info->cmds, env);
+			add_history(str);
+			//Rework this v
+			split = split_commands(str);
+			if (split)
+			{
+				expand_split(env, split);
+				split = separate_cmds(split);
+				trim_split_cmds(split);
+				if (commandize(info, split))
+					env = executer(info->cmds, env);
+				free_split(split);
+			}
+			//Rework this ^
 		}
-		//Rework this ^
 		free(str);
 		str = readline(info->prompt);
 	}

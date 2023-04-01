@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 21:15:18 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/03/03 18:15:34 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/01 16:05:54 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include "echo.h"
 #include "env.h"
+#include "export.h"
 #include "unset.h"
 #include "builtins.h"
 #include "structs.h"
@@ -60,16 +61,16 @@ static int		execute_pwd()
 	char	*currentdir;
 
 	currentdir = getcwd(NULL, 0);
-	ft_putendl_fd(currentdir, 1);
+	ft_putendl_fd(currentdir, 1); //does fd have to be changed?
 	free(currentdir);
 	return (0);
 }
 
 static int		execute_export(t_commands *commands, t_metainfo *info)
 {
-	(void)commands;
-	(void)info;
-	printf("commands was: export\n");
+	// (void)commands;
+	// (void)info;
+	info->envp = export(info->envp, commands->args, 1); //change fd
 	return (0);
 }
 
@@ -78,7 +79,7 @@ static int		execute_unset(t_commands *commands, t_metainfo *info)
 	(void)commands;
 	(void)info;
 	printf("commands was: unset\n");
-	unset(info, commands->args[1], 1);
+	unset(info, commands->args[1], 1); //change fd
 	return (0);
 }
 
@@ -137,5 +138,3 @@ int		execute_builtin(t_commands *commands, t_metainfo *info)
 	else
 		return (false);
 }
-
-

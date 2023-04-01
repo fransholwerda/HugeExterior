@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/18 23:21:28 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/03/22 21:21:14 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/01 15:58:09 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	execute_fork(t_commands *commands, t_metainfo *info)
 	return (pid);
 }
 
-void executer(t_commands *commands, char **envp)
+char **executer(t_commands *commands, char **envp)
 {
 	bool		builtin;
 	t_metainfo	*info;
@@ -123,5 +123,5 @@ void executer(t_commands *commands, char **envp)
 			temp = temp->next;
 		}
 	waitpid(info->lastpid, NULL, 0);
-	return ;
+	return (info->envp);
 }

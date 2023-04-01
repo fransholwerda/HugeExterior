@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/13 13:29:17 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/04 15:52:54 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/01 18:42:38 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include "ft_strncmp.h"
 # include "ft_strndup.h"
 # include "ft_substr.h"
+# include "join_three.h"
 # include "printer.h"
 # include "stop.h"
 

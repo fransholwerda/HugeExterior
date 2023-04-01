@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/15 17:41:14 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/17 13:12:19 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/01 18:27:17 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,20 @@ static char	**remove_env_var(char *env[], int env_len, int entry)
 
 char	**env_pop(char *env[], char *var)
 {
-	char	*temp_var;
 	int		i;
 
-	temp_var = ft_strjoin(var, "=");
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], temp_var, ft_strlen(temp_var)) == 0)
+		if (ft_strncmp(env[i], var, ft_strlen(var)) == 0
+			&& (env[i][ft_strlen(var)] == '\0'
+			|| env[i][ft_strlen(var)] == '='))
 		{
-			free(temp_var);
+			free(var);
 			return (remove_env_var(env, array_len(env), i));
 		}
 		i++;
 	}
-	free(temp_var);
+	free(var);
 	return (env);
 }

@@ -6,19 +6,24 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/23 17:39:10 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/21 16:25:39 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/01 18:35:35 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include <unistd.h>
 #include "array_len.h"
 #include "array_sort.h"
 #include "env_add.h"
+#include "env_pop.h"
 #include "ft_strdup.h"
 #include "ft_strlen.h"
 #include "ft_strndup.h"
 #include "is_valid_varname.h"
 
+
+
+#include <stdio.h>
 extern int	g_error;
 
 static void	print_export(char *env[], int fd)
@@ -41,6 +46,8 @@ static int	find_char(char *str, char c)
 	int	i;
 
 	i = 0;
+	if (str == NULL)
+		return (-1);
 	while (str[i] != '\0')
 	{
 		if (str[i] == c)
@@ -52,35 +59,43 @@ static int	find_char(char *str, char c)
 
 static char	**export_var(char *env[], char *var)
 {
-	int	equal_pos;
+	int		equal_pos;
+	int		var_pos;
 
 	equal_pos = find_char(var, '=');
-	if (equal_pos == -1 && env_find_var(env, var) == -1)
+	var_pos = env_find_var(env, var);
+	if (equal_pos == -1 && var_pos == -1)
 		env = env_add(env, var, NULL);
+	else if (equal_pos > -1 && var_pos > -1)
+	{
+		env = env_pop(env, ft_strndup(var, equal_pos));
+		env = env_add(env, ft_strndup(var, equal_pos),
+				ft_strdup(&var[equal_pos + 1]));
+	}
 	else
 	{
 		env = env_add(env, ft_strndup(var, equal_pos),
 				ft_strdup(&var[equal_pos + 1]));
 	}
+	return (env);
 }
 
 char	**export(char *env[], char *args[], int fd)
 {
 	int		i;
-	char	*var;
 
 	g_error = 0;
+	//validate args
 	if (array_len(args) == 1)
+	{
 		print_export(env, fd);
+		return (env);
+	}
 	i = 1;
-	var = ft_strndup(args[i], find_char(args[i], '='));
 	while (args[i] != NULL)
 	{
-		env = export_var(env, var);
+		env = export_var(env, args[i]);
 		i++;
-		free(var);
-		var = ft_strndup(args[i], find_char(args[i], '='));
 	}
-	free(var);
 	return (env);
 }
