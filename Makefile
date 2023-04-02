@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/04/01 18:42:55 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/04/02 15:51:33 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/builtins/env_pop.c \
 			$(ROOT)src/builtins/env.c \
 			$(ROOT)src/builtins/export.c \
+			$(ROOT)src/builtins/export_utils.c \
 			$(ROOT)src/builtins/pwd.c \
 			$(ROOT)src/builtins/unset.c \
 			$(ROOT)src/lexer/cmds_struct_tools.c \

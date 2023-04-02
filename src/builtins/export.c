@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/23 17:39:10 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/01 18:35:35 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/02 16:43:34 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 #include <unistd.h>
 #include "array_len.h"
 #include "array_sort.h"
+#include "enums.h"
 #include "env_add.h"
 #include "env_pop.h"
+#include "export_utils.h"
 #include "ft_strdup.h"
 #include "ft_strlen.h"
 #include "ft_strndup.h"
@@ -94,8 +96,10 @@ char	**export(char *env[], char *args[], int fd)
 	i = 1;
 	while (args[i] != NULL)
 	{
+		// if (export_validate(args[i]) == True)
 		env = export_var(env, args[i]);
 		i++;
 	}
+	printf("g_error: %d\n", g_error);
 	return (env);
 }

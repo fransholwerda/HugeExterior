@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/04 13:10:35 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/24 13:44:39 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/02 14:20:30 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char	*go_heredoc(char *env[], char *eof, int pipe_count)
 	str = readline("> ");
 	while (ft_strcmp(str, eof) != 0)
 	{
+		//SIGNALS
 		str = expand_heredoc(env, str);
 		write(fd, str, ft_strlen(str));
 		write(fd, "\n", 1);
