@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 16:09:40 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/22 17:59:59 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/04 16:48:16 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "env_pop.h"
 #include "ft_putendl_fd.h"
 #include "ft_putstr_fd.h"
+#include "ft_strdup.h"
 #include "is_valid_varname.h"
 #include "structs.h"
 
@@ -30,5 +31,5 @@ void	unset(t_metainfo *info, char *var, int fd)
 		g_error = 1;
 	}
 	else
-		info->envp = env_pop(info->envp, var);
+		info->envp = env_pop(info->envp, ft_strdup(var));
 }

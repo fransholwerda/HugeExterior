@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/23 17:39:10 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/02 16:43:34 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/04 13:02:43 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ char	**export(char *env[], char *args[], int fd)
 	i = 1;
 	while (args[i] != NULL)
 	{
-		// if (export_validate(args[i]) == True)
-		env = export_var(env, args[i]);
+		if (export_validate(args[i]) == True)
+			env = export_var(env, args[i]);
 		i++;
 	}
 	printf("g_error: %d\n", g_error);

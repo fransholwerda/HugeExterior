@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/01 18:04:34 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/04 17:05:58 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char *env[])
 				split = separate_cmds(split);
 				trim_split_cmds(split);
 				if (commandize(info, split))
-					env = executer(info->cmds, env);
+					info->env = executer(info->cmds, info->env);
 				free_split(split);
 			}
 			//Rework this ^
