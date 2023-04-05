@@ -6,16 +6,19 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 15:27:23 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/17 13:19:59 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/05 15:48:03 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "ft_strlen.h"
 #include "ft_substr.h"
 #include "stop.h"
 #include "split_utils.h"
-#include <stdlib.h>
 
+
+
+#include <stdio.h>
 static void	populate_new_split(char **new_split, char **split, int start, int end)
 {
 	if (end == -1)
@@ -42,7 +45,7 @@ static char	**splinter_new_split(char **split, int i, int start, int end)
 	char	**new_split;
 	int		j;
 
-	if (start == 0 && end == (ft_strlen(split[i]) - 1))
+	if (start == 0 && end == (ft_strlen(split[i])))
 		return (split);
 	else if (start > 0 && end < (ft_strlen(split[i]) - 1))
 		new_split = (char **)malloc((count_split(split) + 3) * sizeof(char *));
