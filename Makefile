@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/03/08 22:20:04 by ahorling      ########   odam.nl          #
+#    Updated: 2023/03/24 16:20:15 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,10 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/builtins/unset.c \
 			$(ROOT)src/lexer/cmds_struct_tools.c \
 			$(ROOT)src/lexer/commandize.c \
+			$(ROOT)src/lexer/expand_utils.c \
 			$(ROOT)src/lexer/expand.c \
 			$(ROOT)src/lexer/file_struct_tools.c \
+			$(ROOT)src/lexer/heredoc.c \
 			$(ROOT)src/lexer/separate_cmds.c \
 			$(ROOT)src/lexer/split_commands.c \
 			$(ROOT)src/lexer/split_utils.c \
@@ -37,6 +39,7 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/utils/array_sort.c \
 			$(ROOT)src/utils/free_split.c \
 			$(ROOT)src/utils/ft_is_al_under.c \
+			$(ROOT)src/utils/ft_itoa.c \
 			$(ROOT)src/utils/ft_putendl_fd.c \
 			$(ROOT)src/utils/ft_putstr_fd.c \
 			$(ROOT)src/utils/ft_split.c \
@@ -58,7 +61,7 @@ INCLUDE	= -I $(ROOT)include \
 			-I $(ROOT)include/utils \
 			-I $(HOME)/.brew/Cellar/readline/8.2.1/include
 LINKS	= -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline
-CFLAGS	= -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror #-g -fsanitize=address
 
 all: $(NAME)
 

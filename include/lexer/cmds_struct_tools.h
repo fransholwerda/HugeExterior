@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/07 17:13:32 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/26 18:29:46 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/03/24 15:32:57 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdbool.h>
 # include "structs.h"
 
-t_commands	*new_cmds(void);
+t_commands	*new_cmds(t_commands *prev);
 t_commands	*last_cmd(t_commands *cmds);
 void		add_infile(t_commands *cmds, char *infile);
 void		add_outfile(t_commands *cmds, char *outfile, bool append);

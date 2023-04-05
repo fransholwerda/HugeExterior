@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env_add.h                                          :+:    :+:            */
+/*   ft_itoa.h                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/15 17:44:38 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/08 14:18:59 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/03/04 15:51:19 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/03/04 15:51:37 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_ADD_H
-# define ENV_ADD_H
+#ifndef FT_ITOA_H
+# define FT_ITOA_H
 
-int		env_find_var(char *env[], char *var);
-char	**env_add(char *env[], char *var, char *value);
+char	*ft_itoa(int n);
 
 #endif

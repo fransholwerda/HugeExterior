@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env_add.h                                          :+:    :+:            */
+/*   expand_utils.h                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/15 17:44:38 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/08 14:18:59 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/03/22 15:15:32 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/03/24 13:42:12 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_ADD_H
-# define ENV_ADD_H
+#ifndef EXPAND_UTILS_H
+# define EXPAND_UTILS_H
 
-int		env_find_var(char *env[], char *var);
-char	**env_add(char *env[], char *var, char *value);
+int		expand_dollar_length(char *str, int end);
+char	*combine_three_strings(char *str, int start, int end, char *var);
+char	*get_env_var(char *env[], char *var);
 
 #endif

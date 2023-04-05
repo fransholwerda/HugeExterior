@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/28 16:17:07 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/26 18:31:23 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/03/24 15:32:46 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_commands
 	t_file				*outfile;
 	char				*hd;
 	struct s_commands	*next;
+	struct s_commands	*prev;
 }						t_commands;
 
 typedef struct s_metainfo

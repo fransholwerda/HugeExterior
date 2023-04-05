@@ -6,24 +6,46 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/15 17:17:42 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/17 13:11:08 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/03/22 14:55:02 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "array_len.h"
+#include "ft_strdup.h"
 #include "ft_strjoin.h"
+#include "ft_strlen.h"
+#include "ft_strncmp.h"
 #include "stop.h"
 
-static char	*join_three(char *str1, char *str2, char *str3)
+extern int	g_error;
+
+static char	*join_four(char *str1, char *str2, char *str3, char *str4)
 {
-	char	*temp;
+	char	*temp1;
+	char	*temp2;
 	char	*result;
 
-	temp = ft_strjoin(str1, str2);
-	result = ft_strjoin(temp, str3);
-	free(temp);
+	temp1 = ft_strjoin(str1, str2);
+	temp2 = ft_strjoin(str3, str4);
+	result = ft_strjoin(temp1, temp2);
+	free(temp1);
+	free(temp2);
 	return (result);
+}
+
+int	env_find_var(char *env[], char *var)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], var, ft_strlen(var)) == 0
+			&& env[i][ft_strlen(var)] == '=')
+			return (i);
+	}
+	return (-1);
 }
 
 char	**env_add(char *env[], char *var, char *value)
@@ -35,7 +57,10 @@ char	**env_add(char *env[], char *var, char *value)
 	new_env = (char **)malloc((array_len(env) + 2) * sizeof(char *));
 	if (!new_env)
 		malloc_stop("malloc_env_add");
-	new_var = join_three(var, "=", value);
+	if (value)
+		new_var = join_four(var, "=\"", value, "\"");
+	else
+		new_var = ft_strdup(var);
 	i = 0;
 	while (env[i])
 	{
