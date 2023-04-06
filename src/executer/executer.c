@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/12/18 23:21:28 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/01 15:58:09 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
+/*   Updated: 2023/04/06 12:06:19 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,10 @@
 #include "executer/errors.h"
 #include "executer/builtins.h"
 
-void	execute_child(t_commands *commands, t_metainfo *info)
+static void	execute_child(t_commands *commands, t_metainfo *info)
 {
 	if (check_builtin(commands) == true)
-	{
 		execute_builtin(commands, info);
-	}
 	else if (access(commands->args[0], F_OK) == 0)
 	{
 		execve(commands->args[0], commands->args, info->envp);
@@ -38,90 +36,126 @@ void	execute_child(t_commands *commands, t_metainfo *info)
 	}
 }
 
-static void	child_redirection(t_commands *commands, t_metainfo *info, int pipefd[2])
+static void	child_redirects(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2])
 {
-	if (commands->infile)
+	if (info->infilefd != STDIN_FILENO)
 	{
-		info->infilefd = open(commands->infile->name, commands->infile->mode);
-		if (dup2(info->infilefd, STDIN_FILENO) == -1)
-			dupe_error();
-		close(info->infilefd);
+		dup2(STDIN_FILENO, info->infilefd);
+		if (commands->next)
+		{
+			close(pipe2[1]);
+			close(pipe2[0]);
+		}
 	}
-	if (commands->outfile)
+	else if (commands->prev)
 	{
-		info->outfilefd = open(commands->outfile->name, commands->outfile->mode);
-		if (dup2(info->outfilefd, STDOUT_FILENO) == -1)
-			dupe_error();
-		close(info->outfilefd);
+		close(pipe1[1]);
+		dup2(pipe1[0], STDIN_FILENO);
+		close(pipe1[0]);
 	}
-	if (commands->next)
+	if (info->outfilefd != STDOUT_FILENO)
 	{
-		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-			dupe_error();
+		dup2(STDOUT_FILENO, info->outfilefd);
+		if (commands->next)
+		{
+			close(pipe2[1]);
+			close(pipe2[0]);
+		}
+	}
+	else if (commands->next)
+	{
+		close(pipe2[0]);
+		dup2(pipe2[1], info->outfilefd);
+		close(pipe2[1]);
 	}
 }
 
-int	execute_fork(t_commands *commands, t_metainfo *info)
+static void	setup_info(t_commands *commands, t_metainfo *info)
 {
-	pid_t		pid;
-	int			pipefd[2];
-
 	info->path = find_path(info, commands);
-	if (pipe(pipefd) == -1)
-		pipe_error();
+	if (commands->infile)
+		if (access(commands->infile->name, R_OK & F_OK) != 0)
+			printf("minishell: %s: No suchfile or directory\n", commands->infile->name);
+		else if (commands->infile->mode2 == -1)
+			info->infilefd = open(commands->infile->name, commands->infile->mode);
+		else
+			info->infilefd = open(commands->infile->name, commands->infile->mode2);
+	else
+		info->infilefd = STDIN_FILENO;
+	if (commands->outfile)
+		if (access(commands->outfile->name, W_OK) == 0)
+		{
+			if (commands->outfile->mode2 == -1)
+				info->outfilefd = open(commands->outfile->name, commands->outfile->mode);
+			else
+				info->outfilefd = open(commands->outfile->name, commands->outfile->mode2);
+		}
+		else
+			printf("minishell: %s: Permission denied\n", commands->outfile->name);
+	else
+		info->outfilefd = STDOUT_FILENO;
+}
+
+static int		begin_fork(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2])
+{
+	pid_t	pid;
+
+	setup_info(commands, info);
+	if (commands->next)
+		pipe(pipe2);
 	pid = fork();
-	if (pid == -1)
-		fork_error();
-	else if (pid == 0)
+	if (pid == 0)
 	{
-		child_redirection(commands, info, pipefd);
-		close(pipefd[0]);
-		close(pipefd[1]);
-		printf("closed child pipes of pipe %s\n", info->path);
+		child_redirects(commands, info, pipe1, pipe2);
 		execute_child(commands, info);
 	}
-	close(pipefd[1]);
-	if (commands->next && !commands->next->infile)
-	{
-		info->infilefd = pipefd[0];
-		printf("new command found, no infile found, setting infile to pipe read end with fd %d\n", info->infilefd);
-	}
 	else
-		close(pipefd[0]);
+	{
+		if (commands->prev)
+		{
+			close(pipe1[0]);
+			close(pipe1[1]);
+		}
+		if (commands->next)
+		{
+			pipe1[0] = pipe2[0];
+			pipe1[1] = pipe2[1];
+		}
+	}
 	return (pid);
 }
 
-char **executer(t_commands *commands, char **envp)
+char	**executer(t_commands *commands, char **envp)
 {
-	bool		builtin;
 	t_metainfo	*info;
-	int i = 0;
-	t_commands	*temp;
+	int			pipe1[2];
+	int			pipe2[2];
 
 	info = malloc(sizeof(t_metainfo));
 	info->envp = envp;
-	temp = commands;
-	if (temp->next == NULL)
+	if (commands->next == NULL)
 	{
-		printf("only one command found\n");
-		builtin = check_builtin(temp);
-		if (builtin == true)
-			execute_builtin(temp, info);
+		if (check_builtin(commands) == true)
+			execute_builtin(commands, info);
 		else
 		{
-			info->lastpid = execute_fork(temp, info);
+			info->lastpid = begin_fork(commands, info, pipe1, pipe2);
 			waitpid(info->lastpid, NULL, 0);
 		}
 	}
 	else
-		while (temp)
+	{
+		while(commands)
 		{
-			i++;
-			printf("loop number: %d\n", i);
-			info->lastpid = execute_fork(temp, info);
-			printf("current lastpid = %d, about to move to next command\n", info->lastpid);
-			temp = temp->next;
+			info->lastpid = begin_fork(commands, info, pipe1, pipe2);
+			commands = commands->next;
 		}
+	}
+	if (commands && commands->prev)
+	{
+		close(pipe1[0]);
+		close(pipe1[1]);
+	}
 	waitpid(info->lastpid, NULL, 0);
 	return (info->envp);
 }
