@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/09 04:58:09 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/02/17 19:44:22 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/07 21:28:08 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ void	env_error()
 
 void	global_error()
 {
-	printf("This is a stand in for the global error code.\n");
+	// printf("This is a stand in for the global error code.\n");
 	exit(g_error);
 }
