@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/07 22:19:12 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/09 16:56:56 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include "executer/errors.h"
 #include "executer/builtins.h"
 
-static void	execute_child(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2])
+static void	execute_child(t_commands *commands, t_metainfo *info)
 {
 	if (check_builtin(commands) == true)
 		execute_builtin(commands, info);
@@ -116,7 +116,7 @@ static int		begin_fork(t_commands *commands, t_metainfo *info, int pipe1[2], int
 	{
 		setup_info(commands, info);
 		child_redirects(commands, info, pipe1, pipe2);
-		execute_child(commands, info, pipe1, pipe2);
+		execute_child(commands, info);
 	}
 	else
 	{
