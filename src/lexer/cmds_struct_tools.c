@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/07 16:30:40 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/24 15:32:32 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/09 18:32:49 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,13 @@ t_commands	*last_cmd(t_commands *cmds)
 	return (ret_cmd);
 }
 
-void	add_infile(t_commands *cmds, char *infile)
+void	add_infile(t_commands *cmds, char *infile, bool hd)
 {
 	if (!cmds->infile)
-		cmds->infile = new_file(infile, O_RDONLY, -1);
+		cmds->infile = new_file(infile, O_RDONLY, -1, hd);
 	else
-		cmds->infile = file_add_back(cmds->infile, infile, O_RDONLY, -1);
+		cmds->infile = file_add_back(cmds->infile,
+				new_file(infile, O_RDONLY, -1, hd));
 }
 
 void	add_outfile(t_commands *cmds, char *outfile, bool append)
@@ -58,18 +59,19 @@ void	add_outfile(t_commands *cmds, char *outfile, bool append)
 	if (!cmds->outfile)
 	{
 		if (append == true)
-			cmds->outfile = new_file(outfile, O_WRONLY | O_APPEND, -1);
+			cmds->outfile = new_file(outfile, O_WRONLY | O_APPEND, -1, false);
 		else
-			cmds->outfile = new_file(outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
+			cmds->outfile = new_file(outfile, O_CREAT | O_RDWR | O_TRUNC,
+					0644, false);
 	}
 	else
 	{
 		if (append == true)
-			cmds->outfile = file_add_back(cmds->outfile, outfile,
-					O_WRONLY | O_APPEND, -1);
+			cmds->outfile = file_add_back(cmds->outfile, new_file(outfile,
+						O_WRONLY | O_APPEND, -1, false));
 		else
-			cmds->outfile = file_add_back(cmds->outfile, outfile,
-					O_CREAT | O_RDWR | O_TRUNC, 0644);
+			cmds->outfile = file_add_back(cmds->outfile,
+					new_file(outfile, O_CREAT | O_RDWR | O_TRUNC, 0644, false));
 	}
 }
 

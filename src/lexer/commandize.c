@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/09 17:37:38 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/09 18:34:55 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ static int	get_command(t_info *info, int pipe, char **split, int i)
 		if (split[i][0] == '<' && split[i][1] == '<'
 			&& is_data(split[i + 1]))
 		{
-			cmds->hd = go_heredoc(info->env, split[i + 1], pipe);
+			add_infile(cmds, go_heredoc(info->env, split[i + 1], pipe), true);
 			i++;
 		}
 		else if (split[i][0] == '<' && is_data(split[i + 1]))
 		{
-			add_infile(cmds, split[i + 1]);
+			add_infile(cmds, split[i + 1], false);
 			i++;
 		}
 		else if (split[i][0] == '>' && split[i][1] == '>'
