@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 15:25:02 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/17 13:20:54 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/09 13:16:13 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,17 @@ static void	find_trim(char **split, int i)
 		{
 			q1 = pos;
 			pos = skip_until(split[i], pos + 1, '\'');
-			q2 = pos;
+			q2 = pos - 1;
 			trim_cmd(split, i, q1, q2);
+			pos -= 2;
 		}
 		else if (split[i][pos] == '\"')
 		{
 			q1 = pos;
 			pos = skip_until(split[i], pos + 1, '\"');
-			q2 = pos;
+			q2 = pos - 1;
 			trim_cmd(split, i, q1, q2);
+			pos -= 2;
 		}
 		pos++;
 	}

@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/06 12:06:44 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/09 15:28:31 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,17 @@ static int	is_empty(char *str)
 	return (1);
 }
 
+void print_split(char **split)
+{
+	int i = 0;
+	while(split[i])
+	{
+		printf("'%s'\n",split[i]);
+		i++;
+	}
+	printf("\n");
+}
+
 int	main(int argc, char **argv, char *env[])
 {
 	//GET ENV INTO OWN ENV, DONT COPY OLD_PWD
@@ -60,6 +71,7 @@ int	main(int argc, char **argv, char *env[])
 				expand_split(env, split);
 				split = separate_cmds(split);
 				trim_split_cmds(split);
+				print_split(split);
 				if (commandize(info, split))
 					info->env = executer(info->cmds, info->env);
 				free_split(split);
@@ -73,3 +85,6 @@ int	main(int argc, char **argv, char *env[])
 	free(str);
 	return (EXIT_SUCCESS);
 }
+
+//fix syntax errors for redirections and pipes, for instance <<|
+//give correct error code

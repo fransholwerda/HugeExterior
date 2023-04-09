@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/24 15:34:06 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/09 16:48:54 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,3 +102,5 @@ t_commands	*commandize(t_info *info, char **split)
 	}
 	return (info->cmds);
 }
+
+//FIX SYNTAX ERRORS WHEN TWO OPERATORS ARE NEXT TO EACHOTHER
