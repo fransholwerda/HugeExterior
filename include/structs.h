@@ -6,13 +6,14 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/28 16:17:07 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/03/24 15:32:46 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/09 18:21:32 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+# include <stdbool.h>
 # include <unistd.h>
 
 typedef struct s_file

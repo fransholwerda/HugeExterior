@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/09 16:56:56 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/09 19:37:20 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,30 +77,42 @@ static void	setup_info(t_commands *commands, t_metainfo *info)
 {
 	info->path = find_path(info, commands);
 	if (commands->infile)
-		if (access(commands->infile->name, R_OK & F_OK) != 0)
+	{
+		while (commands->infile)
 		{
-			printf("minishell: %s: No suchfile or directory\n", commands->infile->name);
-			return(global_error());
+			if (access(commands->infile->name, F_OK) != 0)
+			{
+				printf("minishell: %s: No suchfile or directory\n", commands->infile->name);
+				return(global_error());
+			}
+			else if (access(commands->infile->name, R_OK) != 0)
+			{
+				printf("minishell: %s: Permission denied\n", commands->infile->name);
+				return(global_error());
+			}
+			else
+				info->infilefd = open(commands->infile->name, commands->infile->mode);
+			commands->infile = commands->infile->next;
 		}
-		else if (commands->infile->mode2 == -1)
-			info->infilefd = open(commands->infile->name, commands->infile->mode);
-		else
-			info->infilefd = open(commands->infile->name, commands->infile->mode2);
+	}
 	else
 		info->infilefd = STDIN_FILENO;
 	if (commands->outfile)
-		if (access(commands->outfile->name, W_OK) == 0)
+	{
+		while (commands->outfile)
 		{
-			if (commands->outfile->mode2 == -1)
-				info->outfilefd = open(commands->outfile->name, commands->outfile->mode);
+			if (access(commands->outfile->name, F_OK) != 0)
+					info->outfilefd = open(commands->outfile->name, O_RDWR|O_CREAT, 0655);
+			else if (access(commands->outfile->name, W_OK) == 0)
+					info->outfilefd = open(commands->outfile->name, commands->outfile->mode);
 			else
-				info->outfilefd = open(commands->outfile->name, commands->outfile->mode2);
+			{
+				printf("minishell: %s: Permission denied\n", commands->outfile->name);
+				return(global_error());
+			}
+			commands->outfile = commands->outfile->next;
 		}
-		else
-		{
-			printf("minishell: %s: Permission denied\n", commands->outfile->name);
-			return(global_error());
-		}
+	}
 	else
 		info->outfilefd = STDOUT_FILENO;
 }
@@ -142,7 +154,7 @@ char	**executer(t_commands *commands, char **envp)
 
 	info = malloc(sizeof(t_metainfo));
 	info->envp = envp;
-	if (commands->next == NULL)
+	if (commands && commands->next == NULL)
 	{
 		if (check_builtin(commands) == true)
 			execute_builtin(commands, info);

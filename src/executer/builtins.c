@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 21:15:18 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/01 16:05:54 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/09 17:12:49 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ static int		execute_exit(t_commands *commands, t_metainfo *info)
 //a function to check which built in, if any, is being called. if none are recognized returns an error.
 bool	check_builtin(t_commands *commands)
 {
+	if (!commands->args)
+		return (false);
 	if (ft_strcmp(commands->args[0], "echo") == 0)
 		return (true);
 	else if (ft_strcmp(commands->args[0], "cd") == 0)
