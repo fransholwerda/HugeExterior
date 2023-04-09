@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/04/09 16:56:31 by ahorling      ########   odam.nl          #
+#    Updated: 2023/04/09 20:27:47 by ahorling      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/executer/errors.c \
 			$(ROOT)src/executer/executer.c \
 			$(ROOT)src/executer/pathfind.c \
+			$(ROOT)src/executer/extra.c \
 			$(ROOT)src/utils/array_len.c \
 			$(ROOT)src/utils/array_sort.c \
 			$(ROOT)src/utils/free_split.c \

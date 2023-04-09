@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/09 19:37:20 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/09 20:38:21 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
-#include "structs.h"
-#include "executer/pathfind.h"
-#include "executer/errors.h"
 #include "executer/builtins.h"
+#include "executer/errors.h"
+#include "executer/pathfind.h"
+#include "extra.h"
+#include "structs.h"
 
 static void	execute_child(t_commands *commands, t_metainfo *info)
 {
@@ -44,77 +45,31 @@ static void	child_redirects(t_commands *commands, t_metainfo *info, int pipe1[2]
 		dup2(info->infilefd, STDIN_FILENO);
 		close(info->infilefd);
 		if (commands->prev)
-		{
-			close(pipe1[1]);
-			close(pipe1[0]);
-		}
+			close_pipes(pipe1);
 	}
 	else if (commands->prev)
 	{
 		dup2(pipe1[0], STDIN_FILENO);
-		close(pipe1[1]);
-		close(pipe1[0]);
+		close_pipes(pipe1);
 	}
 	if (info->outfilefd != STDOUT_FILENO)
 	{
 		dup2(info->outfilefd, STDOUT_FILENO);
 		close(info->outfilefd);
 		if (commands->next)
-		{
-			close(pipe2[1]);
-			close(pipe2[0]);
-		}
+			close_pipes(pipe2);
 	}
 	else if (commands->next)
 	{
-		close(pipe2[0]);
 		dup2(pipe2[1], STDOUT_FILENO);
-		close(pipe2[1]);
+		close_pipes(pipe2);
 	}
 }
 
 static void	setup_info(t_commands *commands, t_metainfo *info)
 {
-	info->path = find_path(info, commands);
-	if (commands->infile)
-	{
-		while (commands->infile)
-		{
-			if (access(commands->infile->name, F_OK) != 0)
-			{
-				printf("minishell: %s: No suchfile or directory\n", commands->infile->name);
-				return(global_error());
-			}
-			else if (access(commands->infile->name, R_OK) != 0)
-			{
-				printf("minishell: %s: Permission denied\n", commands->infile->name);
-				return(global_error());
-			}
-			else
-				info->infilefd = open(commands->infile->name, commands->infile->mode);
-			commands->infile = commands->infile->next;
-		}
-	}
-	else
-		info->infilefd = STDIN_FILENO;
-	if (commands->outfile)
-	{
-		while (commands->outfile)
-		{
-			if (access(commands->outfile->name, F_OK) != 0)
-					info->outfilefd = open(commands->outfile->name, O_RDWR|O_CREAT, 0655);
-			else if (access(commands->outfile->name, W_OK) == 0)
-					info->outfilefd = open(commands->outfile->name, commands->outfile->mode);
-			else
-			{
-				printf("minishell: %s: Permission denied\n", commands->outfile->name);
-				return(global_error());
-			}
-			commands->outfile = commands->outfile->next;
-		}
-	}
-	else
-		info->outfilefd = STDOUT_FILENO;
+	manage_infiles(commands, info);
+	manage_outfiles(commands, info);
 }
 
 static int		begin_fork(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2])
@@ -133,10 +88,7 @@ static int		begin_fork(t_commands *commands, t_metainfo *info, int pipe1[2], int
 	else
 	{
 		if (commands->prev)
-		{
-			close(pipe1[0]);
-			close(pipe1[1]);
-		}
+			close_pipes(pipe1);
 		if (commands->next)
 		{
 			pipe1[0] = pipe2[0];
@@ -175,10 +127,7 @@ char	**executer(t_commands *commands, char **envp)
 		}
 	}
 	if (commands->prev)
-	{
-		close(pipe1[0]);
-		close(pipe1[1]);
-	}
+		close_pipes(pipe1);
 	waitpid(info->lastpid, NULL, 0);
 	return (info->envp);
 }
