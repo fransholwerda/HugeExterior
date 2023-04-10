@@ -6,18 +6,24 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/09 04:58:09 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/07 21:28:08 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/10 18:17:29 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include "structs.h"
+#include "utils/ft_strlen.h"
 
 extern int	g_error;
 
-void	path_error()
+void	path_error(t_commands *commands)
 {
-	printf("Error finding or building path\n");
+	write(2, "minishell: ", 11);
+	write(2, commands->args[0], ft_strlen(commands->args[0]));
+	write(2, ": command not found\n", 20);
+	g_error = 127;
 	exit(g_error);
 }
 

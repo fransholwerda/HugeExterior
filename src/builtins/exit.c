@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   errors.h                                           :+:    :+:            */
+/*   exit.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/12 22:13:10 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/10 18:27:54 by ahorling      ########   odam.nl         */
+/*   Created: 2023/04/10 18:21:01 by ahorling      #+#    #+#                 */
+/*   Updated: 2023/04/10 18:28:52 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_H
-# define ERRORS_H
+#include <stdlib.h>
+#include "structs.h"
 
-# include "structs.h"
+extern int g_error;
 
-void	path_error(t_commands *commands);
-void	fork_error();
-void	pipe_error();
-void	dupe_error();
-void	execute_error();
-void	global_error();
-void	env_error();
-
-#endif
+void	mini_exit(t_commands *commands)
+{
+	if (!commands->prev)
+		write(2, "exit\n", 5);
+	exit(g_error);
+}

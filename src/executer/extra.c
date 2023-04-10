@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/09 20:21:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/09 20:36:12 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/10 18:12:50 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ void	manage_infiles(t_commands *commands, t_metainfo *info)
 	{
 		while (commands->infile)
 		{
+			// if (commands->infile->hd == true)
+			// {
+				
+			// }
 			if (access(commands->infile->name, F_OK) != 0)
 			{
 				printf("minishell: %s: No suchfile or directory\n", commands->infile->name);

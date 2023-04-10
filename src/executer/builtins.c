@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 21:15:18 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/09 17:12:49 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/10 18:29:39 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include "echo.h"
 #include "env.h"
+#include "exit.h"
 #include "export.h"
 #include "unset.h"
 #include "builtins.h"
@@ -68,8 +69,6 @@ static int		execute_pwd()
 
 static int		execute_export(t_commands *commands, t_metainfo *info)
 {
-	// (void)commands;
-	// (void)info;
 	info->envp = export(info->envp, commands->args, 1); //change fd
 	return (0);
 }
@@ -92,9 +91,8 @@ static int		execute_env(t_commands *commands, t_metainfo *info)
 
 static int		execute_exit(t_commands *commands, t_metainfo *info)
 {
-	(void)commands;
 	(void)info;
-	printf("commands was: exit\n");
+	mini_exit(commands);
 	return (0);
 }
 

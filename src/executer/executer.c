@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/09 20:38:21 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/10 18:13:09 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static void	execute_child(t_commands *commands, t_metainfo *info)
 	else if (access(commands->args[0], F_OK) == 0)
 	{
 		execve(commands->args[0], commands->args, info->envp);
-		path_error();
+		path_error(commands);
 	}
 	else
 	{
 		execve(info->path, commands->args, info->envp);
-		path_error();
+		path_error(commands);
 	}
 	return (global_error());
 }
@@ -72,7 +72,7 @@ static void	setup_info(t_commands *commands, t_metainfo *info)
 	manage_outfiles(commands, info);
 }
 
-static int		begin_fork(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2])
+static int	begin_fork(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2])
 {
 	pid_t	pid;
 
@@ -118,11 +118,11 @@ char	**executer(t_commands *commands, char **envp)
 	}
 	else
 	{
-		while(commands)
+		while (commands)
 		{
 			info->lastpid = begin_fork(commands, info, pipe1, pipe2);
 			if (commands->next == NULL)
-				break;
+				break ;
 			commands = commands->next;
 		}
 	}
