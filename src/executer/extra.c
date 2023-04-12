@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/09 20:21:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/10 18:12:50 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/12 20:46:51 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,20 @@ void	manage_infiles(t_commands *commands, t_metainfo *info)
 	{
 		while (commands->infile)
 		{
-			// if (commands->infile->hd == true)
-			// {
-				
-			// }
 			if (access(commands->infile->name, F_OK) != 0)
 			{
 				printf("minishell: %s: No suchfile or directory\n", commands->infile->name);
-				return(global_error());
+				return (global_error());
 			}
 			else if (access(commands->infile->name, R_OK) != 0)
 			{
 				printf("minishell: %s: Permission denied\n", commands->infile->name);
-				return(global_error());
+				return (global_error());
 			}
 			else
 				info->infilefd = open(commands->infile->name, commands->infile->mode);
+			if (commands->infile->hd == true)
+				unlink(commands->infile->name);
 			commands->infile = commands->infile->next;
 		}
 	}
@@ -60,13 +58,13 @@ void	manage_outfiles(t_commands *commands, t_metainfo *info)
 		while (commands->outfile)
 		{
 			if (access(commands->outfile->name, F_OK) != 0)
-					info->outfilefd = open(commands->outfile->name, O_RDWR|O_CREAT, 0655);
+				info->outfilefd = open(commands->outfile->name, O_RDWR | O_CREAT, 0655);
 			else if (access(commands->outfile->name, W_OK) == 0)
-					info->outfilefd = open(commands->outfile->name, commands->outfile->mode);
+				info->outfilefd = open(commands->outfile->name, commands->outfile->mode);
 			else
 			{
 				printf("minishell: %s: Permission denied\n", commands->outfile->name);
-				return(global_error());
+				return (global_error());
 			}
 			commands->outfile = commands->outfile->next;
 		}

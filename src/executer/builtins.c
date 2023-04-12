@@ -6,13 +6,14 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 21:15:18 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/10 18:29:39 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/12 21:15:45 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "cd.h"
 #include "echo.h"
 #include "env.h"
 #include "exit.h"
@@ -51,9 +52,7 @@ static int		execute_echo(t_commands *commands, t_metainfo *info)
 
 static int		execute_cd(t_commands *commands, t_metainfo *info)
 {
-	(void)commands;
-	(void)info;
-	printf("command was: cd\n");
+	cd(commands, info);
 	return (0);
 }
 

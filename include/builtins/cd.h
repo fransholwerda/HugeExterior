@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   exit.c                                             :+:    :+:            */
+/*   cd.h                                               :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/04/10 18:21:01 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/12 20:47:10 by ahorling      ########   odam.nl         */
+/*   Created: 2023/04/12 20:53:53 by ahorling      #+#    #+#                 */
+/*   Updated: 2023/04/12 21:03:09 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "structs.h"
+#ifndef CD_H
+# define CD_H
 
-extern int g_error;
+# include "structs.h"
 
-void	mini_exit(t_commands *commands)
-{
-	g_error = 0;
-	if (!commands->prev)
-		write(2, "exit\n", 5);
-	exit(g_error);
-}
+void	cd(t_commands *commands, t_metainfo *info);
+
+#endif
