@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/23 17:39:10 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/04 13:02:43 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/11 15:32:38 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@
 #include "ft_strndup.h"
 #include "is_valid_varname.h"
 
-
-
-#include <stdio.h>
 extern int	g_error;
 
 static void	print_export(char *env[], int fd)
@@ -87,7 +84,6 @@ char	**export(char *env[], char *args[], int fd)
 	int		i;
 
 	g_error = 0;
-	//validate args
 	if (array_len(args) == 1)
 	{
 		print_export(env, fd);
@@ -100,6 +96,5 @@ char	**export(char *env[], char *args[], int fd)
 			env = export_var(env, args[i]);
 		i++;
 	}
-	printf("g_error: %d\n", g_error);
 	return (env);
 }

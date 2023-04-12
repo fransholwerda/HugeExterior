@@ -6,11 +6,12 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/04 13:10:35 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/02 14:20:30 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/12 16:42:46 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -45,7 +46,7 @@ static char	*expand_dollar_hd(char *env[], char *str, int pos)
 
 	end = expand_dollar_length(str, pos);
 	var = get_env_var(env, ft_substr(str, pos + 1, end - pos));
-	new_str = combine_three_strings(str, pos, end, var);
+	new_str = combine_three_strings(str, pos, end + 1, var);
 	return (new_str);
 }
 
@@ -74,17 +75,18 @@ char	*go_heredoc(char *env[], char *eof, int pipe_count)
 	int		fd;
 	char	*filename;
 	char	*str;
-	//Handle Signals?
 
-	(void)env;
+	//signals (ctrl+c)
 	filename = get_hd_filename(pipe_count);
 	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd == -1)
-		return (NULL); //and do some other shit
-	str = readline("> ");
-	while (ft_strcmp(str, eof) != 0)
 	{
-		//SIGNALS
+		write(2, "Heredoc file creation failed.\n", 30);
+		return (NULL);
+	}
+	str = readline("> ");
+	while (str && ft_strcmp(str, eof) != 0)
+	{
 		str = expand_heredoc(env, str);
 		write(fd, str, ft_strlen(str));
 		write(fd, "\n", 1);

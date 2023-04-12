@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/04/10 18:26:02 by ahorling      ########   odam.nl          #
+#    Updated: 2023/04/12 15:15:53 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,12 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/builtins/export_utils.c \
 			$(ROOT)src/builtins/pwd.c \
 			$(ROOT)src/builtins/unset.c \
+			$(ROOT)src/executer/builtins.c \
+			$(ROOT)src/executer/errors.c \
+			$(ROOT)src/executer/executer.c \
+			$(ROOT)src/executer/pathfind.c \
+			$(ROOT)src/executer/extra.c \
+			$(ROOT)src/signals/signal.c \
 			$(ROOT)src/lexer/cmds_struct_tools.c \
 			$(ROOT)src/lexer/commandize.c \
 			$(ROOT)src/lexer/expand_utils.c \
@@ -34,11 +40,6 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/lexer/split_commands.c \
 			$(ROOT)src/lexer/split_utils.c \
 			$(ROOT)src/lexer/trim_cmds.c \
-			$(ROOT)src/executer/builtins.c \
-			$(ROOT)src/executer/errors.c \
-			$(ROOT)src/executer/executer.c \
-			$(ROOT)src/executer/pathfind.c \
-			$(ROOT)src/executer/extra.c \
 			$(ROOT)src/utils/array_len.c \
 			$(ROOT)src/utils/array_sort.c \
 			$(ROOT)src/utils/free_split.c \
@@ -63,6 +64,7 @@ INCLUDE	= -I $(ROOT)include \
 			-I $(ROOT)include/builtins \
 			-I $(ROOT)include/executer \
 			-I $(ROOT)include/lexer \
+			-I $(ROOT)include/signals \
 			-I $(ROOT)include/utils \
 			-I $(HOME)/.brew/Cellar/readline/8.2.1/include
 LINKS	= -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline

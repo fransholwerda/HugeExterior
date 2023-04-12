@@ -6,23 +6,24 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/09 19:42:41 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/12 16:27:06 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
+#include "commandize.h"
+#include "executer.h"
+#include "expand.h"
 #include "free_split.h"
+#include "info.h"
 #include "readline/readline.h"
 #include "readline/history.h"
-#include "structs.h"
-#include "info.h"
-#include "executer.h"
-#include "split_commands.h"
-#include "expand.h"
-#include "trim_cmds.h"
 #include "separate_cmds.h"
-#include "commandize.h"
+#include "signal.h"
+#include "split_commands.h"
+#include "structs.h"
+#include "trim_cmds.h"
 
 int	g_error = 0;
 
@@ -58,9 +59,16 @@ int	main(int argc, char **argv, char *env[])
 	if (argc != 1)
 		return (EXIT_FAILURE);
 	info = init_info(argv, env);
+	termion();
+	redirect_signal();
 	str = readline(info->prompt);
-	while (str != NULL)
+	while (true)
 	{
+		if (!str)
+		{
+			write(STDOUT_FILENO, "exit\n", 5);
+			exit(EXIT_SUCCESS);
+		}
 		if (!is_empty(str))
 		{
 			add_history(str);
@@ -68,7 +76,7 @@ int	main(int argc, char **argv, char *env[])
 			split = split_commands(str);
 			if (split)
 			{
-				expand_split(env, split);
+				expand_split(info->env, split);
 				split = separate_cmds(split);
 				trim_split_cmds(split);
 				//print_split(split);
@@ -88,3 +96,5 @@ int	main(int argc, char **argv, char *env[])
 
 //fix syntax errors for redirections and pipes, for instance <<|
 //give correct error code
+
+//turn termios on in main, turn it off before fork, then turn it back on after waitpid
