@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 17:19:34 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/26 18:11:38 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/14 22:07:37 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 extern int	g_error;
 
-void	echo(t_commands *commands, int fd)
+static void	echo(t_commands *commands, int fd)
 {
 	bool	newline;
 	int		i;
@@ -39,4 +39,10 @@ void	echo(t_commands *commands, int fd)
 	}
 	if (newline == true)
 		ft_putstr_fd("\n", fd);
+}
+
+int		execute_echo(t_commands *commands, int fd)
+{
+	echo(commands, fd);
+	return (0);
 }

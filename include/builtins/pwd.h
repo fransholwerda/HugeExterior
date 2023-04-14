@@ -6,13 +6,13 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/23 17:38:38 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/23 17:38:46 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/14 22:12:14 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PWD_H
 # define PWD_H
 
-void	pwd(int fd);
+int	execute_pwd(int fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/23 17:39:10 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/12 20:59:24 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/14 22:17:25 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include "ft_strlen.h"
 #include "ft_strndup.h"
 #include "is_valid_varname.h"
+#include "structs.h"
 
 
 
@@ -102,4 +103,10 @@ char	**export(char *env[], char *args[], int fd)
 	}
 	printf("g_error: %d\n", g_error);
 	return (env);
+}
+
+int		execute_export(t_commands *commands, t_metainfo *info)
+{
+	info->envp = export(info->envp, commands->args, info->outfilefd); //change fd
+	return (0);
 }

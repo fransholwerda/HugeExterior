@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/09 20:21:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/12 20:46:51 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/14 22:13:44 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	manage_infiles(t_commands *commands, t_metainfo *info)
 				info->infilefd = open(commands->infile->name, commands->infile->mode);
 			if (commands->infile->hd == true)
 				unlink(commands->infile->name);
+			if (commands->infile->next)
+				close(info->infilefd);
 			commands->infile = commands->infile->next;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 17:19:45 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/25 17:38:46 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/14 22:01:33 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "structs.h"
 
-void	echo(t_commands *commands, int fd);
+int	execute_echo(t_commands *commands, int fd);
 
 #endif
