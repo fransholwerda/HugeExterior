@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/04 13:10:35 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/12 16:42:46 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/14 14:05:47 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char	*go_heredoc(char *env[], char *eof, int pipe_count)
 
 	//signals (ctrl+c)
 	filename = get_hd_filename(pipe_count);
+	
 	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd == -1)
 	{

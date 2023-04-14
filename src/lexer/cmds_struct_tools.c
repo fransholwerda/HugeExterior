@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/07 16:30:40 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/09 18:32:49 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/14 15:37:51 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,24 @@
 #include "ft_strdup.h"
 #include "stop.h"
 #include "structs.h"
+
+void	free_cmds(t_commands *cmds)
+{
+	t_commands	*tmp;
+
+	while (cmds)
+	{
+		tmp = cmds->next;
+		if (cmds->args)
+			free_split(cmds->args);
+		if (cmds->infile)
+			free_file(cmds->infile);
+		if (cmds->outfile)
+			free_file(cmds->outfile);
+		free(cmds);
+		cmds = tmp;
+	}
+}
 
 t_commands	*new_cmds(t_commands *prev)
 {

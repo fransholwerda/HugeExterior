@@ -6,13 +6,14 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/12 16:27:06 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/14 18:49:50 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include "commandize.h"
+#include "cmds_struct_tools.h"
 #include "executer.h"
 #include "expand.h"
 #include "free_split.h"
@@ -60,7 +61,7 @@ int	main(int argc, char **argv, char *env[])
 		return (EXIT_FAILURE);
 	info = init_info(argv, env);
 	termion();
-	redirect_signal();
+	redirect_signal(1);
 	str = readline(info->prompt);
 	while (true)
 	{
@@ -81,7 +82,9 @@ int	main(int argc, char **argv, char *env[])
 				trim_split_cmds(split);
 				//print_split(split);
 				if (commandize(info, split))
-					info->env = executer(info->cmds, info->env);
+					system("leaks -q minishell");
+					//info->env = executer(info->cmds, info->env);
+				
 				free_split(split);
 			}
 			//Rework this ^

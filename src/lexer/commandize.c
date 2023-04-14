@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/09 18:34:55 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/14 20:11:36 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,11 @@ t_commands	*commandize(t_info *info, char **split)
 			}
 		}
 		i = get_command(info, pipe, split, i);
+		if (i < 0)
+		{
+			//check for fork return warning
+			return (NULL);
+		}
 	}
 	return (info->cmds);
 }

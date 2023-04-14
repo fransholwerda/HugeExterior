@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/07 17:12:02 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/09 18:27:37 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/14 15:06:11 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,20 @@
 #include "ft_strdup.h"
 #include "stop.h"
 #include "structs.h"
+
+void	free_file(t_file *file)
+{
+	t_file	*tmp;
+
+	while (file)
+	{
+		tmp = file->next;
+		if (file->name)
+			free(file->name);
+		free(file);
+		file = tmp;
+	}
+}
 
 t_file	*new_file(char *filename, int mode, int mode2, bool hd)
 {
