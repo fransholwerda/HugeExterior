@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/16 15:48:03 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/16 17:07:53 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include "signal.h"
 #include "split_commands.h"
 #include "structs.h"
+#include "termine.h"
 #include "trim_cmds.h"
 
 int	g_error = 0;
@@ -82,7 +83,11 @@ int	main(int argc, char **argv, char *env[])
 				trim_split_cmds(split);
 				//print_split(split);
 				if (commandize(info, split))
+				{
+					redirect_signal(3);
 					info->env = executer(info->cmds, info->env);
+					redirect_signal(1);
+				}
 				free_split(split);
 				free_cmds(info->cmds);
 			}
