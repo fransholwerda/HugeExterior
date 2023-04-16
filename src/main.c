@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/14 18:49:50 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/16 15:48:03 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,14 @@ int	main(int argc, char **argv, char *env[])
 				trim_split_cmds(split);
 				//print_split(split);
 				if (commandize(info, split))
-					system("leaks -q minishell");
-					//info->env = executer(info->cmds, info->env);
-				
+					info->env = executer(info->cmds, info->env);
 				free_split(split);
+				free_cmds(info->cmds);
 			}
 			//Rework this ^
 		}
 		free(str);
+		//system("leaks -q minishell");
 		str = readline(info->prompt);
 	}
 	free_info(info);

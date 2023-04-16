@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 13:29:18 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/14 14:07:07 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/16 15:46:24 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ static void	redirect_int(int signal)
 	}
 }
 
+static void	redirect_hd_int(int signal)
+{
+	if (signal == SIGINT)
+		write(1, "\n", 1);
+}
+
 void	redirect_signal(int mode)
 {
 	if (mode == 0)
@@ -57,6 +63,11 @@ void	redirect_signal(int mode)
 		if (signal(SIGINT, redirect_int) == SIG_ERR)
 			write(2, "Sigint error\n", 13);
 	}
+	else if (mode == 2)
+	{
+		if (signal(SIGINT, redirect_hd_int) == SIG_ERR)
+			write(2, "Sigint error\n", 13);
+	}
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-		write(2, "Sigint error\n", 13);
+		write(2, "Sigquit error\n", 14);
 }

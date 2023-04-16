@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/04 13:10:35 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/14 14:05:47 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/16 15:44:51 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 #include "ft_strjoin.h"
 #include "ft_substr.h"
 #include "readline/readline.h"
+#include "signal.h"
+#include "stop.h"
 
 extern int	g_error;
 
@@ -70,20 +72,17 @@ static char	*expand_heredoc(char *env[], char *str)
 	return (str);
 }
 
-char	*go_heredoc(char *env[], char *eof, int pipe_count)
+void	fork_heredoc(char *env[], char *filename, char *eof)
 {
 	int		fd;
-	char	*filename;
 	char	*str;
 
-	//signals (ctrl+c)
-	filename = get_hd_filename(pipe_count);
-	
+	redirect_signal(0);
 	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		write(2, "Heredoc file creation failed.\n", 30);
-		return (NULL);
+		exit(EXIT_FAILURE);
 	}
 	str = readline("> ");
 	while (str && ft_strcmp(str, eof) != 0)
@@ -96,5 +95,31 @@ char	*go_heredoc(char *env[], char *eof, int pipe_count)
 	}
 	close(fd);
 	free(str);
+	free(filename);
+	exit(EXIT_SUCCESS);
+}
+
+char	*go_heredoc(char *env[], char *eof, int pipe_count)
+{
+	int		fork_return;
+	char	*filename;
+	pid_t	pid;
+
+	filename = get_hd_filename(pipe_count);
+	redirect_signal(2);
+	pid = fork();
+	if (pid < 0)
+		stop("hd_fork_failure\n");
+	else if (pid == 0)
+		fork_heredoc(env, filename, eof);
+	waitpid(pid, &fork_return, 0);
+	redirect_signal(1);
+	if (WIFEXITED(fork_return))
+		fork_return = WEXITSTATUS(fork_return);
+	if (fork_return != 0)
+	{
+		free(filename);
+		return (NULL);
+	}
 	return (filename);
 }
