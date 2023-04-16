@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   signal.h                                           :+:    :+:            */
+/*   termios.h                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/04/12 14:27:44 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/16 17:06:34 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/04/16 17:04:39 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/04/16 17:08:06 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNAL_H
-# define SIGNAL_H
+#ifndef TERMINE_H
+# define TERMINE_H
 
-void	redirect_signal(int mode);
+void	termion(void);
+void	termioff(void);
 
 #endif
