@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/09 04:58:09 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/16 20:21:45 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/16 20:36:58 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ void	outfile_error(t_commands *commands)
 	write(2, commands->outfile->name, ft_strlen(commands->outfile->name));
 	write(2, ": Permission denied\n", 21);
 	g_error = 1;
-	if (commands->prev || commands->next)
-		exit(g_error);
+	exit(g_error);
 }
 
 void	env_error()
