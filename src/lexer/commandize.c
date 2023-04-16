@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/16 14:23:18 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/16 18:47:36 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,60 @@ static int	get_command(t_info *info, int pipe, char **split, int i)
 	cmds = last_cmd(info->cmds);
 	while (split[i] != NULL && split[i][0] != '|')
 	{
-		if (split[i][0] == '<' && split[i][1] == '<'
-			&& is_data(split[i + 1]))
+		if (split[i][0] == '<' && split[i][1] == '<')
 		{
-			hd_file = go_heredoc(info->env, split[i + 1], pipe);
-			if (!hd_file)
+			if (is_data(split[i + 1]))
+			{
+				hd_file = go_heredoc(info->env, split[i + 1], pipe);
+				if (!hd_file)
+					return (-1);
+				add_infile(cmds, hd_file, true);
+				i++;
+			}
+			else
+			{
+				syntax(info->prompt, split[i + 1]);
 				return (-1);
-			add_infile(cmds, hd_file, true);
-			i++;
+			}
 		}
-		else if (split[i][0] == '<' && is_data(split[i + 1]))
+		else if (split[i][0] == '<')
 		{
-			add_infile(cmds, split[i + 1], false);
-			i++;
+			if (is_data(split[i + 1]))
+			{
+				add_infile(cmds, split[i + 1], false);
+				i++;
+			}
+			else
+			{
+				syntax(info->prompt, split[i + 1]);
+				return (-1);
+			}
 		}
-		else if (split[i][0] == '>' && split[i][1] == '>'
-			&& is_data(split[i + 1]))
+		else if (split[i][0] == '>' && split[i][1] == '>')
 		{
-			add_outfile(cmds, split[i + 1], true);
-			i++;
+			if (is_data(split[i + 1]))
+			{
+				add_outfile(cmds, split[i + 1], true);
+				i++;
+			}
+			else
+			{
+				syntax(info->prompt, split[i + 1]);
+				return (-1);
+			}
 		}
-		else if (split[i][0] == '>' && is_data(split[i + 1]))
+		else if (split[i][0] == '>')
 		{
-			add_outfile(cmds, split[i + 1], false);
-			i++;
+			if (is_data(split[i + 1]))
+			{
+				add_outfile(cmds, split[i + 1], false);
+				i++;
+			}
+			else
+			{
+				syntax(info->prompt, split[i + 1]);
+				return (-1);
+			}
 		}
 		else
 			add_args(cmds, split[i]);

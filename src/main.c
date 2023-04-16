@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/16 17:07:53 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/16 20:16:45 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void print_split(char **split)
 
 int	main(int argc, char **argv, char *env[])
 {
-	//GET ENV INTO OWN ENV, DONT COPY OLD_PWD
 	char	*str;
 	t_info	*info;
 	char	**split;
@@ -74,27 +73,26 @@ int	main(int argc, char **argv, char *env[])
 		if (!is_empty(str))
 		{
 			add_history(str);
-			//Rework this v
 			split = split_commands(str);
 			if (split)
 			{
 				expand_split(info->env, split);
 				split = separate_cmds(split);
 				trim_split_cmds(split);
-				//print_split(split);
 				if (commandize(info, split))
 				{
+					//print_split(info->cmds->args);
+					//printf("file1: %s, file2: %s\n", info->cmds->infile->name, info->cmds->infile->next->name);
 					redirect_signal(3);
 					info->env = executer(info->cmds, info->env);
 					redirect_signal(1);
 				}
 				free_split(split);
 				free_cmds(info->cmds);
+				info->cmds = NULL;
 			}
-			//Rework this ^
 		}
 		free(str);
-		//system("leaks -q minishell");
 		str = readline(info->prompt);
 	}
 	free_info(info);
@@ -102,7 +100,5 @@ int	main(int argc, char **argv, char *env[])
 	return (EXIT_SUCCESS);
 }
 
-//fix syntax errors for redirections and pipes, for instance <<|
-//give correct error code
-
-//turn termios on in main, turn it off before fork, then turn it back on after waitpid
+// overloading the forks breaks minishell, pls fix
+// fix two heredocs (probably in alex's side of the code)

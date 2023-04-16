@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/16 15:50:54 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/16 17:47:28 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 #include "signal.h"
 #include "structs.h"
 
+
+#include "termine.h"
 static void	execute_child(t_commands *commands, t_metainfo *info)
 {
 	if (check_builtin(commands) == true)

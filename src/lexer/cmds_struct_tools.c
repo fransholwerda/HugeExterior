@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/07 16:30:40 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/14 15:37:51 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/16 17:54:44 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	free_cmds(t_commands *cmds)
 		if (cmds->outfile)
 			free_file(cmds->outfile);
 		free(cmds);
+		cmds = NULL;
 		cmds = tmp;
 	}
 }

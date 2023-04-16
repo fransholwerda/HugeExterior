@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/07 12:58:00 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/09 15:29:13 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/16 18:42:23 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void	syntax(char *prompt, char *token)
 	g_error = 258;
 	write(2, prompt, ft_strlen(prompt));
 	write(2, "syntax error near unexpected token '", 36);
-	write(2, token, ft_strlen(token));
+	if (token)
+		write(2, token, ft_strlen(token));
+	else
+		write(2, "newline", 7);
 	write(2, "'\n", 2);
 }
