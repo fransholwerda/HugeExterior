@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 20:32:04 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/14 21:58:54 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/16 16:09:25 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,13 @@ static char	*get_env_var_no_free(char *env[], char *var)
 
 static void	change_to_home(t_metainfo *info, char *pwd)
 {
-	chdir(get_env_var_no_free(info->envp, "HOME"));
+	if (chdir(get_env_var_no_free(info->envp, "HOME")) != 0)
+	{
+		write(info->outfilefd, "minishell: cd: ", 16);
+		write(info->outfilefd, "HOME", 4);
+		write(info->outfilefd, ": No such file or directory\n", 28);
+		g_error = 1;
+	}
 	pwd = ft_strjoin("PWD=", getcwd(pwd, 1024 * sizeof(char)));
 	info->envp = export_var(info->envp, pwd);
 	free(pwd);
@@ -53,9 +59,9 @@ static void	change_non_home(t_commands *commands, t_metainfo *info, char *pwd)
 {
 	if (chdir(commands->args[1]) != 0)
 	{
-		write(2, "minishell: cd: ", 16);
-		write(2, commands->args[1], ft_strlen(commands->args[1]));
-		write(2, ": No such file or directory\n", 28);
+		write(info->outfilefd, "minishell: cd: ", 16);
+		write(info->outfilefd, commands->args[1], ft_strlen(commands->args[1]));
+		write(info->outfilefd, ": No such file or directory\n", 28);
 		g_error = 1;
 	}
 	else
@@ -66,7 +72,7 @@ static void	change_non_home(t_commands *commands, t_metainfo *info, char *pwd)
 	}
 }
 
-static void	cd(t_commands *commands, t_metainfo *info)
+void	cd(t_commands *commands, t_metainfo *info)
 {
 	char	*pwd;
 
@@ -78,10 +84,4 @@ static void	cd(t_commands *commands, t_metainfo *info)
 		change_to_home(info, pwd);
 	else
 		change_non_home(commands, info, pwd);
-}
-
-int		execute_cd(t_commands *commands, t_metainfo *info)
-{
-	cd(commands, info);
-	return (0);
 }

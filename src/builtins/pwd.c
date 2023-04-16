@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/23 15:15:33 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/14 22:12:08 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/16 16:00:49 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 extern int	g_error;
 
-static void	pwd(int fd)
+void	pwd(int fd)
 {
 	char	buf[1024];
 
@@ -30,8 +30,3 @@ static void	pwd(int fd)
 		ft_putendl_fd(buf, fd);
 }
 
-int		execute_pwd(int fd)
-{
-	pwd(fd);
-	return (0);
-}
