@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/10 18:13:09 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/16 15:50:54 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "executer/errors.h"
 #include "executer/pathfind.h"
 #include "extra.h"
+#include "signal.h"
 #include "structs.h"
 
 static void	execute_child(t_commands *commands, t_metainfo *info)
@@ -112,6 +113,7 @@ char	**executer(t_commands *commands, char **envp)
 			execute_builtin(commands, info);
 		else
 		{
+			termioff();
 			info->lastpid = begin_fork(commands, info, pipe1, pipe2);
 			waitpid(info->lastpid, NULL, 0);
 		}
@@ -120,6 +122,7 @@ char	**executer(t_commands *commands, char **envp)
 	{
 		while (commands)
 		{
+			termioff();
 			info->lastpid = begin_fork(commands, info, pipe1, pipe2);
 			if (commands->next == NULL)
 				break ;
@@ -129,5 +132,6 @@ char	**executer(t_commands *commands, char **envp)
 	if (commands->prev)
 		close_pipes(pipe1);
 	waitpid(info->lastpid, NULL, 0);
+	termion();
 	return (info->envp);
 }
