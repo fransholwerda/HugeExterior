@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/12 22:13:10 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/10 18:27:54 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/16 17:32:28 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@
 # include "structs.h"
 
 void	path_error(t_commands *commands);
-void	fork_error();
-void	pipe_error();
-void	dupe_error();
-void	execute_error();
-void	global_error();
+void	infile_errors(t_commands *commands);
+void	outfile_error(t_commands *commands);
 void	env_error();
 
 #endif
