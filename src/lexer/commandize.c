@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/09 18:34:55 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/16 14:23:18 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static int	is_data(char *str)
 static int	get_command(t_info *info, int pipe, char **split, int i)
 {
 	t_commands	*cmds;
+	char		*hd_file;
 
 	cmds = last_cmd(info->cmds);
 	while (split[i] != NULL && split[i][0] != '|')
@@ -38,7 +39,10 @@ static int	get_command(t_info *info, int pipe, char **split, int i)
 		if (split[i][0] == '<' && split[i][1] == '<'
 			&& is_data(split[i + 1]))
 		{
-			add_infile(cmds, go_heredoc(info->env, split[i + 1], pipe), true);
+			hd_file = go_heredoc(info->env, split[i + 1], pipe);
+			if (!hd_file)
+				return (-1);
+			add_infile(cmds, hd_file, true);
 			i++;
 		}
 		else if (split[i][0] == '<' && is_data(split[i + 1]))
@@ -91,6 +95,11 @@ t_commands	*commandize(t_info *info, char **split)
 			}
 		}
 		i = get_command(info, pipe, split, i);
+		if (i < 0)
+		{
+			//check for fork return warning
+			return (NULL);
+		}
 	}
 	return (info->cmds);
 }

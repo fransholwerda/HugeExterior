@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 17:19:34 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/14 22:07:37 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/16 15:56:02 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void	echo(t_commands *commands, int fd)
 	bool	newline;
 	int		i;
 
-	g_error = 0;
 	i = 1;
 	newline = true;
 	if (commands->args[i] && ft_strncmp(commands->args[i], "-n", 2) == 0)
@@ -39,6 +38,7 @@ static void	echo(t_commands *commands, int fd)
 	}
 	if (newline == true)
 		ft_putstr_fd("\n", fd);
+	g_error = 0;
 }
 
 int		execute_echo(t_commands *commands, int fd)

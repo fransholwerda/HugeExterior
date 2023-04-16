@@ -6,19 +6,22 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 15:14:30 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/12 21:56:52 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/16 15:55:54 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "enums.h"
 #include "ft_is_al_under.h"
+#include "ft_itoa.h"
 #include "ft_strjoin.h"
 #include "ft_strdup.h"
 #include "ft_strlen.h"
 #include "ft_strncmp.h"
 #include "ft_substr.h"
 #include "join_three.h"
+
+extern int	g_error;
 
 int	expand_dollar_length(char *str, int end)
 {
@@ -28,6 +31,8 @@ int	expand_dollar_length(char *str, int end)
 		while (ft_is_al_under_num(str[end + 1]) == True)
 			end++;
 	}
+	else if (str[end + 1] == '?')
+		end++;
 	return (end);
 }
 
@@ -64,6 +69,8 @@ char	*get_env_var(char *env[], char *var)
 	char	*content;
 
 	i = 0;
+	if (var[0] == '?')
+		return (ft_itoa(g_error));
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], var, ft_strlen(var)) == 0

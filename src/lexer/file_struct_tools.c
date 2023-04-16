@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/07 17:12:02 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/09 18:27:37 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/16 13:41:08 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@
 #include "stop.h"
 #include "structs.h"
 
+void	free_file(t_file *file)
+{
+	t_file	*tmp;
+
+	while (file)
+	{
+		tmp = file->next;
+		if (file->name)
+			free(file->name);
+		free(file);
+		file = tmp;
+	}
+}
+
 t_file	*new_file(char *filename, int mode, int mode2, bool hd)
 {
 	t_file	*file;
@@ -23,7 +37,10 @@ t_file	*new_file(char *filename, int mode, int mode2, bool hd)
 	file = (t_file *)malloc(sizeof(t_file));
 	if (!file)
 		malloc_stop("malloc_new_file");
-	file->name = ft_strdup(filename);
+	if (hd == true)
+		file->name = filename;
+	else
+		file->name = ft_strdup(filename);
 	file->mode = mode;
 	file->mode2 = mode2;
 	file->hd = hd;

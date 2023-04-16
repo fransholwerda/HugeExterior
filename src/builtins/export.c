@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/23 17:39:10 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/14 22:17:25 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/16 15:56:16 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@
 #include "is_valid_varname.h"
 #include "structs.h"
 
-
-
-#include <stdio.h>
 extern int	g_error;
 
 static void	print_export(char *env[], int fd)
@@ -88,7 +85,6 @@ char	**export(char *env[], char *args[], int fd)
 	int		i;
 
 	g_error = 0;
-	//validate args
 	if (array_len(args) == 1)
 	{
 		print_export(env, fd);
@@ -101,7 +97,6 @@ char	**export(char *env[], char *args[], int fd)
 			env = export_var(env, args[i]);
 		i++;
 	}
-	printf("g_error: %d\n", g_error);
 	return (env);
 }
 

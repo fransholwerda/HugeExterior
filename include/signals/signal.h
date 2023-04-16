@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   file_struct_tools.h                                :+:    :+:            */
+/*   signal.h                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/07 17:15:07 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/14 15:06:24 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/04/12 14:27:44 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/04/14 13:54:11 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILE_STRUCT_TOOLS_H
-# define FILE_STRUCT_TOOLS_H
+#ifndef SIGNAL_H
+# define SIGNAL_H
 
-# include <stdbool.h>
-# include "structs.h"
-
-void	free_file(t_file *file);
-t_file	*new_file(char *filename, int mode, int mode2, bool hd);
-t_file	*file_add_back(t_file *file, t_file *file_new);
+void	termion(void);
+void	termioff(void);
+void	redirect_signal(int mode);
 
 #endif
