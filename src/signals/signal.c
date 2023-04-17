@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 13:29:18 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/16 17:06:12 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/17 19:46:02 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,6 @@ void	redirect_signal(int mode)
 	else if (mode == 2)
 	{
 		if (signal(SIGINT, redirect_hd_int) == SIG_ERR)
-			write(2, "Sigint error\n", 13);
-	}
-	else if (mode == 3)
-	{
-		if (signal(SIGINT, SIG_IGN) == SIG_ERR)
 			write(2, "Sigint error\n", 13);
 	}
 	else if (mode == 4)

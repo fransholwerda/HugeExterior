@@ -1,35 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   minishell.h                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/17 19:54:07 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/04/17 19:53:20 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/04/17 19:53:39 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "info.h"
-#include "signal.h"
-#include "structs.h"
-#include "termine.h"
-#include "minishell.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-int	g_error = 0;
+# include "structs.h"
 
-int	main(int argc, char **argv, char *env[])
-{
-	t_info	*info;
+void	minishell(t_info *info);
 
-	if (argc != 1)
-		return (EXIT_FAILURE);
-	info = init_info(argv, env);
-	termion();
-	redirect_signal(1);
-	minishell(info);
-	termioff();
-	free_info(info);
-	return (EXIT_SUCCESS);
-}
+#endif

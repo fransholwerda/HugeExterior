@@ -6,19 +6,17 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/16 18:47:36 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/17 20:12:39 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdbool.h>
 #include "cmds_struct_tools.h"
+#include "cmds_struct_utils.h"
 #include "heredoc.h"
 #include "printer.h"
 #include "structs.h"
 
-
-
-#include <stdio.h>
 static int	is_data(char *str)
 {
 	if (!str)
@@ -126,12 +124,7 @@ t_commands	*commandize(t_info *info, char **split)
 		}
 		i = get_command(info, pipe, split, i);
 		if (i < 0)
-		{
-			//check for fork return warning
 			return (NULL);
-		}
 	}
 	return (info->cmds);
 }
-
-//FIX SYNTAX ERRORS WHEN TWO OPERATORS ARE NEXT TO EACHOTHER

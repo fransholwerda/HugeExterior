@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 15:27:23 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/05 15:48:03 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/17 20:18:18 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@
 #include "stop.h"
 #include "split_utils.h"
 
-
-
-#include <stdio.h>
-static void	populate_new_split(char **new_split, char **split, int start, int end)
+static void	fill_new_split(char **new_split, char **split, int start, int end)
 {
 	if (end == -1)
 	{
@@ -53,7 +50,7 @@ static char	**splinter_new_split(char **split, int i, int start, int end)
 		new_split = (char **)malloc((count_split(split) + 2) * sizeof(char *));
 	if (!new_split)
 		malloc_stop("malloc_splinter_new_split");
-	populate_new_split(new_split, split, 0, i);
+	fill_new_split(new_split, split, 0, i);
 	j = 0;
 	if (start > 0)
 	{
@@ -71,7 +68,7 @@ static char	**splinter_new_split(char **split, int i, int start, int end)
 		j++;
 	}
 	free(split[i]);
-	populate_new_split(&new_split[j - 1], split, i + 1, -1);
+	fill_new_split(&new_split[j - 1], split, i + 1, -1);
 	free(split);
 	return (new_split);
 }
@@ -82,32 +79,6 @@ int	skip_until(char *str, int pos, char c)
 		pos++;
 	return (pos);
 }
-
-// static char	**parse_cmds(char **split, int i, int pos)
-// {
-// 	if (split[i][pos] == '\"')
-// 		pos = skip_until(split[i], pos, '\"');
-// 	else if (split[i][pos] == '\'')
-// 		pos = skip_until(split[i], pos, '\'');
-// 	else if (split[i][pos] == '|')
-// 		split = splinter_new_split(split, i, pos, pos + 1);
-// 	else if (split[i][pos] == '<' && split[i][pos + 1] == '<')
-// 	{
-// 		split = splinter_new_split(split, i, pos, pos + 2);
-// 		pos++;
-// 	}
-// 	else if (split[i][pos] == '<')
-// 		split = splinter_new_split(split, i, pos, pos + 1);
-// 	else if (split[i][pos] == '>' && split[i][pos + 1] == '>')
-// 	{
-// 		split = splinter_new_split(split, i, pos, pos + 2);
-// 		pos++;
-// 	}
-// 	else if (split[i][pos] == '>')
-// 		split = splinter_new_split(split, i, pos, pos + 1);
-// 	pos++;
-// 	return (split);
-// }
 
 static char	**find_cmds(char **split, int i)
 {

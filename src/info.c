@@ -6,12 +6,12 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 13:12:27 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/16 14:23:39 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/17 20:11:59 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "cmds_struct_tools.h"
+#include "cmds_struct_utils.h"
 #include "env_copy.h"
 #include "ft_strlen.h"
 #include "ft_strjoin.h"

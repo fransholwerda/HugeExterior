@@ -1,35 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   cmds_struct_utils.h                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/11/08 14:50:15 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/17 19:54:07 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/04/17 20:09:35 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/04/17 20:10:00 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "info.h"
-#include "signal.h"
-#include "structs.h"
-#include "termine.h"
-#include "minishell.h"
+#ifndef CMDS_STRUCT_UTILS_H
+# define CMDS_STRUCT_UTILS_H
 
-int	g_error = 0;
+# include "structs.h"
 
-int	main(int argc, char **argv, char *env[])
-{
-	t_info	*info;
+void		free_cmds(t_commands *cmds);
+t_commands	*new_cmds(t_commands *prev);
+t_commands	*last_cmd(t_commands *cmds);
 
-	if (argc != 1)
-		return (EXIT_FAILURE);
-	info = init_info(argv, env);
-	termion();
-	redirect_signal(1);
-	minishell(info);
-	termioff();
-	free_info(info);
-	return (EXIT_SUCCESS);
-}
+#endif
