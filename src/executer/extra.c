@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/09 20:21:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/16 15:43:58 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/16 19:49:46 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "executer/pathfind.h"
 #include "structs.h"
 #include "executer/errors.h"
+
+extern int	g_error;
 
 void	close_pipes(int pipefd[2])
 {
@@ -30,15 +32,12 @@ void	manage_infiles(t_commands *commands, t_metainfo *info)
 	{
 		while (commands->infile)
 		{
-			if (access(commands->infile->name, F_OK) != 0)
+			if (access(commands->infile->name, F_OK | R_OK) != 0)
+				infile_errors(commands);
+			else if (commands->infile->hd == true && commands->infile->next)
 			{
-				printf("minishell: %s: No suchfile or directory\n", commands->infile->name);
-				return (global_error());
-			}
-			else if (access(commands->infile->name, R_OK) != 0)
-			{
-				printf("minishell: %s: Permission denied\n", commands->infile->name);
-				return (global_error());
+				commands->infile = commands->infile->next;
+				continue ;
 			}
 			else
 				info->infilefd = open(commands->infile->name, commands->infile->mode);
@@ -64,10 +63,7 @@ void	manage_outfiles(t_commands *commands, t_metainfo *info)
 			else if (access(commands->outfile->name, W_OK) == 0)
 				info->outfilefd = open(commands->outfile->name, commands->outfile->mode);
 			else
-			{
-				printf("minishell: %s: Permission denied\n", commands->outfile->name);
-				return (global_error());
-			}
+				outfile_error(commands);
 			commands->outfile = commands->outfile->next;
 		}
 	}

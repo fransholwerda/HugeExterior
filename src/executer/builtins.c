@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 21:15:18 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/16 16:06:50 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/16 19:53:36 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 #include "builtins.h"
 #include "structs.h"
 #include "utils.h"
+
+extern int g_error;
 
 bool	check_builtin(t_commands *commands)
 {
@@ -49,8 +51,11 @@ bool	check_builtin(t_commands *commands)
 
 void	execute_builtin(t_commands *commands, t_metainfo *info)
 {
+	g_error = 0;
 	manage_infiles(commands, info);
 	manage_outfiles(commands, info);
+	if (g_error != 0)
+		return ;
 	if (ft_strcmp(commands->args[0], "echo") == 0)
 		echo(commands, info->outfilefd);
 	else if (ft_strcmp(commands->args[0], "cd") == 0)
@@ -65,4 +70,6 @@ void	execute_builtin(t_commands *commands, t_metainfo *info)
 		env(info->envp, info->outfilefd);
 	else if (ft_strcmp(commands->args[0], "exit") == 0)
 		mini_exit(commands);
+	if (commands->prev || commands->next)
+		exit(g_error);
 }

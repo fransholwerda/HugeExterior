@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/16 17:47:28 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/17 13:08:15 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@
 #include "extra.h"
 #include "signal.h"
 #include "structs.h"
-
-
 #include "termine.h"
+
+extern int g_error;
+
 static void	execute_child(t_commands *commands, t_metainfo *info)
 {
 	if (check_builtin(commands) == true)
@@ -38,7 +39,6 @@ static void	execute_child(t_commands *commands, t_metainfo *info)
 		execve(info->path, commands->args, info->envp);
 		path_error(commands);
 	}
-	return (global_error());
 }
 
 static void	child_redirects(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2])
@@ -84,6 +84,7 @@ static int	begin_fork(t_commands *commands, t_metainfo *info, int pipe1[2], int 
 	pid = fork();
 	if (pid == 0)
 	{
+		redirect_signal(4);
 		setup_info(commands, info);
 		child_redirects(commands, info, pipe1, pipe2);
 		execute_child(commands, info);
@@ -106,13 +107,18 @@ char	**executer(t_commands *commands, char **envp)
 	t_metainfo	*info;
 	int			pipe1[2];
 	int			pipe2[2];
+	int			status;
 
+	status = 0;
 	info = malloc(sizeof(t_metainfo));
 	info->envp = envp;
 	if (commands && commands->next == NULL)
 	{
 		if (check_builtin(commands) == true)
+		{
 			execute_builtin(commands, info);
+			return (info->envp);
+		}
 		else
 		{
 			termioff();
@@ -133,7 +139,9 @@ char	**executer(t_commands *commands, char **envp)
 	}
 	if (commands->prev)
 		close_pipes(pipe1);
-	waitpid(info->lastpid, NULL, 0);
+	while((info->lastpid = wait(&status)) > 0);
+	status = WEXITSTATUS(status);
+	g_error = status;
 	termion();
 	return (info->envp);
 }
