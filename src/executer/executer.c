@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/16 20:22:46 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/17 18:42:02 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
-#include "executer/builtins.h"
-#include "executer/errors.h"
-#include "executer/pathfind.h"
+#include "builtins.h"
+#include "errors.h"
 #include "extra.h"
+#include "pathfind.h"
 #include "signal.h"
+#include "termine.h"
 #include "structs.h"
 
 extern int g_error;
@@ -80,7 +81,11 @@ static int	begin_fork(t_commands *commands, t_metainfo *info, int pipe1[2], int 
 
 	if (commands->next)
 		pipe(pipe2);
-	pid = fork();
+	if ((pid = fork()) < 0)
+	{
+		fork_error();
+		return (pid);
+	}
 	if (pid == 0)
 	{
 		redirect_signal(4);
@@ -122,7 +127,7 @@ char	**executer(t_commands *commands, char **envp)
 		{
 			termioff();
 			info->lastpid = begin_fork(commands, info, pipe1, pipe2);
-			waitpid(info->lastpid, NULL, 0);
+			waitpid(info->lastpid, &status, 0);
 		}
 	}
 	else
@@ -139,7 +144,8 @@ char	**executer(t_commands *commands, char **envp)
 	if (commands->prev)
 		close_pipes(pipe1);
 	while((info->lastpid = wait(&status)) > 0);
-	status = WEXITSTATUS(status);
+	if (WIFEXITED(status) == true)
+		status = WEXITSTATUS(status);
 	g_error = status;
 	termion();
 	return (info->envp);

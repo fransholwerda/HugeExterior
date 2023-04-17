@@ -6,15 +6,15 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/09 04:58:09 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/16 20:36:58 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/17 18:44:56 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "ft_strlen.h"
 #include "structs.h"
-#include "utils/ft_strlen.h"
 
 extern int	g_error;
 
@@ -52,6 +52,15 @@ void	outfile_error(t_commands *commands)
 	write(2, "minishell: ", 12);
 	write(2, commands->outfile->name, ft_strlen(commands->outfile->name));
 	write(2, ": Permission denied\n", 21);
+	g_error = 1;
+	exit(g_error);
+}
+
+void	fork_error()
+{
+	write(2, "minishell: ", 12);
+	write(2, "fork: ", 7);
+	write(2, "Resource temporarily unavailable\n", 34);
 	g_error = 1;
 	exit(g_error);
 }
