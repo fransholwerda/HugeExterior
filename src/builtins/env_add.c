@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/15 17:17:42 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/01 18:44:01 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/19 17:46:56 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ char	**env_add(char *env[], char *var, char *value)
 	new_env[i + 1] = NULL;
 	free(var);
 	free(value);
-	//free(env);
+	free(env);
 	return (new_env);
 }

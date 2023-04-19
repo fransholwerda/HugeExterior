@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/09 20:21:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/17 17:37:35 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/19 17:44:47 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,16 @@ void	close_pipes(int pipefd[2])
 	close(pipefd[1]);
 }
 
+void	closefds(t_metainfo *info)
+{
+	if (info->infilefd > 2)
+		close(info->infilefd);
+	if (info->outfilefd > 2)
+		close(info->outfilefd);
+}
+
 void	manage_infiles(t_commands *commands, t_metainfo *info)
 {
-	info->path = find_path(info, commands);
 	if (commands->infile)
 	{
 		while (commands->infile)
