@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/04/17 20:16:06 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/04/19 13:46:25 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,9 +84,11 @@ $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) $(LINKS) -o $(NAME)
 
 clean:
+	@echo "Cleaning files."
 	@rm -f $(OBJ)
 
 fclean: clean
+	@echo "Cleaning executable."
 	@rm -f $(NAME)
 
 re: fclean all

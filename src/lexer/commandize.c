@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/17 20:12:39 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/19 14:52:15 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,71 +26,60 @@ static int	is_data(char *str)
 	return (1);
 }
 
-static int	get_command(t_info *info, int pipe, char **split, int i)
+int	add_heredoc(t_info *info, char *data, int pipe)
+{
+	char	*hd_file;
+
+	if (is_data(data))
+	{
+		hd_file = go_heredoc(info->env, data, pipe);
+		if (!hd_file)
+			return (-1);
+		add_infile(last_cmd(info->cmds), hd_file, true);
+	}
+	else
+	{
+		syntax(info->prompt, data);
+		return (-1);
+	}
+	return (1);
+}
+
+int	add_file(t_info *info, char *data,
+	void (*f)(t_commands *, char *, bool), bool hd_app)
 {
 	t_commands	*cmds;
-	char		*hd_file;
 
 	cmds = last_cmd(info->cmds);
+	if (is_data(data))
+		f(cmds, data, hd_app);
+	else
+	{
+		syntax(info->prompt, data);
+		return (-1);
+	}
+	return (1);
+}
+
+static int	get_command(t_info *info, int pipe, char **split, int i)
+{
+	int			original_i;
+
+	original_i = i;
 	while (split[i] != NULL && split[i][0] != '|')
 	{
 		if (split[i][0] == '<' && split[i][1] == '<')
-		{
-			if (is_data(split[i + 1]))
-			{
-				hd_file = go_heredoc(info->env, split[i + 1], pipe);
-				if (!hd_file)
-					return (-1);
-				add_infile(cmds, hd_file, true);
-				i++;
-			}
-			else
-			{
-				syntax(info->prompt, split[i + 1]);
-				return (-1);
-			}
-		}
+			i += add_heredoc(info, split[i + 1], pipe);
 		else if (split[i][0] == '<')
-		{
-			if (is_data(split[i + 1]))
-			{
-				add_infile(cmds, split[i + 1], false);
-				i++;
-			}
-			else
-			{
-				syntax(info->prompt, split[i + 1]);
-				return (-1);
-			}
-		}
+			i += add_file(info, split[i + 1], &add_infile, false);
 		else if (split[i][0] == '>' && split[i][1] == '>')
-		{
-			if (is_data(split[i + 1]))
-			{
-				add_outfile(cmds, split[i + 1], true);
-				i++;
-			}
-			else
-			{
-				syntax(info->prompt, split[i + 1]);
-				return (-1);
-			}
-		}
+			i += add_file(info, split[i + 1], &add_outfile, true);
 		else if (split[i][0] == '>')
-		{
-			if (is_data(split[i + 1]))
-			{
-				add_outfile(cmds, split[i + 1], false);
-				i++;
-			}
-			else
-			{
-				syntax(info->prompt, split[i + 1]);
-				return (-1);
-			}
-		}
+			i += add_file(info, split[i + 1], &add_outfile, false);
 		else
-			add_args(cmds, split[i]);
+			add_args(last_cmd(info->cmds), split[i]);
+		if (original_i > i)
+			return (-1);
 		i++;
 	}
 	return (i);
@@ -104,10 +93,7 @@ t_commands	*commandize(t_info *info, char **split)
 	pipe = 0;
 	i = 0;
 	if (split[0] && split[0][0] == '|')
-	{
-		syntax(info->prompt, split[0]);
-		return (NULL);
-	}
+		return (syntax(info->prompt, split[0]));
 	info->cmds = new_cmds(NULL);
 	while (split[i])
 	{
@@ -117,10 +103,7 @@ t_commands	*commandize(t_info *info, char **split)
 			pipe++;
 			i++;
 			if (split[i] == NULL || split[i][0] == '|')
-			{
-				syntax(info->prompt, "|");
-				return (NULL);
-			}
+				return (syntax(info->prompt, "|"));
 		}
 		i = get_command(info, pipe, split, i);
 		if (i < 0)
