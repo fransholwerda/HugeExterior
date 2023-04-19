@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   extra.h                                            :+:    :+:            */
+/*   exec_utils.h                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/04/09 20:24:04 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/19 17:19:28 by ahorling      ########   odam.nl         */
+/*   Created: 2023/04/19 21:13:52 by ahorling      #+#    #+#                 */
+/*   Updated: 2023/04/19 21:49:01 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXTRA_H
-# define EXTRA_H
+#ifndef EXEC_UTILS
+# define EXEC_UTILS
 
 # include "structs.h"
 
-void	close_pipes(int pipefd[2]);
-void	manage_infiles(t_commands *commands, t_metainfo *info);
-void	manage_outfiles(t_commands *commands, t_metainfo *info);
-void	closefds(t_metainfo *info);
+char	**exec_single_builtin(t_commands *commands, t_metainfo *info);
+void	exec_single_command(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2]);
+void	exec_multiple_commands(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2]);
+int		get_exit_code(t_metainfo *info, int status);
 
 #endif

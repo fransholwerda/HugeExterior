@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   extra.c                                            :+:    :+:            */
+/*   extra_utils.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/09 20:21:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/19 20:05:28 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/19 20:24:20 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
-#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "errors.h"
 #include "pathfind.h"
@@ -76,4 +76,13 @@ void	manage_outfiles(t_commands *commands, t_metainfo *info)
 	}
 	else
 		info->outfilefd = STDOUT_FILENO;
+}
+
+void	setup_info(t_commands *commands, t_metainfo *info)
+{
+	info->path = find_path(info, commands);
+	manage_infiles(commands, info);
+	manage_outfiles(commands, info);
+	if (g_error != 0)
+		exit(g_error);
 }

@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/19 19:56:40 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/19 22:08:39 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 #include <fcntl.h>
 #include "builtins.h"
 #include "errors.h"
-#include "extra.h"
+#include "exec_utils.h"
+#include "extra_utils.h"
 #include "pathfind.h"
 #include "signal.h"
 #include "termine.h"
@@ -70,16 +71,7 @@ static void	child_redirects(t_commands *commands, t_metainfo *info, int pipe1[2]
 	}
 }
 
-static void	setup_info(t_commands *commands, t_metainfo *info)
-{
-	info->path = find_path(info, commands);
-	manage_infiles(commands, info);
-	manage_outfiles(commands, info);
-	if (g_error != 0)
-		exit(g_error);
-}
-
-static int	begin_fork(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2])
+int	begin_fork(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2])
 {
 	pid_t	pid;
 
@@ -113,50 +105,26 @@ char	**executer(t_commands *commands, char **envp)
 	t_metainfo	*info;
 	int			pipe1[2];
 	int			pipe2[2];
-	int			status;
+	static int	status = 0;
 	char		**envret;
 
-	status = 0;
 	info = malloc(sizeof(t_metainfo));
 	info->envp = envp;
-	g_error = 0;
+	envret = info->envp;
 	if (commands && commands->next == NULL)
 	{
 		if (check_builtin(commands) == true)
 		{
-			execute_builtin(commands, info);
-			free(info->path);
-			closefds(info);
-			envret = info->envp;
-			free(info);
+			envret = exec_single_builtin(commands, info);
 			return (envret);
 		}
 		else
-		{
-			termioff();
-			info->lastpid = begin_fork(commands, info, pipe1, pipe2);
-			waitpid(info->lastpid, &status, 0);
-		}
+			exec_single_command(commands, info, pipe1, pipe2);
+		waitpid(info->lastpid, &status, 0);
 	}
 	else
-	{
-		while (commands)
-		{
-			termioff();
-			info->lastpid = begin_fork(commands, info, pipe1, pipe2);
-			if (commands->next == NULL)
-				break ;
-			commands = commands->next;
-		}
-	}
-	if (commands->prev)
-		close_pipes(pipe1);
-	while ((info->lastpid = wait(&status)) > 0);
-	if (WIFEXITED(status) == true)
-		status = WEXITSTATUS(status);
-	g_error = status;
-	termion();
-	envret = info->envp;
+		exec_multiple_commands(commands, info, pipe1, pipe2);
+	g_error = get_exit_code(info, status);
 	free(info);
 	return (envret);
 }

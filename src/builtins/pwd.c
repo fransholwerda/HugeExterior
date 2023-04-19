@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/23 15:15:33 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/16 16:00:49 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/19 20:58:41 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,3 @@ void	pwd(int fd)
 	else
 		ft_putendl_fd(buf, fd);
 }
-
