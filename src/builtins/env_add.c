@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/15 17:17:42 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/01 18:44:01 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/19 17:43:40 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@
 #include "join_three.h"
 #include "stop.h"
 
-
-
-
-
-#include <stdio.h>
 extern int	g_error;
 
 int	env_find_var(char *env[], char *var)

@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/15 17:03:45 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/22 16:08:14 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/19 17:22:58 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,26 @@ static int	env_len_no_oldpwd(char *env[])
 	{
 		if (ft_strncmp(env[i], "OLDPWD=", 7) != 0)
 			count++;
+		if (ft_strncmp(env[i], "SHLVL=", 6) == 0)
+			count--;
 		i++;
 	}
+	count++;
 	return (count);
 }
+
+// static int	get_shlvl(char *env[], int j)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (env[i])
+// 	{
+// 		if (ft_strncmp(env[i], "SHLVL=", 6) )
+// 			return (replace_shlvl());
+// 	}
+// 	return (create_shlvl());
+// }
 
 //Will make a copy of env without OLDPWD
 char	**env_copy(char *env[])
@@ -54,6 +70,7 @@ char	**env_copy(char *env[])
 		}
 		i++;
 	}
+	//j = get_shlvl(new_env, j);
 	new_env[j] = NULL;
 	return (new_env);
 }

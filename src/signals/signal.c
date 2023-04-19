@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 13:29:18 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/19 15:24:15 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/19 16:11:48 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	redirect_int(int signal)
 static void	redirect_hd_int(int signal)
 {
 	if (signal == SIGINT)
-		write(1, "\n", 1);
+		exit(1);
 }
 
 void	redirect_signal(int mode)

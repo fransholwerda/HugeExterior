@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/23 17:39:10 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/17 18:32:12 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/19 17:42:57 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,8 @@ char	**export_var(char *env[], char *var)
 				ft_strdup(&var[equal_pos + 1]));
 	}
 	else
-	{
 		env = env_add(env, ft_strndup(var, equal_pos),
 				ft_strdup(&var[equal_pos + 1]));
-	}
 	return (env);
 }
 

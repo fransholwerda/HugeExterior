@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/13 13:25:31 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/17 15:48:30 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/19 17:44:29 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_split(char **split)
 	int	i;
 
 	i = 0;
-	while (split[i])
+	while (split && split[i])
 	{
 		free(split[i]);
 		split[i] = NULL;

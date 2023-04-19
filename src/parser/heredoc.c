@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/04 13:10:35 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/16 15:44:51 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/19 16:13:04 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	fork_heredoc(char *env[], char *filename, char *eof)
 	int		fd;
 	char	*str;
 
-	redirect_signal(0);
+	redirect_signal(2);
 	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd == -1)
 	{
@@ -106,7 +106,7 @@ char	*go_heredoc(char *env[], char *eof, int pipe_count)
 	pid_t	pid;
 
 	filename = get_hd_filename(pipe_count);
-	redirect_signal(2);
+	redirect_signal(3);
 	pid = fork();
 	if (pid < 0)
 		stop("hd_fork_failure\n");
@@ -118,6 +118,7 @@ char	*go_heredoc(char *env[], char *eof, int pipe_count)
 		fork_return = WEXITSTATUS(fork_return);
 	if (fork_return != 0)
 	{
+		g_error = fork_return;
 		free(filename);
 		return (NULL);
 	}

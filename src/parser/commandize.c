@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/19 14:52:15 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/19 15:54:50 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	add_file(t_info *info, char *data,
 
 static int	get_command(t_info *info, int pipe, char **split, int i)
 {
-	int			original_i;
+	int	original_i;
 
 	original_i = i;
 	while (split[i] != NULL && split[i][0] != '|')

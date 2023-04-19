@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/04/19 13:46:25 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/04/19 16:39:19 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,17 +33,17 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/executer/extra.c \
 			$(ROOT)src/signals/signal.c \
 			$(ROOT)src/signals/termine.c \
-			$(ROOT)src/lexer/cmds_struct_tools.c \
-			$(ROOT)src/lexer/cmds_struct_utils.c \
-			$(ROOT)src/lexer/commandize.c \
-			$(ROOT)src/lexer/expand_utils.c \
-			$(ROOT)src/lexer/expand.c \
-			$(ROOT)src/lexer/file_struct_tools.c \
-			$(ROOT)src/lexer/heredoc.c \
-			$(ROOT)src/lexer/separate_cmds.c \
-			$(ROOT)src/lexer/split_commands.c \
-			$(ROOT)src/lexer/split_utils.c \
-			$(ROOT)src/lexer/trim_cmds.c \
+			$(ROOT)src/parser/cmds_struct_tools.c \
+			$(ROOT)src/parser/cmds_struct_utils.c \
+			$(ROOT)src/parser/commandize.c \
+			$(ROOT)src/parser/expand_utils.c \
+			$(ROOT)src/parser/expand.c \
+			$(ROOT)src/parser/file_struct_tools.c \
+			$(ROOT)src/parser/heredoc.c \
+			$(ROOT)src/parser/separate_cmds.c \
+			$(ROOT)src/parser/split_commands.c \
+			$(ROOT)src/parser/split_utils.c \
+			$(ROOT)src/parser/trim_cmds.c \
 			$(ROOT)src/utils/array_len.c \
 			$(ROOT)src/utils/array_sort.c \
 			$(ROOT)src/utils/free_split.c \
@@ -67,7 +67,7 @@ OBJ		= $(SRC:.c=.o)
 INCLUDE	= -I $(ROOT)include \
 			-I $(ROOT)include/builtins \
 			-I $(ROOT)include/executer \
-			-I $(ROOT)include/lexer \
+			-I $(ROOT)include/parser \
 			-I $(ROOT)include/signals \
 			-I $(ROOT)include/utils \
 			-I $(HOME)/.brew/Cellar/readline/8.2.1/include
