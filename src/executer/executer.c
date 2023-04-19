@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/19 18:06:46 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/19 19:56:40 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ char	**executer(t_commands *commands, char **envp)
 	status = 0;
 	info = malloc(sizeof(t_metainfo));
 	info->envp = envp;
+	g_error = 0;
 	if (commands && commands->next == NULL)
 	{
 		if (check_builtin(commands) == true)
@@ -150,13 +151,11 @@ char	**executer(t_commands *commands, char **envp)
 	}
 	if (commands->prev)
 		close_pipes(pipe1);
-//	waitpid(info->lastpid, &status, 0);
-	while (info->lastpid == wait(&status) > 0);
+	while ((info->lastpid = wait(&status)) > 0);
 	if (WIFEXITED(status) == true)
 		status = WEXITSTATUS(status);
 	g_error = status;
 	termion();
-	closefds(info);
 	envret = info->envp;
 	free(info);
 	return (envret);
