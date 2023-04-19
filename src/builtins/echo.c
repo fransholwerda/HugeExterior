@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 17:19:34 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/16 16:09:18 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/16 20:01:28 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,36 @@
 
 extern int	g_error;
 
+static int	flag_check(char *args[], int fd)
+{
+	int		i;
+	int		j;
+
+	i = 1;
+	while (args[i] && ft_strncmp(args[i], "-n", 2) == 0)
+	{
+		j = 2;
+		while (args[i][j] && args[i][j] == 'n')
+			j++;
+		if (args[i][j])
+		{
+			ft_putstr_fd(&args[i][j], fd);
+			return (i + 1);
+		}
+		i++;
+	}
+	return (i);
+}
+
 void	echo(t_commands *commands, int fd)
 {
 	bool	newline;
 	int		i;
 
-	i = 1;
+	i = flag_check(commands->args, fd);
 	newline = true;
-	if (commands->args[i] && ft_strncmp(commands->args[i], "-n", 2) == 0)
-	{
+	if (i > 1)
 		newline = false;
-		i++;
-	}
 	while (commands->args[i])
 	{
 		ft_putstr_fd(commands->args[i], fd);

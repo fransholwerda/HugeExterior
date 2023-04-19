@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   printer.h                                          :+:    :+:            */
+/*   minishell.h                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/07 13:09:44 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/19 13:12:47 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/04/17 19:53:20 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/04/17 19:53:39 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINTER_H
-# define PRINTER_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-void	*syntax(char *prompt, char *token);
+# include "structs.h"
+
+void	minishell(t_info *info);
 
 #endif

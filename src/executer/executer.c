@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/19 17:55:41 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/19 18:06:46 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include "signal.h"
 #include "termine.h"
 #include "structs.h"
+#include "termine.h"
 
 extern int	g_error;
 
