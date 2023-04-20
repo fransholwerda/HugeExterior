@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 19:51:30 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/19 17:57:53 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/20 13:16:20 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static void	parse_and_execute(t_info *info, char *str)
 		trim_split_cmds(split);
 		if (commandize(info, split))
 		{
-			print_cmd(info->cmds);
 			redirect_signal(3);
 			info->env = executer(info->cmds, info->env);
 			redirect_signal(1);

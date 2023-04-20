@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 15:14:30 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/16 15:55:54 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/20 13:10:19 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ char	*combine_three_strings(char *str, int start, int end, char *var)
 	else
 		new_str = ft_strdup(var);
 	free(s1);
+	s1 = NULL;
 	free(s2);
+	s2 = NULL;
 	return (new_str);
 }
 
@@ -78,10 +80,12 @@ char	*get_env_var(char *env[], char *var)
 		{
 			content = ft_strdup(&env[i][ft_strlen(var) + 1]);
 			free(var);
+			var = NULL;
 			return (content);
 		}
 		i++;
 	}
 	free(var);
+	var = NULL;
 	return (ft_strdup(""));
 }
