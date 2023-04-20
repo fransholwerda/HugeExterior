@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 19:51:30 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/20 16:04:34 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/20 16:26:12 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,27 +35,6 @@ static int	is_empty(char *str)
 		str++;
 	}
 	return (1);
-}
-
-void print_split(char *split[])
-{
-	int i = 0;
-	//remove
-	while (split[i])
-	{
-		printf("::%s::\n", split[i]);
-		i++;
-	}
-}
-
-void print_cmd(t_commands *cmds)
-{
-	//remove
-	while (cmds && cmds->args)
-	{
-		print_split(cmds->args);
-		cmds = cmds->next;
-	}
 }
 
 static void	parse_and_execute(t_info *info, char *str)

@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/09 20:21:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/19 20:24:20 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/20 16:46:00 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	manage_infiles(t_commands *commands, t_metainfo *info)
 				continue ;
 			}
 			else
-				info->infilefd = open(commands->infile->name, commands->infile->mode);
+				info->infilefd
+					= open(commands->infile->name, commands->infile->mode);
 			if (commands->infile->hd == true)
 				unlink(commands->infile->name);
 			if (commands->infile->next)
@@ -66,9 +67,11 @@ void	manage_outfiles(t_commands *commands, t_metainfo *info)
 		while (commands->outfile)
 		{
 			if (access(commands->outfile->name, F_OK) != 0)
-				info->outfilefd = open(commands->outfile->name, O_RDWR | O_CREAT, 0655);
+				info->outfilefd
+					= open(commands->outfile->name, O_RDWR | O_CREAT, 0655);
 			else if (access(commands->outfile->name, W_OK) == 0)
-				info->outfilefd = open(commands->outfile->name, commands->outfile->mode);
+				info->outfilefd
+					= open(commands->outfile->name, commands->outfile->mode);
 			else
 				outfile_error(commands);
 			commands->outfile = commands->outfile->next;

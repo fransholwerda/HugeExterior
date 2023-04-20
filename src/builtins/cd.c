@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 20:32:04 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/16 16:09:25 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/20 16:26:54 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ void	cd(t_commands *commands, t_metainfo *info)
 	pwd = ft_strjoin("OLDPWD=", get_env_var_no_free(info->envp, "PWD"));
 	info->envp = export_var(info->envp, pwd);
 	free(pwd);
-	if (!commands->args[1] || (commands->args[1][0] == '~' && !commands->args[1][1]))
+	if (!commands->args[1]
+		|| (commands->args[1][0] == '~' && !commands->args[1][1]))
 		change_to_home(info, pwd);
 	else
 		change_non_home(commands, info, pwd);

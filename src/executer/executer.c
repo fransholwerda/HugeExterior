@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/19 22:08:39 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/20 16:27:21 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static void	execute_child(t_commands *commands, t_metainfo *info)
 	}
 }
 
-static void	child_redirects(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2])
+static void	child_redirects(t_commands *commands, t_metainfo *info
+	, int pipe1[2], int pipe2[2])
 {
 	if (info->infilefd != STDIN_FILENO)
 	{
@@ -71,7 +72,8 @@ static void	child_redirects(t_commands *commands, t_metainfo *info, int pipe1[2]
 	}
 }
 
-int	begin_fork(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2])
+int	begin_fork(t_commands *commands, t_metainfo *info
+	, int pipe1[2], int pipe2[2])
 {
 	pid_t	pid;
 

@@ -6,12 +6,12 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/09 20:24:04 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/19 20:23:01 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/20 16:47:22 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXTRA_H
-# define EXTRA_H
+#ifndef EXTRA_UTILS_H
+# define EXTRA_UTILS_H
 
 # include "structs.h"
 
