@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/28 16:17:07 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/09 19:43:28 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/20 14:52:11 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 # include <stdbool.h>
 # include <unistd.h>
+
+typedef struct s_three_ints
+{
+	int	start;
+	int	end;
+	int	i;
+}		t_three_ints;
 
 typedef struct s_file
 {

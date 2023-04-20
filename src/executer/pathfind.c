@@ -6,13 +6,15 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/03 16:38:35 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/16 15:47:32 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/19 18:36:28 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "structs.h"
+#include "free_split.h"
 #include "ft_split.h"
 #include "utils.h"
 #include "errors.h"
@@ -27,7 +29,7 @@ static char	**get_paths(t_metainfo *info)
 	while (info->envp[i])
 	{
 		if (ft_strncmp(info->envp[i], "PATH=", 5) == 0)
-			break;
+			break ;
 		i++;
 	}
 	temp = ft_substr(info->envp[i], 5, ft_strlen(info->envp[i]));
@@ -51,7 +53,7 @@ char	*find_path(t_metainfo *info, t_commands *commands)
 	paths = get_paths(info);
 	i = 0;
 	if (!commands->args)
-		return("1");
+		return ("1");
 	while (paths[i] && commands->args[0] != '\0')
 	{
 		temp = ft_strjoin("/", commands->args[0]);
@@ -59,12 +61,12 @@ char	*find_path(t_metainfo *info, t_commands *commands)
 		free(temp);
 		if (access(final_command, F_OK) == 0)
 		{
-			free(paths);
-			return(final_command);
+			free_split(paths);
+			return (final_command);
 		}
 		free(final_command);
 		i++;
 	}
-	free(paths);
+	free_split(paths);
 	return ("1");
 }

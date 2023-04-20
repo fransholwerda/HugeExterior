@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   exit.c                                             :+:    :+:            */
+/*   splinter_split.h                                   :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
+/*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/04/10 18:21:01 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/19 20:58:32 by ahorling      ########   odam.nl         */
+/*   Created: 2023/04/20 15:48:59 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/04/20 15:49:26 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "structs.h"
+#ifndef SPLINTER_SPLIT_H
+# define SPLINTER_SPLIT_H
 
-extern int	g_error;
+char	**splinter_new_split(char **split, int i, int start, int end);
 
-void	mini_exit(t_commands *commands)
-{
-	g_error = 0;
-	if (!commands->prev)
-		write(2, "exit\n", 5);
-	exit(g_error);
-}
+#endif

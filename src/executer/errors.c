@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/09 04:58:09 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/17 18:44:56 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/19 20:53:57 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	outfile_error(t_commands *commands)
 	exit(g_error);
 }
 
-void	fork_error()
+void	fork_error(void)
 {
 	write(2, "minishell: ", 12);
 	write(2, "fork: ", 7);
@@ -65,7 +65,7 @@ void	fork_error()
 	exit(g_error);
 }
 
-void	env_error()
+void	env_error(void)
 {
 	write(2, "Failure to split env in in pathfind\n", 37);
 	g_error = 1;

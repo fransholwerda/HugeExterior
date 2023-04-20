@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/23 17:39:10 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/19 17:42:57 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/20 14:16:36 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	**export_var(char *env[], char *var)
 	equal_pos = find_char(var, '=');
 	var_pos = env_find_var(env, var);
 	if (equal_pos == -1 && var_pos == -1)
-		env = env_add(env, var, NULL);
+		env = env_add(env, ft_strdup(var), NULL);
 	else if (equal_pos > -1 && var_pos > -1)
 	{
 		env = env_pop(env, ft_strndup(var, equal_pos));

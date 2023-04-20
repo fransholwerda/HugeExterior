@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 21:15:18 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/17 18:32:13 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/19 20:23:51 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "cd.h"
 #include "echo.h"
 #include "env.h"
-#include "executer/extra.h"
+#include "extra_utils.h"
 #include "exit.h"
 #include "export.h"
 #include "pwd.h"
@@ -25,7 +25,7 @@
 #include "structs.h"
 #include "utils.h"
 
-extern int g_error;
+extern int	g_error;
 
 bool	check_builtin(t_commands *commands)
 {

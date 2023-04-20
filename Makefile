@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/04/19 16:39:19 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/04/20 15:48:44 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,9 +28,10 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/builtins/unset.c \
 			$(ROOT)src/executer/builtins.c \
 			$(ROOT)src/executer/errors.c \
+			$(ROOT)src/executer/exec_utils.c \
 			$(ROOT)src/executer/executer.c \
+			$(ROOT)src/executer/extra_utils.c \
 			$(ROOT)src/executer/pathfind.c \
-			$(ROOT)src/executer/extra.c \
 			$(ROOT)src/signals/signal.c \
 			$(ROOT)src/signals/termine.c \
 			$(ROOT)src/parser/cmds_struct_tools.c \
@@ -41,6 +42,7 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/parser/file_struct_tools.c \
 			$(ROOT)src/parser/heredoc.c \
 			$(ROOT)src/parser/separate_cmds.c \
+			$(ROOT)src/parser/splinter_split.c \
 			$(ROOT)src/parser/split_commands.c \
 			$(ROOT)src/parser/split_utils.c \
 			$(ROOT)src/parser/trim_cmds.c \

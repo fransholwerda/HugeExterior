@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/19 15:54:50 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/20 16:04:07 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	is_data(char *str)
 	return (1);
 }
 
-int	add_heredoc(t_info *info, char *data, int pipe)
+static int	add_heredoc(t_info *info, char *data, int pipe)
 {
 	char	*hd_file;
 
@@ -45,7 +45,7 @@ int	add_heredoc(t_info *info, char *data, int pipe)
 	return (1);
 }
 
-int	add_file(t_info *info, char *data,
+static int	add_file(t_info *info, char *data,
 	void (*f)(t_commands *, char *, bool), bool hd_app)
 {
 	t_commands	*cmds;
