@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 20:32:04 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/21 16:48:51 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/21 17:15:41 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,11 @@ static char	*get_env_var_no_free(char *env[], char *var)
 	return (ft_strdup(""));
 }
 
-static void	change_to_home(t_metainfo *info, char *pwd)
+static void	change_to_home(t_metainfo *info, char *oldpwd)
 {
-	char *buffer;
-	char *home;
+	char	*buffer;
+	char	*home;
+	char	*pwd;
 	
 	home = get_env_var_no_free(info->envp, "HOME");
 	if (chdir(home) != 0)
@@ -53,11 +54,12 @@ static void	change_to_home(t_metainfo *info, char *pwd)
 		write(info->outfilefd, "HOME", 4);
 		write(info->outfilefd, ": No such file or directory\n", 28);
 		g_error = 1;
-		free(pwd);
+		free(oldpwd);
 		free(home);
 		return ;
 	}
-	free(pwd);
+	info->envp = export_var(info->envp, oldpwd);
+	free(oldpwd);
 	buffer = malloc(sizeof(char) * 10240);
 	pwd = ft_strjoin("PWD=", getcwd(buffer, 1024 * sizeof(char)));
 	free(buffer);
@@ -66,21 +68,24 @@ static void	change_to_home(t_metainfo *info, char *pwd)
 	free(home);
 }
 
-static void	change_non_home(t_commands *commands, t_metainfo *info, char *pwd)
+static void	change_non_home(t_commands *commands, t_metainfo *info, char *oldpwd)
 {
 	char *buffer;
+	char *pwd;
 
+	pwd = NULL;
 	if (chdir(commands->args[1]) != 0)
 	{
 		write(info->outfilefd, "minishell: cd: ", 16);
 		write(info->outfilefd, commands->args[1], ft_strlen(commands->args[1]));
 		write(info->outfilefd, ": No such file or directory\n", 28);
 		g_error = 1;
-		free(pwd);
+		free(oldpwd);
 	}
 	else
 	{
-		free(pwd);
+		info->envp = export_var(info->envp, oldpwd);
+		free(oldpwd);
 		buffer = malloc(10240 * sizeof(char));
 		pwd = ft_strjoin("PWD=", getcwd(buffer, 10240 * sizeof(char)));
 		free(buffer);
@@ -91,17 +96,16 @@ static void	change_non_home(t_commands *commands, t_metainfo *info, char *pwd)
 
 void	cd(t_commands *commands, t_metainfo *info)
 {
-	char	*pwd;
 	char	*oldpwd;
+	char	*currentpwd;
 
 	g_error = 0;
-	oldpwd = get_env_var_no_free(info->envp, "PWD");
-	pwd = ft_strjoin("OLDPWD=", oldpwd);
-	info->envp = export_var(info->envp, pwd);
-	free(oldpwd);
+	currentpwd = get_env_var_no_free(info->envp, "PWD");
+	oldpwd = ft_strjoin("OLDPWD=", currentpwd);
+	free(currentpwd);
 	if (!commands->args[1]
 		|| (commands->args[1][0] == '~' && !commands->args[1][1]))
-		change_to_home(info, pwd);
+		change_to_home(info, oldpwd);
 	else
-		change_non_home(commands, info, pwd);
+		change_non_home(commands, info, oldpwd);
 }
