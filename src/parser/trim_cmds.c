@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 15:25:02 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/21 12:43:12 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/21 18:18:53 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 #include "separate_cmds.h"
 #include "stop.h"
 #include <stdlib.h>
+
+#include <stdio.h>
+// static void	print_array(char **array)
+// {
+// 	int i = 0;
+// 	while (array[i])
+// 	{
+// 		printf("::%s::\n", array[i]);
+// 		i++;
+// 	}
+// 	printf("next should be NULL\n");
+// 	printf("::%s::\n\n", array[i]);
+// }
 
 static void	trim_cmd(char **split, int i, int q1, int q2)
 {
@@ -76,6 +89,7 @@ void	trim_split_cmds(char **split)
 	int	i;
 
 	i = 0;
+	//print_array(split);
 	while (split[i])
 	{
 		find_trim(split, i);
@@ -87,7 +101,8 @@ void	trim_cmds(t_commands *cmds)
 {
 	while (cmds)
 	{
-		trim_split_cmds(cmds->args);
+		if (cmds->args)
+			trim_split_cmds(cmds->args);
 		cmds = cmds->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 14:38:57 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/21 15:26:09 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/21 17:49:52 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@
 #include "ft_is_al_under.h"
 #include "stop.h"
 
-
-
-
-#include <stdio.h>
 static int	expand_dollar(char *env[], char *split[], int i, int pos)
 {
 	int		end;
@@ -59,7 +55,6 @@ static void	expand_cmd(char *env[], char *split[], int i)
 		}
 		while (split[i][pos] == '$' && split[i][pos + 1] != ' '
 			&& split[i][pos + 1] != '$' && split[i][pos + 1] != '\0')
-			// expand_dollar(env, split, i, pos);
 			pos = expand_dollar(env, split, i, pos);
 		pos++;
 		len = ft_strlen(split[i]);

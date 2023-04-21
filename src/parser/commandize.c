@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/21 12:45:20 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/21 18:02:15 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,19 @@
 #include "structs.h"
 
 
+
 #include <stdio.h>
+static void	print_array(char **array)
+{
+	int i = 0;
+	while (array[i])
+	{
+		printf("::%s::\n", array[i]);
+		i++;
+	}
+	printf("next should be NULL\n");
+	printf("::%s::\n\n", array[i]);
+}
 static int	is_data(char *str)
 {
 	if (!str)
@@ -67,9 +79,9 @@ static int	get_command(t_info *info, int pipe, char **split, int i)
 {
 	int	original_i;
 
-	original_i = i;
 	while (split[i] != NULL && split[i][0] != '|')
 	{
+		original_i = i;
 		if (split[i][0] == '<' && split[i][1] == '<')
 			i += add_heredoc(info, split[i + 1], pipe);
 		else if (split[i][0] == '<')
@@ -87,29 +99,17 @@ static int	get_command(t_info *info, int pipe, char **split, int i)
 	return (i);
 }
 
-// static void	print_split(char *split[])
-// {
-// 	int i = 0;
-// 	while (split[i])
-// 	{
-// 		printf("::%s::\n",split[i]);
-// 		i++;
-// 	}
-// 	printf("end\n");
-// 	printf("::%s::\n",split[i]);
-// }
-
 t_commands	*commandize(t_info *info, char **split)
 {
 	int	pipe;
 	int	i;
 
-	// print_split(split);
 	pipe = 0;
 	i = 0;
 	if (split[0] && split[0][0] == '|')
 		return (syntax(info->prompt, split[0]));
 	info->cmds = new_cmds(NULL);
+	print_array(split);
 	while (split[i])
 	{
 		if (split[i][0] == '|')
@@ -120,9 +120,12 @@ t_commands	*commandize(t_info *info, char **split)
 			if (split[i] == NULL || split[i][0] == '|')
 				return (syntax(info->prompt, "|"));
 		}
+		printf("before i: %d\n", i);
 		i = get_command(info, pipe, split, i);
+		printf("after i: %d\n", i);
 		if (i < 0)
 			return (NULL);
 	}
+	print_array(split);
 	return (info->cmds);
 }
