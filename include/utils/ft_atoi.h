@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   trim_cmds.h                                        :+:    :+:            */
+/*   ft_atoi.h                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/02/06 17:30:32 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/21 12:43:57 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/04/20 17:29:05 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/04/20 17:29:26 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TRIM_CMDS_H
-# define TRIM_CMDS_H
+#ifndef FT_ATOI_H
+# define FT_ATOI_H
 
-# include "structs.h"
-
-void	trim_split_cmds(char **split);
-void	trim_cmds(t_commands *cmds);
+int	ft_atoi(const char *nptr);
 
 #endif

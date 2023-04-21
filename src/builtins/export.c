@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/23 17:39:10 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/20 14:16:36 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/20 20:02:24 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	print_export(char *env[], int fd)
 	}
 }
 
-static int	find_char(char *str, char c)
+int	find_char(char *str, char c)
 {
 	int	i;
 

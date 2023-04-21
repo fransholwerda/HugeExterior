@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 14:57:56 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/20 15:55:57 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/20 21:17:46 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static int	splinter(t_three_ints ints, char *new_split[], char *split[])
 	return (j);
 }
 
+//else if (start > 0 && end < (ft_strlen(split[i]) - 1)) #83
 char	**splinter_new_split(char **split, int i, int start, int end)
 {
 	t_three_ints	ints;
@@ -74,7 +75,7 @@ char	**splinter_new_split(char **split, int i, int start, int end)
 	ints.i = i;
 	if (start == 0 && end == (ft_strlen(split[i])))
 		return (split);
-	else if (start > 0 && end < (ft_strlen(split[i]) - 1))
+	else if (start > 0 && end < (ft_strlen(split[i])))
 		new_split = (char **)malloc((count_split(split) + 3) * sizeof(char *));
 	else
 		new_split = (char **)malloc((count_split(split) + 2) * sizeof(char *));

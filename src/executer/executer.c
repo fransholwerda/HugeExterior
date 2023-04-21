@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/20 16:27:21 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/21 13:14:06 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include "pathfind.h"
 #include "signal.h"
 #include "termine.h"
+#include "stop.h"
 #include "structs.h"
 #include "termine.h"
 
@@ -102,6 +103,18 @@ int	begin_fork(t_commands *commands, t_metainfo *info
 	return (pid);
 }
 
+t_metainfo	*init_metainfo(char *envp[])
+{
+	t_metainfo	*info;
+
+	info = malloc(sizeof(t_metainfo));
+	if (!info)
+		malloc_stop("malloc_executer");
+	info->envp = envp;
+	info->path = NULL;
+	return (info);
+}
+
 char	**executer(t_commands *commands, char **envp)
 {
 	t_metainfo	*info;
@@ -110,8 +123,7 @@ char	**executer(t_commands *commands, char **envp)
 	static int	status = 0;
 	char		**envret;
 
-	info = malloc(sizeof(t_metainfo));
-	info->envp = envp;
+	info = init_metainfo(envp);
 	envret = info->envp;
 	if (commands && commands->next == NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 15:27:23 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/20 16:05:34 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/21 12:53:20 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@
 
 int	skip_until(char *str, int pos, char c)
 {
-	while (str[pos] != c)
+	while (str[pos] && str[pos] != c)
 		pos++;
 	return (pos);
 }
 
-static char	**function_name(char *split[], int i, int *pos)
+static char	**check_operators(char *split[], int i, int *pos)
 {
-	if (split[i][*pos] == '\"')
-		*pos = skip_until(split[i], *pos, '\"');
+	if (split[i][*pos] && split[i][*pos] == '\"')
+		*pos = skip_until(split[i], *pos + 1, '\"');
 	else if (split[i][*pos] == '\'')
-		*pos = skip_until(split[i], *pos, '\'');
+		*pos = skip_until(split[i], *pos + 1, '\'');
 	else if (split[i][*pos] == '|')
 		split = splinter_new_split(split, i, *pos, *pos + 1);
 	else if (split[i][*pos] == '<' && split[i][*pos + 1] == '<')
@@ -51,7 +51,7 @@ static char	**function_name(char *split[], int i, int *pos)
 	return (split);
 }
 
-static char	**find_cmds(char **split, int i)
+static char	**find_cmds(char *split[], int i)
 {
 	int	len;
 	int	pos;
@@ -59,11 +59,14 @@ static char	**find_cmds(char **split, int i)
 	len = ft_strlen(split[i]);
 	pos = 0;
 	while (pos < len)
-		split = function_name(split, i, &pos);
+	{
+		split = check_operators(split, i, &pos);
+		len = ft_strlen(split[i]);
+	}
 	return (split);
 }
 
-char	**separate_cmds(char **split)
+char	**separate_cmds(char *split[])
 {
 	int	i;
 
