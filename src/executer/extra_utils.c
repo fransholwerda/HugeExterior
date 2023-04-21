@@ -6,13 +6,14 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/09 20:21:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/21 18:00:20 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/21 20:52:48 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 #include "errors.h"
 #include "pathfind.h"
 #include "structs.h"
@@ -50,7 +51,10 @@ void	manage_infiles(t_commands *commands, t_metainfo *info)
 				info->infilefd
 					= open(commands->infile->name, commands->infile->mode);
 			if (commands->infile->hd == true)
+			{
 				unlink(commands->infile->name);
+				return ;
+			}
 			if (commands->infile->next)
 				close(info->infilefd);
 			commands->infile = commands->infile->next;

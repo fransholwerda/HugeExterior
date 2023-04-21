@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/21 18:02:15 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/21 21:00:08 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,8 @@ static void	print_array(char **array)
 	int i = 0;
 	while (array[i])
 	{
-		printf("::%s::\n", array[i]);
 		i++;
 	}
-	printf("next should be NULL\n");
-	printf("::%s::\n\n", array[i]);
 }
 static int	is_data(char *str)
 {
@@ -120,9 +117,7 @@ t_commands	*commandize(t_info *info, char **split)
 			if (split[i] == NULL || split[i][0] == '|')
 				return (syntax(info->prompt, "|"));
 		}
-		printf("before i: %d\n", i);
 		i = get_command(info, pipe, split, i);
-		printf("after i: %d\n", i);
 		if (i < 0)
 			return (NULL);
 	}

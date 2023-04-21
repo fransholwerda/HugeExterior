@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/21 20:14:15 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/21 20:54:20 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ static void	execute_child(t_commands *commands, t_metainfo *info)
 {
 	if (check_builtin(commands) == true)
 		execute_builtin(commands, info);
+	if (!commands->args)
+	{
+		if (commands->infile->hd == true)
+			exit(0);
+	}
 	else if (access(commands->args[0], F_OK) == 0)
 	{
 		execve(commands->args[0], commands->args, info->envp);
