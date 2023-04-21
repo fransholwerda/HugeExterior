@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/03 16:38:35 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/19 18:36:28 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/21 17:52:59 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,19 @@
 #include "utils.h"
 #include "errors.h"
 
-static char	**get_paths(t_metainfo *info)
+extern int	g_error;
+
+static void	path_not_found(t_metainfo *info, t_commands *commands)
+{
+	(void)info;
+	write(2, "minishell: ", 12);
+	write(2, commands->args[0], ft_strlen(commands->args[0]));
+	write(2, ": No such file or directory\n", 29);
+	g_error = 127;
+	exit(g_error);
+}
+
+static char	**get_paths(t_metainfo *info, t_commands *commands)
 {
 	int		i;
 	char	**paths;
@@ -32,6 +44,8 @@ static char	**get_paths(t_metainfo *info)
 			break ;
 		i++;
 	}
+	if (info->envp[i] == NULL)
+		path_not_found(info, commands);
 	temp = ft_substr(info->envp[i], 5, ft_strlen(info->envp[i]));
 	paths = ft_split(temp, ':');
 	if (!paths)
@@ -50,7 +64,7 @@ char	*find_path(t_metainfo *info, t_commands *commands)
 	char	**paths;
 	char	*final_command;
 
-	paths = get_paths(info);
+	paths = get_paths(info, commands);
 	i = 0;
 	if (!commands->args)
 		return ("1");
