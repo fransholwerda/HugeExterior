@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 21:12:10 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/20 20:02:33 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/21 20:26:05 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,25 @@
 
 extern int	g_error;
 
+void	check_heredoc(t_commands *commands)
+{
+	t_file *HEAD;
+
+	if (commands->infile)
+	{
+		HEAD = malloc(sizeof(t_file));
+		HEAD = commands->infile;
+		while (commands->infile)
+		{
+			if (commands->infile->hd == true)
+				unlink(commands->infile->name);
+			commands->infile = commands->infile->next;
+		}
+		commands->infile = HEAD;
+		free(HEAD);
+	}
+}
+
 char	**exec_single_builtin(t_commands *commands, t_metainfo *info)
 {
 	char	**ret;
@@ -43,6 +62,8 @@ char	**exec_single_builtin(t_commands *commands, t_metainfo *info)
 void	exec_single_command(t_commands *commands, t_metainfo *info
 	, int pipe1[2], int pipe2[2])
 {
+	if (!commands->args)
+		check_heredoc(commands);
 	g_error = 0;
 	termioff();
 	info->lastpid = begin_fork(commands, info, pipe1, pipe2);
@@ -54,6 +75,12 @@ void	exec_multiple_commands(t_commands *commands, t_metainfo *info
 	g_error = 0;
 	while (commands)
 	{
+		if (!commands->args)
+		{
+			check_heredoc(commands);
+			commands = commands->next;
+			continue ; 
+		}
 		termioff();
 		info->lastpid = begin_fork(commands, info, pipe1, pipe2);
 		if (commands->next == NULL)
@@ -68,8 +95,7 @@ int	get_exit_code(t_metainfo *info, int status)
 {
 	waitpid(info->lastpid, &status, 0);
 	while (wait(NULL) > 0)
-	{
-	}
+		continue ;
 	if (WIFEXITED(status) == true)
 	{
 		status = WEXITSTATUS(status);

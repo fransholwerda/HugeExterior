@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 21:13:52 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/20 16:47:03 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/21 20:19:52 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ void	exec_single_command(t_commands *commands, t_metainfo *info,
 void	exec_multiple_commands(t_commands *commands, t_metainfo *info,
 			int pipe1[2], int pipe2[2]);
 int		get_exit_code(t_metainfo *info, int status);
+void	check_heredoc(t_commands *commands);
 
 #endif
