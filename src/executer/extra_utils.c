@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/09 20:21:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/20 16:46:00 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/21 18:00:20 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ void	manage_outfiles(t_commands *commands, t_metainfo *info)
 
 void	setup_info(t_commands *commands, t_metainfo *info)
 {
-	info->path = find_path(info, commands);
 	manage_infiles(commands, info);
 	manage_outfiles(commands, info);
+	info->path = find_path(info, commands);
 	if (g_error != 0)
 		exit(g_error);
 }
