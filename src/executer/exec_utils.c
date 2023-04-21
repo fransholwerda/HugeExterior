@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 21:12:10 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/21 20:58:14 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/21 21:34:16 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	exec_multiple_commands(t_commands *commands, t_metainfo *info
 
 int	get_exit_code(t_metainfo *info, int status)
 {
+	int	exit;
+
 	waitpid(info->lastpid, &status, 0);
 	while (wait(NULL) > 0)
 		continue ;
@@ -74,6 +76,18 @@ int	get_exit_code(t_metainfo *info, int status)
 		status = WEXITSTATUS(status);
 		termion();
 		return (status);
+	}
+	else if (WIFSIGNALED(status) == true)
+	{
+		exit = WTERMSIG(status);
+		if (exit == 2)
+			status = 130;
+		else if (exit == 3)
+		{
+			status = 131;
+			write(2, "Quit: 3", 8);
+		}
+		write(2, "\n", 2);
 	}
 	termion();
 	return (status);

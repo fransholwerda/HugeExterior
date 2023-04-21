@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/09 20:21:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/21 20:52:48 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/21 21:20:18 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	manage_outfiles(t_commands *commands, t_metainfo *info)
 void	setup_info(t_commands *commands, t_metainfo *info)
 {
 	manage_infiles(commands, info);
+	if (access(".heredoc0", F_OK) == 0)
+		unlink(".heredoc0");
 	manage_outfiles(commands, info);
 	info->path = find_path(info, commands);
 	if (g_error != 0)

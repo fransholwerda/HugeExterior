@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/09 04:58:09 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/21 15:05:29 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/21 21:20:15 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	path_error(t_commands *commands)
 
 void	infile_errors(t_commands *commands)
 {
+	if (access(".heredoc0", F_OK) == 0)
+		unlink(".heredoc0");
 	if (access(commands->infile->name, F_OK) != 0)
 	{
 		write(2, "minishell: ", 12);
