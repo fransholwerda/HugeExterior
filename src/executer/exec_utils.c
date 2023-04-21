@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 21:12:10 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/19 22:12:42 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/20 20:02:33 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,16 @@ char	**exec_single_builtin(t_commands *commands, t_metainfo *info)
 	return (ret);
 }
 
-void	exec_single_command(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2])
+void	exec_single_command(t_commands *commands, t_metainfo *info
+	, int pipe1[2], int pipe2[2])
 {
 	g_error = 0;
 	termioff();
 	info->lastpid = begin_fork(commands, info, pipe1, pipe2);
 }
 
-void	exec_multiple_commands(t_commands *commands, t_metainfo *info, int pipe1[2], int pipe2[2])
+void	exec_multiple_commands(t_commands *commands, t_metainfo *info
+	, int pipe1[2], int pipe2[2])
 {
 	g_error = 0;
 	while (commands)
@@ -71,6 +73,7 @@ int	get_exit_code(t_metainfo *info, int status)
 	if (WIFEXITED(status) == true)
 	{
 		status = WEXITSTATUS(status);
+		termion();
 		return (status);
 	}
 	termion();

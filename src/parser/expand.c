@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 14:38:57 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/03/24 13:43:48 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/20 13:10:25 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ static int	expand_dollar(char *env[], char *split[], int i, int pos)
 	temp = split[i];
 	split[i] = combine_three_strings(split[i], pos, end + 1, var);
 	free(temp);
-	free (var);
+	temp = NULL;
+	free(var);
+	var = NULL;
 	return (pos);
 }
 

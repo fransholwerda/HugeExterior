@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/15 17:41:14 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/04 17:07:02 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/19 17:33:03 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,12 @@ char	**env_pop(char *env[], char *var)
 			|| env[i][ft_strlen(var)] == '='))
 		{
 			free(var);
+			var = NULL;
 			return (remove_env_var(env, array_len(env), i));
 		}
 		i++;
 	}
 	free(var);
+	var = NULL;
 	return (env);
 }

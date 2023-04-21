@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 19:51:30 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/19 18:04:43 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/21 13:08:42 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,18 @@ static int	is_empty(char *str)
 	return (1);
 }
 
+// static void	print_split(char *split[])
+// {
+// 	int i = 0;
+// 	while (split[i])
+// 	{
+// 		printf("::%s::\n",split[i]);
+// 		i++;
+// 	}
+// 	printf("Next should be NULL:\n");
+// 	printf("::%s::\n",split[i]);
+// }
+
 static void	parse_and_execute(t_info *info, char *str)
 {
 	char	**split;
@@ -47,12 +59,16 @@ static void	parse_and_execute(t_info *info, char *str)
 	{
 		expand_split(info->env, split);
 		split = separate_cmds(split);
-		trim_split_cmds(split);
 		if (commandize(info, split))
 		{
+			trim_cmds(info->cmds);
+			//print_split(info->cmds->args);
 			redirect_signal(3);
 			info->env = executer(info->cmds, info->env);
 			redirect_signal(1);
+		}
+		if (info->cmds)
+		{
 			free_cmds(info->cmds);
 			info->cmds = NULL;
 		}

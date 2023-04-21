@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   free_split.c                                       :+:    :+:            */
+/*   trim_cmds.h                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/11/13 13:25:31 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/20 13:10:38 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/02/06 17:30:32 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/04/21 12:43:57 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#ifndef TRIM_CMDS_H
+# define TRIM_CMDS_H
 
-void	free_split(char **split)
-{
-	int	i;
+# include "structs.h"
 
-	i = 0;
-	while (split && split[i])
-	{
-		free(split[i]);
-		split[i] = NULL;
-		i++;
-	}
-	free(split[i]);
-	split[i] = NULL;
-	free(split);
-	split = NULL;
-}
+void	trim_split_cmds(char **split);
+void	trim_cmds(t_commands *cmds);
+
+#endif

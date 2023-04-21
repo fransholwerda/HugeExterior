@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 15:25:02 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/09 13:16:13 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/21 12:43:12 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,14 @@ void	trim_split_cmds(char **split)
 	{
 		find_trim(split, i);
 		i++;
+	}
+}
+
+void	trim_cmds(t_commands *cmds)
+{
+	while (cmds)
+	{
+		trim_split_cmds(cmds->args);
+		cmds = cmds->next;
 	}
 }

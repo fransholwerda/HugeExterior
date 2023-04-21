@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/13 13:29:17 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/01 18:42:38 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/20 17:29:40 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "array_len.h"
 # include "array_sort.h"
 # include "free_split.h"
+# include "ft_atoi.h"
 # include "ft_is_al_under.h"
 # include "ft_itoa.h"
 # include "ft_putendl_fd.h"

@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/19 14:52:15 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/21 12:45:20 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "printer.h"
 #include "structs.h"
 
+
+#include <stdio.h>
 static int	is_data(char *str)
 {
 	if (!str)
@@ -26,7 +28,7 @@ static int	is_data(char *str)
 	return (1);
 }
 
-int	add_heredoc(t_info *info, char *data, int pipe)
+static int	add_heredoc(t_info *info, char *data, int pipe)
 {
 	char	*hd_file;
 
@@ -45,7 +47,7 @@ int	add_heredoc(t_info *info, char *data, int pipe)
 	return (1);
 }
 
-int	add_file(t_info *info, char *data,
+static int	add_file(t_info *info, char *data,
 	void (*f)(t_commands *, char *, bool), bool hd_app)
 {
 	t_commands	*cmds;
@@ -63,7 +65,7 @@ int	add_file(t_info *info, char *data,
 
 static int	get_command(t_info *info, int pipe, char **split, int i)
 {
-	int			original_i;
+	int	original_i;
 
 	original_i = i;
 	while (split[i] != NULL && split[i][0] != '|')
@@ -85,11 +87,24 @@ static int	get_command(t_info *info, int pipe, char **split, int i)
 	return (i);
 }
 
+// static void	print_split(char *split[])
+// {
+// 	int i = 0;
+// 	while (split[i])
+// 	{
+// 		printf("::%s::\n",split[i]);
+// 		i++;
+// 	}
+// 	printf("end\n");
+// 	printf("::%s::\n",split[i]);
+// }
+
 t_commands	*commandize(t_info *info, char **split)
 {
 	int	pipe;
 	int	i;
 
+	// print_split(split);
 	pipe = 0;
 	i = 0;
 	if (split[0] && split[0][0] == '|')

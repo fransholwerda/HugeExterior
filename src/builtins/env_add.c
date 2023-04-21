@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/15 17:17:42 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/19 18:15:19 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/20 14:24:23 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,20 @@
 #include "join_three.h"
 #include "stop.h"
 
-
-
-
-
-#include <stdio.h>
 extern int	g_error;
 
+void	free_env_add_stuff(char *env[], char *var, char *value)
+{
+	free(var);
+	var = NULL;
+	free(value);
+	value = NULL;
+	free(env);
+	env = NULL;
+}
+
+// if (ft_strncmp(env[i], var, ft_strlen(var)) == 0)
+// 	return (i);
 int	env_find_var(char *env[], char *var)
 {
 	int	i;
@@ -41,8 +48,6 @@ int	env_find_var(char *env[], char *var)
 		if ((var[j] == '\0' || var[j] == '=')
 			&& (env[i][j] == '\0' || env[i][j] == '='))
 			return (i);
-		// if (ft_strncmp(env[i], var, ft_strlen(var)) == 0)
-		// 	return (i);
 		i++;
 	}
 	return (-1);
@@ -69,8 +74,6 @@ char	**env_add(char *env[], char *var, char *value)
 	}
 	new_env[i] = new_var;
 	new_env[i + 1] = NULL;
-	free(var);
-	free(value);
-	free(env);
+	free_env_add_stuff(env, var, value);
 	return (new_env);
 }

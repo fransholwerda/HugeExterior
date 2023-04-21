@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 13:29:18 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/19 15:24:15 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/20 16:11:45 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,23 @@ static void	redirect_int(int signal)
 static void	redirect_hd_int(int signal)
 {
 	if (signal == SIGINT)
-		write(1, "\n", 1);
+		exit(1);
+}
+
+static void	redirect_signal_extended(int mode)
+{
+	if (mode == 3)
+	{
+		if (signal(SIGINT, SIG_IGN) == SIG_ERR)
+			write(2, "Sigint error\n", 13);
+	}
+	else if (mode == 4)
+	{
+		if (signal(SIGINT, SIG_DFL) == SIG_ERR)
+			write(2, "Sigint error\n", 13);
+		if (signal(SIGQUIT, SIG_DFL) == SIG_ERR)
+			write(2, "Sigquit error\n", 14);
+	}
 }
 
 void	redirect_signal(int mode)
@@ -51,16 +67,6 @@ void	redirect_signal(int mode)
 		if (signal(SIGINT, redirect_hd_int) == SIG_ERR)
 			write(2, "Sigint error\n", 13);
 	}
-	else if (mode == 3)
-	{
-		if (signal(SIGINT, SIG_IGN) == SIG_ERR)
-			write(2, "Sigint error\n", 13);
-	}
-	else if (mode == 4)
-	{
-		if (signal(SIGINT, SIG_DFL) == SIG_ERR)
-			write(2, "Sigint error\n", 13);
-		if (signal(SIGQUIT, SIG_DFL) == SIG_ERR)
-			write(2, "Sigquit error\n", 14);
-	}
+	else
+		redirect_signal_extended(mode);
 }

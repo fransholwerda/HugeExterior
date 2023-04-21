@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/02 13:05:46 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/04 13:50:20 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/19 17:05:50 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	export_validate(char *str)
 			if (g_error == 0)
 			{
 				g_error = 1;
-				write(2, "1minishell: export: '", 20);
+				write(2, "minishell: export: '", 19);
 				write(2, str, ft_strlen(str));
 				write(2, "': is not a valid identifier\n", 29);
 			}
