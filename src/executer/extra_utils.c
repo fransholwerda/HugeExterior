@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/09 20:21:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/21 21:20:18 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/23 17:38:24 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include "errors.h"
+#include "ft_strlen.h"
+#include "ft_strncmp.h"
 #include "pathfind.h"
 #include "structs.h"
 
@@ -50,11 +52,6 @@ void	manage_infiles(t_commands *commands, t_metainfo *info)
 			else
 				info->infilefd
 					= open(commands->infile->name, commands->infile->mode);
-			if (commands->infile->hd == true)
-			{
-				unlink(commands->infile->name);
-				return ;
-			}
 			if (commands->infile->next)
 				close(info->infilefd);
 			commands->infile = commands->infile->next;
@@ -87,7 +84,8 @@ void	manage_outfiles(t_commands *commands, t_metainfo *info)
 
 void	setup_info(t_commands *commands, t_metainfo *info)
 {
-	manage_infiles(commands, info);
+	if (access(commands->args[0], F_OK))
+		manage_infiles(commands, info);
 	if (access(".heredoc0", F_OK) == 0)
 		unlink(".heredoc0");
 	manage_outfiles(commands, info);

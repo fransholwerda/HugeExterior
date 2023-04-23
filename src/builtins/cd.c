@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 20:32:04 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/21 17:15:41 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/23 17:41:58 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	change_to_home(t_metainfo *info, char *oldpwd)
 	char	*buffer;
 	char	*home;
 	char	*pwd;
-	
+
 	home = get_env_var_no_free(info->envp, "HOME");
 	if (chdir(home) != 0)
 	{
@@ -68,10 +68,10 @@ static void	change_to_home(t_metainfo *info, char *oldpwd)
 	free(home);
 }
 
-static void	change_non_home(t_commands *commands, t_metainfo *info, char *oldpwd)
+static void	non_home(t_commands *commands, t_metainfo *info, char *oldpwd)
 {
-	char *buffer;
-	char *pwd;
+	char	*buffer;
+	char	*pwd;
 
 	pwd = NULL;
 	if (chdir(commands->args[1]) != 0)
@@ -107,5 +107,5 @@ void	cd(t_commands *commands, t_metainfo *info)
 		|| (commands->args[1][0] == '~' && !commands->args[1][1]))
 		change_to_home(info, oldpwd);
 	else
-		change_non_home(commands, info, oldpwd);
+		non_home(commands, info, oldpwd);
 }

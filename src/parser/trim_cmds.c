@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 15:25:02 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/21 18:18:53 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/23 17:38:03 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	trim_split_cmds(char **split)
 	int	i;
 
 	i = 0;
-	//print_array(split);
 	while (split[i])
 	{
 		find_trim(split, i);

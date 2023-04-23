@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/10 18:21:01 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/23 13:59:32 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/23 16:22:06 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	validate_exit_args(char **args)
 	int	i;
 
 	i = 0;
-	while (args[1][i])
+	while (args[1] && args[1][i])
 	{
 		if (i == 0 && (args[1][i] == '-' || args[1][i] == '+'))
 			i++;
@@ -36,7 +36,7 @@ static int	validate_exit_args(char **args)
 		}
 		i++;
 	}
-	if (args[2])
+	if (args[1] && args[2])
 	{
 		write(2, "minishell: exit: too many arguments\n", 36);
 		g_error = 1;
@@ -49,8 +49,10 @@ void	mini_exit(t_commands *commands)
 {
 	int	return_value;
 
+	if (access(".heredoc0", F_OK) == 0)
+		unlink(".heredoc0");
 	return_value = validate_exit_args(commands->args);
-	if (return_value == 1)
+	if (return_value == 1 && commands->args[1])
 		g_error = ft_atoi(commands->args[1]);
 	else if (return_value == -1)
 		return ;
