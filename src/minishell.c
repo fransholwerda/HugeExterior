@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 19:51:30 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/21 17:50:09 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/23 13:27:57 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,23 @@ static int	is_empty(char *str)
 // 	printf("::%s::\n",split[i]);
 // }
 
+static void	unlink_heredocs(t_commands *cmds)
+{
+	t_file	*file;
+
+	while (cmds)
+	{
+		file = cmds->infile;
+		while (file)
+		{
+			if (file->hd == true)
+				unlink(cmds->infile->name);
+			file = file->next;
+		}
+		cmds = cmds->next;
+	}
+}
+
 static void	parse_and_execute(t_info *info, char *str)
 {
 	char	**split;
@@ -68,6 +85,7 @@ static void	parse_and_execute(t_info *info, char *str)
 		}
 		if (info->cmds)
 		{
+			unlink_heredocs(info->cmds);
 			free_cmds(info->cmds);
 			info->cmds = NULL;
 		}
