@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   exec_utils.h                                       :+:    :+:            */
+/*   ft_strrchr.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/04/19 21:13:52 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/23 22:03:15 by ahorling      ########   odam.nl         */
+/*   Created: 2023/04/23 21:40:24 by ahorling      #+#    #+#                 */
+/*   Updated: 2023/04/23 21:44:19 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXEC_UTILS_H
-# define EXEC_UTILS_H
+#include <unistd.h>
+#include "ft_strchr.h"
 
-# include "structs.h"
+char	*ft_strrchr(const char *str, int c)
+{
+	char	*input;
 
-char	**exec_single_builtin(t_commands *commands, t_metainfo *info);
-void	exec_single_command(t_commands *commands, t_metainfo *info,
-			int pipe1[2], int pipe2[2]);
-void	exec_multiple_commands(t_commands *commands, t_metainfo *info,
-			int pipe1[2], int pipe2[2]);
-int		get_exit_code(t_metainfo *info, int status);
-
-#endif
+	input = (char *)str;
+	if (ft_strchr(str, c) == NULL)
+		return (NULL);
+	while (*input != '\0')
+		input++;
+	while (*input != c)
+		input--;
+	return (input);
+}

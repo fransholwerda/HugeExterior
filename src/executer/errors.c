@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/09 04:58:09 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/23 16:26:58 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/23 22:20:09 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,29 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "ft_strlen.h"
+#include "ft_strchr.h"
 #include "structs.h"
 
 extern int	g_error;
 
 void	path_error(t_commands *commands)
 {
-	write(2, "minishell: ", 12);
-	write(2, commands->args[0], ft_strlen(commands->args[0]));
-	write(2, ": command not found\n", 21);
-	g_error = 127;
-	exit(g_error);
+	if (ft_strchr(commands->args[0], '/'))
+	{
+		write(2, "minishell: ", 12);
+		write(2, commands->args[0], ft_strlen(commands->args[0]));
+		write(2, ": No such file or directory\n", 29);
+		g_error = 127;
+		exit(g_error);
+	}
+	else
+	{
+		write(2, "minishell: ", 12);
+		write(2, commands->args[0], ft_strlen(commands->args[0]));
+		write(2, ": command not found\n", 21);
+		g_error = 127;
+		exit(g_error);
+	}
 }
 
 void	infile_errors(t_commands *commands)

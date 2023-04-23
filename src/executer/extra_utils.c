@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/09 20:21:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/23 17:38:24 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/23 21:37:16 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	manage_outfiles(t_commands *commands, t_metainfo *info)
 		{
 			if (access(commands->outfile->name, F_OK) != 0)
 				info->outfilefd
-					= open(commands->outfile->name, O_RDWR | O_CREAT, 0655);
+					= open(commands->outfile->name, O_RDWR | O_CREAT, 0644);
 			else if (access(commands->outfile->name, W_OK) == 0)
 				info->outfilefd
 					= open(commands->outfile->name, commands->outfile->mode);
@@ -84,8 +84,7 @@ void	manage_outfiles(t_commands *commands, t_metainfo *info)
 
 void	setup_info(t_commands *commands, t_metainfo *info)
 {
-	if (access(commands->args[0], F_OK))
-		manage_infiles(commands, info);
+	manage_infiles(commands, info);
 	if (access(".heredoc0", F_OK) == 0)
 		unlink(".heredoc0");
 	manage_outfiles(commands, info);

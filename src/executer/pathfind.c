@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/03 16:38:35 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/23 18:38:15 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/23 22:16:02 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include "structs.h"
 #include "free_split.h"
+#include "exec_utils.h"
 #include "ft_split.h"
 #include "utils.h"
 #include "errors.h"
@@ -36,6 +37,7 @@ static char	**get_paths(t_metainfo *info, t_commands *commands)
 	char	**paths;
 	char	*temp;
 
+	(void)commands;
 	i = 0;
 	while (info->envp[i])
 	{
@@ -44,7 +46,10 @@ static char	**get_paths(t_metainfo *info, t_commands *commands)
 		i++;
 	}
 	if (info->envp[i] == NULL)
-		path_not_set(commands);
+	{
+		paths = NULL;
+		return (paths);
+	}
 	temp = ft_substr(info->envp[i], 5, ft_strlen(info->envp[i]));
 	paths = ft_split(temp, ':');
 	if (!paths)
@@ -64,6 +69,8 @@ char	*find_path(t_metainfo *info, t_commands *commands)
 	char	*final_command;
 
 	paths = get_paths(info, commands);
+	if (paths == NULL && access(commands->args[0], F_OK) != 0)
+		path_not_set(commands);
 	i = 0;
 	if (!commands->args)
 		return ("1");

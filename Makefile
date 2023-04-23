@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/04/21 21:42:58 by ahorling      ########   odam.nl          #
+#    Updated: 2023/04/23 21:43:58 by ahorling      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,8 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/utils/ft_putendl_fd.c \
 			$(ROOT)src/utils/ft_putstr_fd.c \
 			$(ROOT)src/utils/ft_split.c \
+                     $(ROOT)src/utils/ft_strchr.c \
+                     $(ROOT)src/utils/ft_strrchr.c \
 			$(ROOT)src/utils/ft_strdup.c \
 			$(ROOT)src/utils/ft_strjoin.c \
 			$(ROOT)src/utils/ft_strlen.c \
