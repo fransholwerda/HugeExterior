@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/15 17:03:45 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/20 20:43:17 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/23 18:16:17 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,21 @@ static char	*get_shlvl(char *env[], int i)
 	return (NULL);
 }
 
+static int	find_shlvl_oldpwd(char *env[], char *new_env[], int i, int j)
+{
+	if (ft_strncmp(env[i], "SHLVL=", 6) == 0)
+	{
+		new_env[j] = get_shlvl(env, i);
+		j++;
+	}
+	else if (ft_strncmp(env[i], "OLDPWD=", 7) != 0)
+	{
+		new_env[j] = ft_strdup(env[i]);
+		j++;
+	}
+	return (j);
+}
+
 //Will make a copy of env without OLDPWD
 char	**env_copy(char *env[])
 {
@@ -77,16 +92,7 @@ char	**env_copy(char *env[])
 	j = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], "SHLVL=", 6) == 0)
-		{
-			new_env[j] = get_shlvl(env, i);
-			j++;
-		}
-		else if (ft_strncmp(env[i], "OLDPWD=", 7) != 0)
-		{
-			new_env[j] = ft_strdup(env[i]);
-			j++;
-		}
+		j = find_shlvl_oldpwd(env, new_env, i, j);
 		i++;
 	}
 	return (new_env);
