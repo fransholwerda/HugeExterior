@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 19:51:30 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/23 13:27:57 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/23 14:38:06 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "executer.h"
 #include "expand.h"
 #include "free_split.h"
+#include "ft_itoa.h"
+#include "ft_strjoin.h"
 #include "info.h"
 #include "readline/readline.h"
 #include "readline/history.h"
@@ -51,18 +53,22 @@ static int	is_empty(char *str)
 
 static void	unlink_heredocs(t_commands *cmds)
 {
-	t_file	*file;
+	char	*pipe_string;
+	char	*filename;
+	int		pipe_number;
 
+	pipe_number = 0;
 	while (cmds)
 	{
-		file = cmds->infile;
-		while (file)
-		{
-			if (file->hd == true)
-				unlink(cmds->infile->name);
-			file = file->next;
-		}
+		pipe_string = ft_itoa(pipe_number);
+		filename = ft_strjoin(".heredoc", pipe_string);
+		unlink(filename);
+		free(pipe_string);
+		pipe_string = NULL;
+		free(filename);
+		filename = NULL;
 		cmds = cmds->next;
+		pipe_number++;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/21 21:00:08 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/23 14:19:13 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,6 @@
 #include "printer.h"
 #include "structs.h"
 
-
-
-#include <stdio.h>
-static void	print_array(char **array)
-{
-	int i = 0;
-	while (array[i])
-	{
-		i++;
-	}
-}
 static int	is_data(char *str)
 {
 	if (!str)
@@ -106,7 +95,6 @@ t_commands	*commandize(t_info *info, char **split)
 	if (split[0] && split[0][0] == '|')
 		return (syntax(info->prompt, split[0]));
 	info->cmds = new_cmds(NULL);
-	print_array(split);
 	while (split[i])
 	{
 		if (split[i][0] == '|')
@@ -121,6 +109,5 @@ t_commands	*commandize(t_info *info, char **split)
 		if (i < 0)
 			return (NULL);
 	}
-	print_array(split);
 	return (info->cmds);
 }
