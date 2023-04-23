@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 21:15:18 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/21 20:30:26 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/23 16:03:44 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	execute_builtin(t_commands *commands, t_metainfo *info)
 	else if (ft_strcmp(commands->args[0], "export") == 0)
 		info->envp = export(info->envp, commands->args, 1);
 	else if (ft_strcmp(commands->args[0], "unset") == 0)
-		unset(info, commands->args[1], info->outfilefd);
+		unset(info, commands->args, info->outfilefd);
 	else if (ft_strcmp(commands->args[0], "env") == 0)
 		env(info->envp, info->outfilefd);
 	else if (ft_strcmp(commands->args[0], "exit") == 0)

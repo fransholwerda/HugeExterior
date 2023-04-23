@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/22 16:09:40 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/04 16:48:16 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/23 16:03:20 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,23 @@
 
 extern int	g_error;
 
-void	unset(t_metainfo *info, char *var, int fd)
+void	unset(t_metainfo *info, char *args[], int fd)
 {
+	int	i;
+
 	g_error = 0;
-	if (is_valid_varname(var) == False)
+	i = 1;
+	while (args[i])
 	{
-		ft_putstr_fd("minishell: unset: '", fd);
-		ft_putstr_fd(var, fd);
-		ft_putendl_fd("': not a valid identifier", fd);
-		g_error = 1;
+		if (is_valid_varname(args[i]) == False)
+		{
+			ft_putstr_fd("minishell: unset: '", fd);
+			ft_putstr_fd(args[i], fd);
+			ft_putendl_fd("': not a valid identifier", fd);
+			g_error = 1;
+		}
+		else
+			info->envp = env_pop(info->envp, ft_strdup(args[i]));
+		i++;
 	}
-	else
-		info->envp = env_pop(info->envp, ft_strdup(var));
 }
