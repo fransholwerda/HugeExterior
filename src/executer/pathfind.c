@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/03 16:38:35 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/21 18:04:59 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/23 18:38:15 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*find_path(t_metainfo *info, t_commands *commands)
 	i = 0;
 	if (!commands->args)
 		return ("1");
-	while (paths[i] && commands->args[0] != '\0')
+	while (paths[i] && commands->args[0])
 	{
 		temp = ft_strjoin("/", commands->args[0]);
 		final_command = ft_strjoin(paths[i], temp);
