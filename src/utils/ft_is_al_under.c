@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 17:49:12 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/02/22 17:36:56 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/23 15:57:01 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_is_al_under_num(char c)
 		return (True);
 	if (c == '_')
 		return (True);
-	if (c == '0' && c <= '9')
+	if (c >= '0' && c <= '9')
 		return (True);
 	return (False);
 }
