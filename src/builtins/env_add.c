@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/15 17:17:42 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/24 20:37:31 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/24 22:24:04 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@
 #include "join_three.h"
 #include "stop.h"
 
-
-
-
-
-#include <stdio.h>
 extern int	g_error;
 
 void	free_env_add_stuff(char *env[], char *var, char *value)

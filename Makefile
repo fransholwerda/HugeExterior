@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/04/24 21:30:32 by ahorling      ########   odam.nl          #
+#    Updated: 2023/04/24 22:05:24 by ahorling      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/info.c \
 			$(ROOT)src/minishell.c \
 			$(ROOT)src/builtins/cd.c \
+			$(ROOT)src/builtins/cd_extra.c \
 			$(ROOT)src/builtins/echo.c \
 			$(ROOT)src/builtins/env_add.c \
 			$(ROOT)src/builtins/env_copy.c \
@@ -77,7 +78,7 @@ INCLUDE	= -I $(ROOT)include \
 			-I $(ROOT)include/utils \
 			-I $(HOME)/.brew/Cellar/readline/8.2.1/include
 LINKS	= -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline
-CFLAGS	= -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror #-g -fsanitize=address
 
 all: $(NAME)
 

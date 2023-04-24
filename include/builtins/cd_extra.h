@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   cd.h                                               :+:    :+:            */
+/*   cd_extra.h                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/04/12 20:53:53 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/24 21:57:52 by ahorling      ########   odam.nl         */
+/*   Created: 2023/04/24 21:53:41 by ahorling      #+#    #+#                 */
+/*   Updated: 2023/04/24 21:59:45 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CD_H
-# define CD_H
+#ifndef CD_EXTRA_H
+# define CD_EXTRA_H
 
 # include "structs.h"
 
-void	cd(t_commands *commands, t_metainfo *info);
-void	out_of_bounds(char *buffer, t_metainfo *info, char *oldpwd);
+void	cd_to_non_home(t_metainfo *info, char *buffer, char *oldpwd, char *pwd);
 
 #endif

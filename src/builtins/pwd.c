@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/23 15:15:33 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/24 19:23:40 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/24 22:05:15 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	pwd(t_commands *commands, int fd)
 	getcwd(buf, 10240 * sizeof(char));
 	if (!buf)
 	{
-		write(2, "getcwd failed", 14);
+		write(2, "getcwd failed", 13);
 		g_error = 1;
 		if (commands->prev || commands->next)
 			exit(g_error);
