@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/08 15:59:07 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/04/24 12:15:43 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/04/24 15:20:43 by ahorling      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,8 +55,8 @@ SRC		= $(ROOT)src/main.c \
 			$(ROOT)src/utils/ft_putendl_fd.c \
 			$(ROOT)src/utils/ft_putstr_fd.c \
 			$(ROOT)src/utils/ft_split.c \
-                     $(ROOT)src/utils/ft_strchr.c \
-                     $(ROOT)src/utils/ft_strrchr.c \
+        	$(ROOT)src/utils/ft_strchr.c \
+            $(ROOT)src/utils/ft_strrchr.c \
 			$(ROOT)src/utils/ft_strdup.c \
 			$(ROOT)src/utils/ft_strjoin.c \
 			$(ROOT)src/utils/ft_strlen.c \
@@ -77,7 +77,7 @@ INCLUDE	= -I $(ROOT)include \
 			-I $(ROOT)include/utils \
 			-I $(HOME)/.brew/Cellar/readline/8.2.1/include
 LINKS	= -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline
-CFLAGS	= -Wall -Wextra -Werror #-g -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -g -fsanitize=address
 
 all: $(NAME)
 

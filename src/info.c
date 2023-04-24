@@ -6,42 +6,28 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 13:12:27 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/24 13:16:36 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/24 14:14:13 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "cmds_struct_utils.h"
 #include "env_copy.h"
+#include "ft_strdup.h"
 #include "ft_strlen.h"
 #include "ft_strjoin.h"
 #include "stop.h"
 #include "structs.h"
 
-static char	*get_prompt(char *program_name)
-{
-	char			*prompt;
-	unsigned int	i;
-
-	prompt = NULL;
-	i = ft_strlen(program_name) - 1;
-	while (i > 0)
-	{
-		if (program_name[i] == '/')
-			prompt = ft_strjoin(&program_name[i + 1], "> ");
-		i--;
-	}
-	return (prompt);
-}
-
 t_info	*init_info(char *argv[], char *env[])
 {
 	t_info	*info;
 
+	(void)argv;
 	info = (t_info *)malloc(sizeof(t_info));
 	if (!info)
 		stop("init_info: ");
-	info->prompt = get_prompt(argv[0]);
+	info->prompt = ft_strdup("minishell> ");
 	info->env = env_copy(env);
 	info->cmds = NULL;
 	return (info);

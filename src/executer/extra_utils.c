@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/09 20:21:24 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/23 21:37:16 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/24 15:14:19 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ void	closefds(t_metainfo *info)
 
 void	manage_infiles(t_commands *commands, t_metainfo *info)
 {
+	t_file	*head;
+
 	if (commands->infile)
 	{
+		head = commands->infile;
 		while (commands->infile)
 		{
 			if (access(commands->infile->name, F_OK | R_OK) != 0)
@@ -56,6 +59,7 @@ void	manage_infiles(t_commands *commands, t_metainfo *info)
 				close(info->infilefd);
 			commands->infile = commands->infile->next;
 		}
+		commands->infile = head;
 	}
 	else
 		info->infilefd = STDIN_FILENO;
@@ -63,8 +67,11 @@ void	manage_infiles(t_commands *commands, t_metainfo *info)
 
 void	manage_outfiles(t_commands *commands, t_metainfo *info)
 {
+	t_file *head;
+
 	if (commands->outfile)
 	{
+		head = commands->outfile;
 		while (commands->outfile)
 		{
 			if (access(commands->outfile->name, F_OK) != 0)
@@ -77,6 +84,7 @@ void	manage_outfiles(t_commands *commands, t_metainfo *info)
 				outfile_error(commands);
 			commands->outfile = commands->outfile->next;
 		}
+		commands->outfile = head;
 	}
 	else
 		info->outfilefd = STDOUT_FILENO;
