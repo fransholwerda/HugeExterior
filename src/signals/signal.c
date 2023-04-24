@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 13:29:18 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/20 16:11:45 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/24 12:40:11 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 #include <unistd.h>
 #include "readline/readline.h"
 
+extern int	g_error;
+
 static void	redirect_int(int signal)
 {
 	if (signal == SIGINT)
 	{
+		g_error = 1;
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);

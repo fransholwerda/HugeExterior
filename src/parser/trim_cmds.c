@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/06 15:25:02 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/23 17:38:03 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/24 13:38:44 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	trim_cmd(char **split, int i, int q1, int q2)
 	split[i] = new_str;
 }
 
-static void	find_trim(char **split, int i)
+void	find_trim(char **split, int i)
 {
 	int	pos;
 	int	q1;

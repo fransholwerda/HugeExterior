@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 15:14:30 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/20 13:10:19 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/24 12:45:41 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ char	*get_env_var(char *env[], char *var)
 
 	i = 0;
 	if (var[0] == '?')
+	{
+		free(var);
 		return (ft_itoa(g_error));
+	}
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], var, ft_strlen(var)) == 0
