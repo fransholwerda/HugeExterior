@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/09 04:58:09 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/23 22:20:09 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/24 16:32:58 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	infile_errors(t_commands *commands)
 		write(2, commands->infile->name, ft_strlen(commands->infile->name));
 		write(2, ": No suchfile or directory\n", 28);
 		g_error = 1;
-		exit(g_error);
+		if (commands->prev || commands->next)
+			exit(g_error);
 	}
 	else if (access(commands->infile->name, R_OK) != 0)
 	{
@@ -55,7 +56,8 @@ void	infile_errors(t_commands *commands)
 		write(2, commands->infile->name, ft_strlen(commands->infile->name));
 		write(2, ": Permission denied\n", 21);
 		g_error = 1;
-		exit(g_error);
+		if (commands->prev || commands->next)
+			exit(g_error);
 	}
 }
 
@@ -65,7 +67,8 @@ void	outfile_error(t_commands *commands)
 	write(2, commands->outfile->name, ft_strlen(commands->outfile->name));
 	write(2, ": Permission denied\n", 21);
 	g_error = 1;
-	exit(g_error);
+	if (commands->prev || commands->next)
+		exit(g_error);
 }
 
 void	fork_error(void)

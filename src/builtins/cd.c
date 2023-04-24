@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 20:32:04 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/23 17:41:58 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/24 16:38:01 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static void	change_to_home(t_metainfo *info, char *oldpwd)
 	home = get_env_var_no_free(info->envp, "HOME");
 	if (chdir(home) != 0)
 	{
-		write(info->outfilefd, "minishell: cd: ", 16);
-		write(info->outfilefd, "HOME", 4);
-		write(info->outfilefd, ": No such file or directory\n", 28);
+		write(2, "minishell: cd: ", 16);
+		write(2, "HOME", 4);
+		write(2, ": No such file or directory\n", 28);
 		g_error = 1;
 		free(oldpwd);
 		free(home);
@@ -76,9 +76,9 @@ static void	non_home(t_commands *commands, t_metainfo *info, char *oldpwd)
 	pwd = NULL;
 	if (chdir(commands->args[1]) != 0)
 	{
-		write(info->outfilefd, "minishell: cd: ", 16);
-		write(info->outfilefd, commands->args[1], ft_strlen(commands->args[1]));
-		write(info->outfilefd, ": No such file or directory\n", 28);
+		write(2, "minishell: cd: ", 16);
+		write(2, commands->args[1], ft_strlen(commands->args[1]));
+		write(2, ": No such file or directory\n", 28);
 		g_error = 1;
 		free(oldpwd);
 	}
