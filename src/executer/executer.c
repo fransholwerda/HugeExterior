@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/23 22:17:27 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/24 14:59:53 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "exec_utils.h"
 #include "extra_utils.h"
 #include "ft_strncmp.h"
+#include "ft_strchr.h"
 #include "ft_strrchr.h"
 #include "ft_strlen.h"
 #include "pathfind.h"
@@ -37,7 +38,8 @@ static void	execute_child(t_commands *commands, t_metainfo *info)
 		execute_builtin(commands, info);
 	if (!commands->args)
 		exit(0);
-	else if (access(commands->args[0], F_OK) == 0 && ft_strrchr(commands->args[0], '/'))
+	else if (access(commands->args[0], F_OK) == 0 \
+		&& ft_strchr(commands->args[0], '/'))
 	{
 		if (access(commands->args[0], X_OK) != 0 \
 			&& (ft_strncmp(commands->args[0], "./", 2) == 0 \
@@ -51,7 +53,6 @@ static void	execute_child(t_commands *commands, t_metainfo *info)
 		info->path = commands->args[0];
 		commands->args[0] = ft_strrchr(commands->args[0], '/') + 1;
 		execve(info->path, commands->args, info->envp);
-		path_error(commands);
 	}
 	else
 	{

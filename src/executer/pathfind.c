@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/03 16:38:35 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/23 22:16:02 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/23 22:33:14 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static char	**get_paths(t_metainfo *info, t_commands *commands)
 	char	**paths;
 	char	*temp;
 
-	(void)commands;
 	i = 0;
 	while (info->envp[i])
 	{
@@ -48,15 +47,12 @@ static char	**get_paths(t_metainfo *info, t_commands *commands)
 	if (info->envp[i] == NULL)
 	{
 		paths = NULL;
+		if (access(commands->args[0], F_OK) != 0)
+			path_not_set(commands);
 		return (paths);
 	}
 	temp = ft_substr(info->envp[i], 5, ft_strlen(info->envp[i]));
 	paths = ft_split(temp, ':');
-	if (!paths)
-	{
-		free(temp);
-		env_error();
-	}
 	free(temp);
 	return (paths);
 }
@@ -69,10 +65,8 @@ char	*find_path(t_metainfo *info, t_commands *commands)
 	char	*final_command;
 
 	paths = get_paths(info, commands);
-	if (paths == NULL && access(commands->args[0], F_OK) != 0)
-		path_not_set(commands);
 	i = 0;
-	if (!commands->args)
+	if (!commands->args || paths == NULL)
 		return ("1");
 	while (paths[i] && commands->args[0])
 	{
