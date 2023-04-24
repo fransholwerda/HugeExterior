@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/25 13:25:47 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/23 14:19:13 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/24 13:49:01 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "heredoc.h"
 #include "printer.h"
 #include "structs.h"
+#include "trim_cmds.h"
 
 static int	is_data(char *str)
 {
@@ -69,13 +70,25 @@ static int	get_command(t_info *info, int pipe, char **split, int i)
 	{
 		original_i = i;
 		if (split[i][0] == '<' && split[i][1] == '<')
+		{
+			find_trim(split, i + 1);
 			i += add_heredoc(info, split[i + 1], pipe);
+		}
 		else if (split[i][0] == '<')
+		{
+			find_trim(split, i + 1);
 			i += add_file(info, split[i + 1], &add_infile, false);
+		}
 		else if (split[i][0] == '>' && split[i][1] == '>')
+		{
+			find_trim(split, i + 1);
 			i += add_file(info, split[i + 1], &add_outfile, true);
+		}
 		else if (split[i][0] == '>')
+		{
+			find_trim(split, i + 1);
 			i += add_file(info, split[i + 1], &add_outfile, false);
+		}
 		else
 			add_args(last_cmd(info->cmds), split[i]);
 		if (original_i > i)

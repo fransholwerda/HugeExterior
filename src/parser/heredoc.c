@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/04 13:10:35 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/21 17:19:20 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/24 13:17:36 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ char	*go_heredoc(char *env[], char *eof, int pipe_count)
 	redirect_signal(1);
 	if (WIFEXITED(fork_return))
 		fork_return = WEXITSTATUS(fork_return);
-	if (fork_return != 0)
+	if (fork_return != EXIT_SUCCESS)
 	{
 		g_error = fork_return;
 		free(filename);

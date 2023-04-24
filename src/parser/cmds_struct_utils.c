@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 20:05:10 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/19 17:45:19 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/24 12:26:53 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ void	free_cmds(t_commands *cmds)
 			free_file(cmds->infile);
 		if (cmds->outfile)
 			free_file(cmds->outfile);
+		cmds->args = NULL;
+		cmds->infile = NULL;
+		cmds->outfile = NULL;
 		free(cmds);
 		cmds = NULL;
 		cmds = tmp;

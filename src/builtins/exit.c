@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/10 18:21:01 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/23 16:22:06 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/24 13:56:36 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void	mini_exit(t_commands *commands)
 
 	if (access(".heredoc0", F_OK) == 0)
 		unlink(".heredoc0");
+	if (!commands->prev && !commands->next)
+		write(2, "exit\n", 5);
 	return_value = validate_exit_args(commands->args);
 	if (return_value == 1 && commands->args[1])
 		g_error = ft_atoi(commands->args[1]);
 	else if (return_value == -1)
 		return ;
-	if (!commands->prev && !commands->next)
-		write(2, "exit\n", 5);
 	exit(g_error % 256);
 }

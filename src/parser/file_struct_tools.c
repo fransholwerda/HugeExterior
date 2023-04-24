@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/07 17:12:02 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/16 13:41:08 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/24 12:25:01 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	free_file(t_file *file)
 	{
 		tmp = file->next;
 		if (file->name)
+		{
 			free(file->name);
+			file->name = NULL;
+		}
 		free(file);
 		file = tmp;
 	}
