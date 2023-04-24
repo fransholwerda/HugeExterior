@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 21:15:18 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/24 14:19:13 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/24 17:12:22 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	execute_builtin(t_commands *commands, t_metainfo *info)
 {
 	g_error = 0;
 	manage_infiles(commands, info);
+	if (g_error != 0)
+		return ;
 	manage_outfiles(commands, info);
 	if (g_error != 0)
 		return ;
