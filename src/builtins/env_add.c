@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/15 17:17:42 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/20 14:24:23 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/24 20:37:31 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 #include "join_three.h"
 #include "stop.h"
 
+
+
+
+
+#include <stdio.h>
 extern int	g_error;
 
 void	free_env_add_stuff(char *env[], char *var, char *value)
@@ -39,7 +44,7 @@ int	env_find_var(char *env[], char *var)
 	int	j;
 
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 	{
 		j = 0;
 		while (env[i][j] != '\0' && env[i][j] != '='

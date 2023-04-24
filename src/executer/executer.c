@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/24 15:55:01 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/24 19:55:36 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "errors.h"
 #include "exec_utils.h"
 #include "extra_utils.h"
+#include "ft_strdup.h"
 #include "ft_strncmp.h"
 #include "ft_strchr.h"
 #include "ft_strrchr.h"
@@ -50,7 +51,7 @@ static void	execute_child(t_commands *commands, t_metainfo *info)
 			write(2, ": Permission denied\n", 21);
 			exit(126);
 		}
-		info->path = commands->args[0];
+		info->path = ft_strdup(commands->args[0]);
 		commands->args[0] = ft_strrchr(commands->args[0], '/') + 1;
 		execve(info->path, commands->args, info->envp);
 	}

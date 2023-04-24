@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/23 17:39:10 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/20 20:02:24 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/04/24 20:11:31 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 #include "ft_strndup.h"
 #include "is_valid_varname.h"
 
+
+
+
+#include <stdio.h>
 extern int	g_error;
 
 static void	print_export(char *env[], int fd)

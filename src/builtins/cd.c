@@ -6,12 +6,14 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/12 20:32:04 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/24 16:38:01 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/24 21:12:53 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <dirent.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "builtins/export.h"
 #include "builtins/export_utils.h"
 #include "utils/ft_strncmp.h"
@@ -21,6 +23,7 @@
 #include "structs.h"
 
 extern int	g_error;
+
 
 static char	*get_env_var_no_free(char *env[], char *var)
 {
@@ -68,6 +71,29 @@ static void	change_to_home(t_metainfo *info, char *oldpwd)
 	free(home);
 }
 
+static void	out_of_bounds(char *buffer, t_metainfo *info, char *oldpwd)
+{
+	char *home;
+
+	home = get_env_var_no_free(info->envp, "HOME");
+	if (home[0] == '\0')
+	{
+		write(2, "listen here you little shit, I'm kicking you out\n", 49);
+		free(buffer);
+		free(home);
+		exit(1);
+	}
+	else if (home)
+	{
+		write(2, "Target directory is unaccessible\n", 33);
+		write(2, "You seem to have gotten lost, lets send you back $HOME\n", 55);
+		free(buffer);
+		free(home);
+		change_to_home(info, oldpwd);
+		return ;
+	}
+}
+
 static void	non_home(t_commands *commands, t_metainfo *info, char *oldpwd)
 {
 	char	*buffer;
@@ -85,9 +111,17 @@ static void	non_home(t_commands *commands, t_metainfo *info, char *oldpwd)
 	else
 	{
 		info->envp = export_var(info->envp, oldpwd);
-		free(oldpwd);
 		buffer = malloc(10240 * sizeof(char));
-		pwd = ft_strjoin("PWD=", getcwd(buffer, 10240 * sizeof(char)));
+		if (!buffer)
+			return ;
+		getcwd(buffer, 10240 * sizeof(char));
+		if (access(buffer, F_OK) != 0)
+		{
+			out_of_bounds(buffer, info, oldpwd);
+			return ;
+		}
+		free(oldpwd);
+		pwd = ft_strjoin("PWD=", buffer);
 		free(buffer);
 		info->envp = export_var(info->envp, pwd);
 		free(pwd);
