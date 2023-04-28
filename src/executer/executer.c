@@ -6,7 +6,7 @@
 /*   By: ahorling <ahorling@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 19:23:48 by ahorling      #+#    #+#                 */
-/*   Updated: 2023/04/24 19:55:36 by ahorling      ########   odam.nl         */
+/*   Updated: 2023/04/28 15:57:05 by ahorling      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,8 @@ static void	execute_child(t_commands *commands, t_metainfo *info)
 		execve(info->path, commands->args, info->envp);
 	}
 	else
-	{
 		execve(info->path, commands->args, info->envp);
-		path_error(commands);
-	}
+	path_error(commands);
 }
 
 static void	child_redirects(t_commands *commands, t_metainfo *info
